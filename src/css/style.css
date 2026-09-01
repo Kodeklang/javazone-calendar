@@ -530,13 +530,27 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 }
 .speaker__head { display: flex; gap: 16px; align-items: center; }
 
-/* Sleeping Pill publishes no speaker photos at all, so this monogram is the
-   artwork rather than a placeholder waiting for one. */
-.speaker__mono {
+/* Only about a third of the speakers have a photo to be had - Sleeping Pill
+   publishes none, and Bluesky is the one social link that can be resolved to
+   one. So the monogram is not a placeholder waiting to be filled: it is what
+   most cards will always show, and the two are given identical geometry so a
+   list mixing them reads as one deliberate treatment rather than a half-done
+   import. Any change to the circle below belongs in both rules. */
+.speaker__mono,
+.speaker__photo {
   width: 60px; height: 60px; flex: none; border-radius: 999px;
-  background: rgba(4, 44, 92, 0.5); border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.speaker__mono {
+  background: rgba(4, 44, 92, 0.5);
   display: flex; align-items: center; justify-content: center;
   font-size: 19px; font-weight: 700; letter-spacing: 0.02em; color: var(--track);
+}
+/* The sources are square, so this crops nothing today; it is here so a
+   non-square one can never stretch a face. The tint underneath shows only
+   while the image is still decoding. */
+.speaker__photo {
+  object-fit: cover; background: rgba(4, 44, 92, 0.5);
 }
 .speaker__who { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .speaker__name { margin: 0; font-size: 19px; font-weight: 700; color: var(--ink-strong); }
@@ -582,7 +596,9 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
   .detail__body { font-size: 14.5px; line-height: 1.65; }
   .pill { padding: 7px 13px; font-size: 12px; }
   .speaker { padding: 16px; border-radius: 14px; }
-  .speaker__mono { width: 46px; height: 46px; font-size: 15px; }
+  .speaker__mono,
+  .speaker__photo { width: 46px; height: 46px; }
+  .speaker__mono { font-size: 15px; }
   .speaker__name { font-size: 15.5px; }
   .speaker__bio { font-size: 14px; }
   .parallel__item a { padding: 12px 14px; gap: 12px; }

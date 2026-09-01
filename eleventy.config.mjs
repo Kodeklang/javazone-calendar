@@ -1,9 +1,11 @@
 import { mkdirSync } from "node:fs";
 import { FONT_DIR, buildFonts } from "./lib/fonts.mjs";
 
-// Created up front so the passthrough copy below has something to point at on a
-// clean checkout, before any face has been subset.
+// Created up front so the passthrough copies below have something to point at
+// on a clean checkout: before any face has been subset, and before
+// scripts/fetch-photos.mjs has ever run.
 mkdirSync(FONT_DIR, { recursive: true });
+mkdirSync("src/photos", { recursive: true });
 
 export default function (eleventyConfig) {
   // Subset the webfonts before anything else runs. Passthrough copy happens
@@ -18,6 +20,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ [FONT_DIR]: "css/fonts" });
   eleventyConfig.addPassthroughCopy({ "src/js": "js" });
   eleventyConfig.addPassthroughCopy({ "src/icons": "icons" });
+  eleventyConfig.addPassthroughCopy({ "src/photos": "photos" });
   eleventyConfig.addPassthroughCopy({ "src/root": "." });
 
   // The RUM SDK ships a prebuilt bundle, so it needs no bundler of our own.

@@ -12,6 +12,17 @@ import rum from "./rum.js";
 const raw = readFileSync(new URL("./program.json", import.meta.url), "utf8");
 const program = JSON.parse(raw);
 
+// Written by scripts/fetch-photos.mjs. Absent on a checkout that has never run
+// it, which is not an error: every speaker simply falls back to the monogram.
+const photosRaw = (() => {
+  try {
+    return readFileSync(new URL("./photos.json", import.meta.url), "utf8");
+  } catch {
+    return '{"speakers":{}}';
+  }
+})();
+const photos = JSON.parse(photosRaw);
+
 const SLOT_MIN = 5; // one grid row
 const MS = 60_000;
 
@@ -113,6 +124,20 @@ const colourOf = (format) => FORMAT_COLOUR[format] ?? FALLBACK_COLOUR;
 const formatById = new Map(program.formats.map((f) => [f.id, f]));
 const languageById = new Map(program.languages.map((l) => [l.id, l]));
 const speakersById = new Map(program.speakers.map((s) => [s.id, s]));
+
+/**
+ * The speaker's photo, or null for the majority who have none.
+ *
+ * Root-relative; the templates put it through Eleventy's `url` filter. Sizes
+ * come from the manifest so the img can carry width and height and reserve its
+ * own space, rather than reflowing the card once it decodes.
+ */
+function photo(id) {
+  const found = photos.speakers[id];
+  return found
+    ? { url: `/photos/${found.file}`, width: photos.size, height: photos.size }
+    : null;
+}
 
 /** Up to two initials, for the monogram that stands in for a speaker photo. */
 function initials(name) {
@@ -227,7 +252,7 @@ const sessions = program.sessions.map((s) => {
     speakers: s.speakerIds
       .map((id) => speakersById.get(id))
       .filter(Boolean)
-      .map((p) => ({ ...p, initials: initials(p.name) })),
+      .map((p) => ({ ...p, initials: initials(p.name), photo: photo(p.id) })),
     parallel: overlapping.map((o) => ({
       id: o.id, title: o.title, roomName: o.roomName, startUtc: o.startUtc,
       url: `/program/${o.slug}/`, colour: colourOf(o.format),
@@ -251,7 +276,7 @@ function templates(dir) {
   return found;
 }
 
-const assetHash = createHash("sha256").update(raw);
+const assetHash = createHash("sha256").update(raw).update(photosRaw);
 for (const f of [
   new URL("../css/style.css", import.meta.url),
   new URL("../css/fonts.css", import.meta.url),

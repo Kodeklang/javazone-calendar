@@ -49,6 +49,19 @@ const REST = [...new Set([
   {%- for f in fonts %}
   "{{ f | url }}",
   {%- endfor %}
+  // Speaker photos. In REST rather than SHELL: they are ~250 kB in total and
+  // an install must not fail over one of them, but they do have to be here -
+  // a card whose img is chosen at build time has no monogram to fall back to,
+  // so an uncached photo is a broken image in the hall rather than initials.
+  // The ?v matches the src in program.njk exactly; a precache entry that does
+  // not match the request it is meant to answer is dead weight.
+  {%- for t in site.talks %}
+  {%- for p in t.speakers %}
+  {%- if p.photo %}
+  "{{ p.photo.url | url }}?v={{ site.buildId }}",
+  {%- endif %}
+  {%- endfor %}
+  {%- endfor %}
   // Only ever fetched by an install prompt or the home screen, so they would
   // otherwise be the assets least likely to be cached when they are needed.
   "{{ '/icons/icon-180.png' | url }}",

@@ -51,9 +51,21 @@ eleventyComputed:
       {%- for p in session.speakers %}
       <article class="speaker">
         <div class="speaker__head">
-          {#- Sleeping Pill publishes no speaker photos, so the monogram from
-              the design is not a placeholder here - it is the artwork. #}
+          {#- Sleeping Pill publishes no speaker photos, so the few that exist
+              are fetched from the speakers' own Bluesky accounts - see
+              scripts/fetch-photos.mjs. Most speakers have none and keep the
+              monogram, which is drawn to the same 60px circle, so a card with
+              a photo and one without sit on identical bounds.
+
+              alt is empty on purpose: the name is in the h3 alongside, so
+              anything here would only be read out twice. #}
+          {%- if p.photo %}
+          <img class="speaker__photo" src="{{ p.photo.url | url }}?v={{ site.buildId }}"
+               width="{{ p.photo.width }}" height="{{ p.photo.height }}"
+               alt="" loading="lazy" decoding="async">
+          {%- else %}
           <span class="speaker__mono" style="--track: {{ session.colour }}" aria-hidden="true">{{ p.initials }}</span>
+          {%- endif %}
           <div class="speaker__who">
             <h3 class="speaker__name">{{ p.name }}</h3>
             {%- if p.links.linkedin or p.links.bluesky or p.links.twitter %}
