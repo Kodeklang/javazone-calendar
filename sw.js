@@ -11,7 +11,7 @@
 // The cache name carries a hash of the programme *and* every shipped asset, so
 // any real change retires the old cache wholesale.
 
-const CACHE = "jz-1454eda7939f";
+const CACHE = "jz-2b44d722cbda";
 
 const BASE = "/";
 
@@ -25,10 +25,10 @@ const SHELL = [
   "/",
   "/dag/2/",
   "/dag/3/",
-  "/css/style.css?v=1454eda7939f",
-  "/css/fonts.css?v=1454eda7939f",
-  "/js/app.js?v=1454eda7939f",
-  "/js/rum.js?v=1454eda7939f",
+  "/css/style.css?v=2b44d722cbda",
+  "/css/fonts.css?v=2b44d722cbda",
+  "/js/app.js?v=2b44d722cbda",
+  "/js/rum.js?v=2b44d722cbda",
   "/manifest.webmanifest",
   "/icons/icon.svg",
   "/icons/icon-192.png",
@@ -206,6 +206,68 @@ const REST = [...new Set([
   "/css/fonts/montserrat-700-latin.woff2",
   "/css/fonts/montserrat-800-latin-ext.woff2",
   "/css/fonts/montserrat-800-latin.woff2",
+  // Speaker photos. In REST rather than SHELL: they are ~250 kB in total and
+  // an install must not fail over one of them, but they do have to be here -
+  // a card whose img is chosen at build time has no monogram to fall back to,
+  // so an uncached photo is a broken image in the hall rather than initials.
+  // The ?v matches the src in program.njk exactly; a precache entry that does
+  // not match the request it is meant to answer is dead weight.
+  "/photos/morten-nygaard-asnes.webp?v=2b44d722cbda",
+  "/photos/kristian-berg.webp?v=2b44d722cbda",
+  "/photos/hans-kristian-flaatten.webp?v=2b44d722cbda",
+  "/photos/radek-kargul.webp?v=2b44d722cbda",
+  "/photos/willem-jan-glerum.webp?v=2b44d722cbda",
+  "/photos/a-n-m-bazlur-rahman.webp?v=2b44d722cbda",
+  "/photos/piotr-laskawiec.webp?v=2b44d722cbda",
+  "/photos/ken-sipe.webp?v=2b44d722cbda",
+  "/photos/sam-bellen.webp?v=2b44d722cbda",
+  "/photos/christin-gorman.webp?v=2b44d722cbda",
+  "/photos/elise-kristiansen.webp?v=2b44d722cbda",
+  "/photos/knut-haugen.webp?v=2b44d722cbda",
+  "/photos/kevin-dubois.webp?v=2b44d722cbda",
+  "/photos/oystein-hagen-blixhavn.webp?v=2b44d722cbda",
+  "/photos/josh-long.webp?v=2b44d722cbda",
+  "/photos/johannes-bechberger.webp?v=2b44d722cbda",
+  "/photos/martin-skarsaune.webp?v=2b44d722cbda",
+  "/photos/aurora-scharff.webp?v=2b44d722cbda",
+  "/photos/nadia-tokerud.webp?v=2b44d722cbda",
+  "/photos/cay-horstmann.webp?v=2b44d722cbda",
+  "/photos/veronika-heimsbakk.webp?v=2b44d722cbda",
+  "/photos/akihiro-nishikawa.webp?v=2b44d722cbda",
+  "/photos/bruce-bujon.webp?v=2b44d722cbda",
+  "/photos/nikolai-norman-andersen.webp?v=2b44d722cbda",
+  "/photos/johannes-brodwall.webp?v=2b44d722cbda",
+  "/photos/mick-semb-wever.webp?v=2b44d722cbda",
+  "/photos/gaute-meek-olsen.webp?v=2b44d722cbda",
+  "/photos/jago-de-vreede.webp?v=2b44d722cbda",
+  "/photos/daniel-oh.webp?v=2b44d722cbda",
+  "/photos/adele-carpenter.webp?v=2b44d722cbda",
+  "/photos/anders-noras.webp?v=2b44d722cbda",
+  "/photos/piotr-przybyl.webp?v=2b44d722cbda",
+  "/photos/anders-sveen.webp?v=2b44d722cbda",
+  "/photos/alexander-chatzizacharias.webp?v=2b44d722cbda",
+  "/photos/gunnar-morling.webp?v=2b44d722cbda",
+  "/photos/pasha-finkelshteyn.webp?v=2b44d722cbda",
+  "/photos/georges-saab.webp?v=2b44d722cbda",
+  "/photos/marit-van-dijk.webp?v=2b44d722cbda",
+  "/photos/andres-almiray.webp?v=2b44d722cbda",
+  "/photos/totto-thor-henning-hetland.webp?v=2b44d722cbda",
+  "/photos/fredrik-lillemoen-eiding.webp?v=2b44d722cbda",
+  "/photos/baruch-sadogursky.webp?v=2b44d722cbda",
+  "/photos/ixchel-ruiz.webp?v=2b44d722cbda",
+  "/photos/morten-andersen-gott.webp?v=2b44d722cbda",
+  "/photos/tim-berglund.webp?v=2b44d722cbda",
+  "/photos/rafael-winterhalter.webp?v=2b44d722cbda",
+  "/photos/rustam-mehmandarov.webp?v=2b44d722cbda",
+  "/photos/einar-waaler-host.webp?v=2b44d722cbda",
+  "/photos/adam-warski.webp?v=2b44d722cbda",
+  "/photos/oleg-selajev.webp?v=2b44d722cbda",
+  "/photos/brian-vermeer.webp?v=2b44d722cbda",
+  "/photos/gerrit-grunwald.webp?v=2b44d722cbda",
+  "/photos/bram-janssens.webp?v=2b44d722cbda",
+  "/photos/leonard-sheng-sheng-lee.webp?v=2b44d722cbda",
+  "/photos/marten-range.webp?v=2b44d722cbda",
+  "/photos/patrick-baumgartner.webp?v=2b44d722cbda",
   // Only ever fetched by an install prompt or the home screen, so they would
   // otherwise be the assets least likely to be cached when they are needed.
   "/icons/icon-180.png",
