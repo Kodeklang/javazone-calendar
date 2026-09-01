@@ -10,13 +10,14 @@ the other days sit at `/dag/2/` and `/dag/3/`, one tap away in the header.
 
 The published site is plain semantic HTML, CSS and vanilla JavaScript. Eleventy
 is a build-time tool only — no framework, and no third-party requests at
-runtime: the webfonts are served from this origin.
+runtime: the webfonts and the speaker photos are served from this origin.
 
 ## Running it
 
 ```sh
 npm install
 npm run fetch     # pull the current programme from Sleeping Pill
+npm run photos    # pull speaker photos from Bluesky
 npm start         # http://localhost:8080
 ```
 
@@ -59,6 +60,42 @@ The script sorts everything and writes stable JSON, so an unchanged programme
 produces a byte-identical file. It refuses to write a suspiciously small result
 rather than publishing an empty programme, and skips individual sessions missing
 the fields the site cannot render without.
+
+## Speaker photos
+
+Sleeping Pill carries no photo URL for anyone, and JavaZone's own site reads the
+same API, so the only place a portrait can come from is the speaker's own social
+links. Of the three the payload carries, exactly one is reachable:
+
+| Link | Speakers | |
+| --- | --- | --- |
+| LinkedIn | 141 | The photo is in `og:image` on the public profile, but roughly half of all requests answer HTTP 999, some of the rest carry the grey default silhouette, and `/in/` is disallowed in their `robots.txt`. Unusable — and it is the one most speakers have. |
+| Bluesky | 60 | A documented, unauthenticated XRPC API. **This is the source.** |
+| Twitter | 54 | No public API since 2023. Only reachable through a third-party avatar proxy, which rate-limits and answers with a generic face rather than a 404 when it finds nothing. |
+
+`npm run photos` resolves each Bluesky handle through `app.bsky.actor.getProfile`,
+downsizes the 1000×1000 source to a 120×120 WebP, and writes `src/photos/` plus a
+manifest at `src/_data/photos.json`. 120px is exactly 2× the 60px the card draws,
+and covers the 46px it draws on narrow screens.
+
+That yields **56 photos for 182 speakers**. A third of the handles are a bare word
+rather than a domain — `gsaab`, `jhannes` — which resolves to nothing as written;
+appending `.bsky.social` recovers six of them. The rest of the shortfall is real:
+two accounts have set no avatar, two do not resolve under any spelling.
+
+So most speakers keep the monogram, permanently. `.speaker__mono` and
+`.speaker__photo` are therefore given identical geometry at both breakpoints, so a
+list mixing them reads as one treatment rather than a half-finished import. Any
+change to the circle belongs in both rules.
+
+Re-running is cheap and safe. A Bluesky avatar URL ends in the blob's CID, so the
+URL *is* the content hash: an unchanged avatar is recognised from the manifest and
+never re-downloaded or re-encoded, and a run over an unchanged programme writes
+nothing at all. Photos for speakers who leave the programme, or who drop their
+Bluesky link, are pruned. A speaker whose lookup fails keeps the photo the last
+good run found, and if more than half of all lookups fail the script writes
+nothing and exits non-zero — an outage must not be mistaken for 56 speakers
+deleting their avatars at once.
 
 ## How it deploys
 
@@ -195,10 +232,12 @@ Real data forced four, all deliberate:
 - **No lunch or break bands.** The design draws them across the grid; Sleeping
   Pill publishes no service sessions at all, only talks. Nothing was invented to
   fill them.
-- **Speakers are monograms, not photos.** The design shows an initials circle
-  where the reference app had a portrait. That is not a placeholder here — the
-  API carries no photo URL for anyone, so the monogram is the artwork. It also
-  means this app ships no image pipeline at all.
+- **Most speakers are monograms, not photos.** The design shows an initials
+  circle where the reference app had a portrait. Sleeping Pill carries no photo
+  URL for anyone, and only 56 of 182 speakers have a portrait that can be
+  fetched from anywhere at all (see [Speaker photos](#speaker-photos)). So the
+  monogram is not a placeholder waiting to be filled — it is what most cards
+  will always show, and the two are drawn to the same circle.
 - **No room subtitles.** The design's column headers carry a second line
   ("Main Hall", "Rebel · 2nd floor"); the payload has only the room name.
 - **Three card tiers instead of one.** JavaZone runs 10-minute lightning talks
