@@ -151,9 +151,6 @@ self.addEventListener("install", (event) => {
 
 self.addEventListener("activate", (event) => {
   event.waitUntil((async () => {
-    // Let the browser start a navigation's network request while this worker is
-    // still booting, so the two overlap instead of queueing.
-    await self.registration.navigationPreload?.enable();
     const names = await caches.keys();
     await Promise.all(names.filter((n) => n !== CACHE).map((n) => caches.delete(n)));
     // Claiming is what reloads a page sitting on the previous version.
@@ -182,9 +179,22 @@ async function staleWhileRevalidate(event, request) {
   const cache = await caches.open(CACHE);
   const cached = await cache.match(request);
 
+  // fromNetwork, for the same reason the precache uses it, and this is the
+  // one place it was missed. GitHub Pages stamps every page max-age=600, so a
+  // plain fetch in the ten minutes after a deploy is answered from the
+  // browser's HTTP cache with the very bytes this is trying to replace - and
+  // then stores them under a cache name asserting they are the new build.
+  // warm() skips entries that are already present, so nothing ever corrects
+  // one: the page stays on the old build until someone presses reload on that
+  // exact page. That is what made a layout change take a click per page.
+  //
+  // Navigation preload is gone with it. Its response comes off the same HTTP
+  // cache and cannot be asked for anything else, so it can only reintroduce
+  // the problem - and with every page precached it was answering a request
+  // that almost never reached the network anyway.
   const fresh = (async () => {
-    const response = (await event.preloadResponse) || (await fetch(request));
-    if (response?.ok) await cache.put(request, response.clone());
+    const response = await fetch(fromNetwork(request));
+    if (response.ok) await cache.put(request, response.clone());
     return response;
   })();
 
