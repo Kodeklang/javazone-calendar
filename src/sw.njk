@@ -1,0 +1,234 @@
+---
+permalink: /sw.js
+eleventyExcludeFromCollections: true
+---
+// Service worker for the JavaZone programme.
+//
+// The whole site is taken on the way in: every day grid, every talk, the
+// subset fonts. It buys a programme that works in a hall with no signal at
+// all - including talks the visitor never happened to open while they still
+// had it.
+//
+// The shell is cached at install and the rest once this worker is in charge,
+// because activation is what carries an update to a page that is already open.
+//
+// The cache name carries a hash of the programme *and* every shipped asset, so
+// any real change retires the old cache wholesale.
+
+const CACHE = "jz-{{ site.buildId }}";
+
+const BASE = "{{ '/' | url }}";
+
+// What the app cannot run without. This list is taken atomically: if any of it
+// cannot be had, the install fails and the old worker stays in charge, which is
+// better than activating a cache that is missing the stylesheet.
+//
+// Day one's url *is* BASE, so the loop already covers the front page. Listing
+// it twice would make cache.addAll reject the whole install on duplicates.
+const SHELL = [
+  {%- for d in site.days %}
+  "{{ d.url | url }}",
+  {%- endfor %}
+  "{{ '/css/style.css' | url }}?v={{ site.buildId }}",
+  "{{ '/css/fonts.css' | url }}?v={{ site.buildId }}",
+  "{{ '/js/app.js' | url }}?v={{ site.buildId }}",
+  "{{ '/js/rum.js' | url }}?v={{ site.buildId }}",
+  "{{ '/manifest.webmanifest' | url }}",
+  "{{ '/icons/icon.svg' | url }}",
+  "{{ '/icons/icon-192.png' | url }}",
+];
+
+// Everything else the site publishes.
+const REST = [...new Set([
+  // The detail pages: the whole point of precaching this much.
+  {%- for t in site.talks %}
+  "{{ t.url | url }}",
+  {%- endfor %}
+  // fonts.css is in the shell; the faces it names are not, because
+  // font-display: swap means a missing one costs typography and not the page.
+  {%- for f in fonts %}
+  "{{ f | url }}",
+  {%- endfor %}
+  // Only ever fetched by an install prompt or the home screen, so they would
+  // otherwise be the assets least likely to be cached when they are needed.
+  "{{ '/icons/icon-180.png' | url }}",
+  "{{ '/icons/icon-512.png' | url }}",
+  "{{ '/icons/icon-maskable-512.png' | url }}",
+  "{{ '/js/datadog/datadog-rum-slim.js' | url }}",
+])];
+
+// cache: "reload" so the precache is filled from the network rather than from
+// the browser's HTTP cache. GitHub Pages stamps every asset max-age=600, so a
+// worker installing in the ten minutes after a deploy would otherwise store
+// pre-deploy files under a cache name asserting they are current - and nothing
+// below ever revalidates them.
+const fromNetwork = (url) => new Request(url, { cache: "reload" });
+
+/**
+ * Fill the cache with everything in REST.
+ *
+ * Deliberately not cache.addAll: that is all-or-nothing, which is the right
+ * trade for ten shell files and the wrong one for a hundred and seventy. A
+ * single page 404ing must not cost the visitor every other cached page.
+ * Whatever is missed here still resolves through the fetch handler on first
+ * use.
+ *
+ * The requests go out a few at a time rather than all at once, because this
+ * runs while the visitor is reading the page that triggered it - on a crowded
+ * conference network, a hundred and seventy parallel fetches would be taken out
+ * of the bandwidth they are currently browsing on.
+ *
+ * Already-stored entries are skipped, so a pass that was cut short - the
+ * browser is free to kill a worker mid-task - resumes where it stopped instead
+ * of fetching the programme again.
+ */
+const missing = new Set();
+async function warm(cache) {
+  let next = 0;
+  const worker = async () => {
+    while (next < REST.length) {
+      const url = REST[next++];
+      // A 404 is remembered for the life of this worker instance, so a page
+      // the programme no longer has is not asked for again on every visit.
+      if (missing.has(url) || await cache.match(url)) continue;
+      try {
+        const response = await fetch(fromNetwork(url));
+        if (response.ok) await cache.put(url, response);
+        else missing.add(url);
+      } catch {
+        /* offline mid-warm: the fetch handler will pick this one up later */
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: 6 }, worker));
+}
+
+// One pass at a time. Every navigation asks for the programme to be topped up,
+// and without this each would start a competing pass over the same files.
+//
+// Never passed to waitUntil, and that is the most important line in this file.
+// A waiting worker may only activate once the active one has no pending
+// events, skipWaiting or not - that is in the specification, and Safari holds
+// to it. With a multi-megabyte warm extending every navigation, and iOS killing
+// the worker partway through, the active worker is left looking permanently
+// busy: every deploy's worker installs, goes to "waiting", and stays there for
+// hours, with the visitor on the build from before. Left to run on its own the
+// warm still does its job - a killed worker resumes where it stopped the next
+// time it is woken - and it no longer stands between an update and the visitor.
+let warming = null;
+function warmOnce() {
+  warming ??= caches.open(CACHE)
+    .then(warm)
+    .finally(() => { warming = null; });
+  return warming;
+}
+
+self.addEventListener("install", (event) => {
+  // The shell only. The rest of the programme is fetched after this worker is
+  // in charge, deliberately: an install that has to pull everything first is an
+  // update the visitor cannot see for as long as it takes. The banner would sit
+  // there through every reload, because until this worker activates the old one
+  // keeps answering with the page it already had.
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE);
+    await cache.addAll(SHELL.map(fromNetwork));
+    await self.skipWaiting();
+  })());
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil((async () => {
+    // Let the browser start a navigation's network request while this worker is
+    // still booting, so the two overlap instead of queueing.
+    await self.registration.navigationPreload?.enable();
+    const names = await caches.keys();
+    await Promise.all(names.filter((n) => n !== CACHE).map((n) => caches.delete(n)));
+    // Claiming is what reloads a page sitting on the previous version.
+    await self.clients.claim();
+  })());
+  // Outside waitUntil, see warmOnce. It also keeps activation instant: a fetch
+  // is held back until the worker is activated, so a page must not have to
+  // wait for the whole programme to come down before it can be served.
+  warmOnce();
+});
+
+/**
+ * Serve the page from the cache and refresh it in the background.
+ *
+ * Every page is precached, so moving around the programme costs a cache read
+ * rather than a round trip - which on a crowded conference network is the
+ * difference between instant and a wait. Going to the network first meant
+ * waiting for it even though the answer was already on disk.
+ *
+ * Freshness does not depend on this path. A deploy changes CACHE, so the new
+ * worker installs a fresh copy of every page and app.js reloads the document on
+ * controllerchange; version.json is never served from here, so the update
+ * banner still sees the truth.
+ */
+async function staleWhileRevalidate(event, request) {
+  const cache = await caches.open(CACHE);
+  const cached = await cache.match(request);
+
+  const fresh = (async () => {
+    const response = (await event.preloadResponse) || (await fetch(request));
+    if (response?.ok) await cache.put(request, response.clone());
+    return response;
+  })();
+
+  if (cached) {
+    // Do not make the visitor wait on the refresh, but keep the worker alive
+    // long enough to finish it.
+    event.waitUntil(fresh.catch(() => {}));
+    return cached;
+  }
+
+  try {
+    return await fresh;
+  } catch {
+    return (await cache.match(BASE)) ?? Response.error();
+  }
+}
+
+async function cacheFirst(request) {
+  const cache = await caches.open(CACHE);
+  const cached = await cache.match(request);
+  if (cached) return cached;
+  // Same reason as the precache: a miss is about to be stored under a cache
+  // name that stands for a particular deploy, so it must come from the network
+  // and not from whatever the HTTP cache kept from the last one.
+  const response = await fetch(fromNetwork(request));
+  if (response.ok) cache.put(request, response.clone());
+  return response;
+}
+
+self.addEventListener("fetch", (event) => {
+  const { request } = event;
+  if (request.method !== "GET") return;
+
+  const url = new URL(request.url);
+  if (url.origin !== location.origin) return;
+
+  // The update check must always see the truth.
+  if (url.pathname === `${BASE}version.json`) return;
+
+  if (request.mode === "navigate") {
+    event.respondWith(staleWhileRevalidate(event, request));
+    // Top up anything a killed worker left behind, so the offline guarantee
+    // repairs itself rather than waiting for the next deploy. Not awaited and
+    // not extending the event, see warmOnce.
+    warmOnce();
+    return;
+  }
+
+  // A request that asks to bypass caches means it. The update button fetches
+  // the current page this way, and a fetch() is not a navigation - without
+  // this it was answered from the cache with the very page it was trying to
+  // replace, and the reload that followed showed it again.
+  if (request.cache === "reload" || request.cache === "no-store") {
+    event.respondWith(fetch(request));
+    return;
+  }
+
+  // Fonts, icons, CSS and JS are all retired by the cache name.
+  event.respondWith(cacheFirst(request));
+});

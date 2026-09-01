@@ -1,0 +1,134 @@
+---
+pagination:
+  data: site.talks
+  size: 1
+  alias: session
+permalink: "{{ session.url }}"
+layout: base.njk
+eleventyComputed:
+  title: "{{ session.title }} · JavaZone 2026"
+  description: "{{ session.description[0] | striptags | truncate(160) if session.description.length else session.title }}"
+  back: "{{ session.day.url }}#session-{{ session.id }}"
+---
+<div class="app app--detail">
+  {% include "masthead.njk" %}
+
+  <main class="detail">
+    <header class="detail__head">
+      <p class="detail__meta">
+        <span class="chip chip--solid" style="--track: {{ session.colour }}"
+              data-en="{{ session.formatName.en }}">{{ session.formatName.no }}</span>
+        <span class="detail__day" data-en="{{ session.day.longLabel.en }}">{{ session.day.longLabel.no }}</span>
+        <span class="countdown" id="countdown"
+              data-start="{{ session.startUtc }}" data-end="{{ session.endUtc }}"></span>
+      </p>
+
+      <h1>{{ session.title }}</h1>
+
+      <p class="pills">
+        <span class="pill pill--time">
+          <time datetime="{{ session.startUtc }}">{{ session.startUtc | time }}</time>–<time datetime="{{ session.endUtc }}">{{ session.endUtc | time }}</time>
+        </span>
+        <span class="pill">{{ session.roomName }}</span>
+      </p>
+
+      <p class="tags">
+        {%- if session.languageName %}
+        <span class="tag" data-en="{{ session.languageName.en }}">{{ session.languageName.no }}</span>
+        {%- endif %}
+        <span class="tag" data-en="{{ session.durationMin | durationEn }}">{{ session.durationMin | duration }}</span>
+        {%- for k in session.keywords %}
+        <span class="tag tag--keyword">{{ k }}</span>
+        {%- endfor %}
+      </p>
+    </header>
+
+    {%- if session.speakers.length %}
+    <section class="detail__section">
+      <h2 class="section__label" data-en="{{ 'Speakers' if session.speakers.length > 1 else 'Speaker' }}">
+        {{ 'Foredragsholdere' if session.speakers.length > 1 else 'Foredragsholder' }}
+      </h2>
+      {%- for p in session.speakers %}
+      <article class="speaker">
+        <div class="speaker__head">
+          {#- Sleeping Pill publishes no speaker photos, so the monogram from
+              the design is not a placeholder here - it is the artwork. #}
+          <span class="speaker__mono" style="--track: {{ session.colour }}" aria-hidden="true">{{ p.initials }}</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">{{ p.name }}</h3>
+            {%- if p.links.linkedin or p.links.bluesky or p.links.twitter %}
+            <p class="speaker__links">
+              {%- if p.links.linkedin %}
+              <a href="{{ p.links.linkedin }}" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+              {%- endif %}
+              {%- if p.links.bluesky %}
+              <a href="https://bsky.app/profile/{{ p.links.bluesky }}" rel="noopener noreferrer" target="_blank">Bluesky</a>
+              {%- endif %}
+              {%- if p.links.twitter %}
+              <a href="https://x.com/{{ p.links.twitter }}" rel="noopener noreferrer" target="_blank">X</a>
+              {%- endif %}
+            </p>
+            {%- endif %}
+          </div>
+        </div>
+        {%- for para in p.bio %}
+        <p class="speaker__bio">{{ para | safe }}</p>
+        {%- endfor %}
+      </article>
+      {%- endfor %}
+    </section>
+    {%- endif %}
+
+    {%- if session.description.length %}
+    <section class="detail__section">
+      <h2 class="section__label" data-en="About this session">Om sesjonen</h2>
+      {%- for para in session.description %}
+      <p class="detail__body">{{ para | safe }}</p>
+      {%- endfor %}
+    </section>
+    {%- endif %}
+
+    {%- if session.audience %}
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Who it is for">Passer for</h2>
+      <p class="detail__body">{{ session.audience }}</p>
+    </section>
+    {%- endif %}
+
+    {%- if session.prerequisites %}
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Before you arrive">Forberedelser</h2>
+      {#- Setup instructions: numbered steps, shell commands, sometimes fenced
+          code. Reflowing them would destroy them, so the line breaks stand. #}
+      <p class="detail__pre">{{ session.prerequisites | safe }}</p>
+    </section>
+    {%- endif %}
+
+    {%- if session.video %}
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Recording">Opptak</h2>
+      <p class="detail__body">
+        <a href="https://vimeo.com/{{ session.video }}" rel="noopener noreferrer" target="_blank"
+           data-en="Watch on Vimeo">Se opptaket på Vimeo</a>
+      </p>
+    </section>
+    {%- endif %}
+
+    {%- if session.parallel.length %}
+    <section class="detail__section">
+      <h2 class="section__label" data-en="On at the same time">Samtidig i programmet</h2>
+      <ol class="parallel">
+        {%- for p in session.parallel %}
+        <li class="parallel__item" style="--track: {{ p.colour }}">
+          <a href="{{ p.url | url }}">
+            <time class="parallel__time" datetime="{{ p.startUtc }}">{{ p.startUtc | time }}</time>
+            <span class="parallel__title">{{ p.title }}</span>
+            <span class="parallel__room">{{ p.roomName }}</span>
+          </a>
+        </li>
+        {%- endfor %}
+      </ol>
+    </section>
+    {%- endif %}
+  </main>
+</div>

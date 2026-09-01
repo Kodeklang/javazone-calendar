@@ -1,0 +1,127 @@
+---
+permalink: /debug/
+eleventyExcludeFromCollections: true
+---
+{#- A diagnostics page for the service worker, for when a phone is stuck on an
+    old build and nothing visible explains why. It has no layout and no shared
+    assets on purpose: everything the cached app.js and style.css could be
+    hiding stays out of the picture. Not precached, so a stale worker has to
+    fetch it from the network.
+
+    Built: {{ site.buildId }} (programme {{ site.version }}) #}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Service worker diagnostics</title>
+<style>
+  body { font: 14px/1.4 ui-monospace, monospace; margin: 16px; color: #222; }
+  pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+  button { font: inherit; padding: 10px 14px; margin: 4px 8px 4px 0; }
+</style>
+</head>
+<body>
+<p>
+  <button id="recheck">Re-check</button>
+  <button id="update">Ask worker to update</button>
+  <button id="reset">Reset: unregister worker, clear caches</button>
+</p>
+<pre id="out">…</pre>
+<script>
+const out = document.getElementById("out");
+const SERVED_BUILD = "{{ site.buildId }}";
+const SERVED_VERSION = "{{ site.version }}";
+const PROBES = [{% for d in site.days %}"{{ d.url | url }}", {% endfor %}"{{ site.talks[0].url | url }}"];
+
+const versionOf = (html) => (html.match(/app-version" content="([^"]+)"/) || [])[1] || "?";
+
+async function report() {
+  const lines = [];
+  const say = (s) => { lines.push(s); out.textContent = lines.join("\n"); };
+
+  say(`this page was built: ${SERVED_BUILD} (programme ${SERVED_VERSION})`);
+  say(`ua: ${navigator.userAgent}`);
+  say("");
+
+  try {
+    const res = await fetch("{{ '/version.json' | url }}", { cache: "no-cache" });
+    say(`version.json from network: ${(await res.json()).version}`);
+  } catch (e) { say(`version.json: ${e}`); }
+
+  try {
+    const res = await fetch("{{ '/sw.js' | url }}", { cache: "no-cache" });
+    const m = (await res.text()).match(/const CACHE = "([^"]+)"/);
+    say(`sw.js on the server names cache: ${m ? m[1] : "?"}`);
+  } catch (e) { say(`sw.js: ${e}`); }
+  say("");
+
+  if (!("serviceWorker" in navigator)) { say("no serviceWorker support"); return; }
+  say(`controller: ${navigator.serviceWorker.controller ? navigator.serviceWorker.controller.state + " " + navigator.serviceWorker.controller.scriptURL : "none"}`);
+  const regs = await navigator.serviceWorker.getRegistrations();
+  say(`registrations: ${regs.length}`);
+  for (const reg of regs) {
+    say(`  scope ${reg.scope}  updateViaCache=${reg.updateViaCache}`);
+    for (const k of ["installing", "waiting", "active"]) {
+      const w = reg[k];
+      say(`  ${k}: ${w ? w.state : "-"}`);
+    }
+  }
+  say("");
+
+  if (!window.caches) { say("no Cache API"); return; }
+  const names = await caches.keys();
+  say(`caches: ${names.length ? names.join(", ") : "none"}`);
+  for (const name of names) {
+    const cache = await caches.open(name);
+    const keys = await cache.keys();
+    say(`  ${name}: ${keys.length} entries`);
+    for (const path of PROBES) {
+      const r = await cache.match(path);
+      say(`    ${path} → ${r ? "programme " + versionOf(await r.text()) : "not cached"}`);
+    }
+    const css = keys.map((k) => new URL(k.url).pathname + new URL(k.url).search).filter((u) => u.includes("style.css"));
+    say(`    stylesheets: ${css.join(", ") || "none"}`);
+  }
+  say("");
+
+  if (navigator.storage?.estimate) {
+    const { usage, quota } = await navigator.storage.estimate();
+    say(`storage: ${(usage / 1e6).toFixed(1)} MB used of ${(quota / 1e6).toFixed(0)} MB`);
+  }
+}
+
+document.getElementById("recheck").onclick = report;
+
+document.getElementById("update").onclick = async () => {
+  out.textContent = "asking for update…";
+  try {
+    const reg = await navigator.serviceWorker.getRegistration();
+    if (!reg) { out.textContent = "no registration"; return; }
+    const started = Date.now();
+    await reg.update();
+    const w = reg.installing || reg.waiting;
+    out.textContent = `update() resolved after ${Date.now() - started} ms; installing=${reg.installing?.state ?? "-"} waiting=${reg.waiting?.state ?? "-"} active=${reg.active?.state ?? "-"}`;
+    if (w) {
+      w.addEventListener("statechange", () => {
+        out.textContent += `\nnew worker → ${w.state}`;
+      });
+    }
+    setTimeout(report, 8000);
+  } catch (e) {
+    out.textContent = `update() failed: ${e && e.message || e}`;
+  }
+};
+
+document.getElementById("reset").onclick = async () => {
+  out.textContent = "resetting…";
+  for (const reg of await navigator.serviceWorker.getRegistrations()) await reg.unregister();
+  for (const name of await caches.keys()) await caches.delete(name);
+  out.textContent = "worker unregistered and caches cleared. Close this tab, then open the programme in a new one: it installs afresh.";
+};
+
+report();
+</script>
+</body>
+</html>

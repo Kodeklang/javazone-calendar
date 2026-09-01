@@ -1,0 +1,12 @@
+<div class="masthead">
+  {% if back %}
+    <a class="back" href="{{ back | url }}" id="back">
+      <span class="back__chevron" aria-hidden="true">‹</span>
+      <span data-en="Programme">Program</span>
+    </a>
+  {% endif %}
+  <span class="wordmark{% if back %} wordmark--centred{% endif %}">JavaZone</span>
+  <button type="button" class="lang" id="lang" aria-label="Language / Språk">
+    <span class="lang__on">NO</span><span class="lang__off">EN</span>
+  </button>
+</div>

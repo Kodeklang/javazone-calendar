@@ -1,0 +1,108 @@
+---
+pagination:
+  data: site.days
+  size: 1
+  alias: day
+permalink: "{{ day.url }}"
+layout: base.njk
+eleventyComputed:
+  title: "{{ day.longLabel.no }} · Program · JavaZone 2026"
+  description: "Programmet for {{ day.longLabel.no }} på JavaZone 2026, {{ site.event.venue }}."
+---
+<div class="app">
+  {% include "masthead.njk" %}
+
+  <header class="dayhead">
+    <h1 class="dayhead__title">Program</h1>
+    <p class="dayhead__when">
+      <span data-en="{{ site.event.dateRange.en }}">{{ site.event.dateRange.no }}</span>
+      <span aria-hidden="true"> · </span>{{ site.event.venue }}
+    </p>
+
+    <nav class="days" aria-label="Velg dag">
+      {%- for d in site.days %}
+      <a class="day{% if d.number == day.number %} is-current{% endif %}"
+         href="{{ d.url | url }}"{% if d.number == day.number %} aria-current="page"{% endif %}>
+        <span class="day__dow" data-en="{{ d.weekdayShort.en }}">{{ d.weekdayShort.no }}</span>
+        <span class="day__date" data-en="{{ d.dateLabel.en }}">{{ d.dateLabel.no }}</span>
+      </a>
+      {%- endfor %}
+    </nav>
+  </header>
+
+  {#- Two independent facets rather than the reference app's single track list:
+      Sleeping Pill publishes no track, and the two fields it does populate on
+      every session - format and language - are each meaningful on their own.
+      Chips within a group are alternatives; the groups narrow each other. #}
+  <ul class="tracks" aria-label="Filtrer programmet">
+    <li>
+      <button type="button" class="chip chip--reset" id="filter-reset"
+              aria-pressed="true" data-en="Everything">Alt</button>
+    </li>
+    {%- for f in day.formats %}
+    <li>
+      <button type="button" class="chip chip--format" data-facet="format" data-value="{{ f.id }}"
+              aria-pressed="false" style="--track: {{ f.colour }}"
+              data-en="{{ f.name.en }}">{{ f.name.no }}</button>
+    </li>
+    {%- endfor %}
+    {%- for l in day.languages %}
+    <li>
+      <button type="button" class="chip chip--lang" data-facet="language" data-value="{{ l.id }}"
+              aria-pressed="false" data-en="{{ l.name.en }}">{{ l.name.no }}</button>
+    </li>
+    {%- endfor %}
+  </ul>
+  <p class="visually-hidden" id="filter-status" role="status" aria-live="polite"></p>
+
+  <div class="grid-scroll" id="grid-scroll">
+    <div class="grid" style="--rooms: {{ day.rooms | length }}; --visible-rooms: {{ day.rooms | length }}; --slots: {{ day.slots }}"
+         data-day-start="{{ day.startUtc }}" data-slot-min="5">
+
+      <div class="grid__corner"><abbr title="Norsk tid">CEST</abbr></div>
+
+      {%- for room in day.rooms %}
+      <h2 class="grid__room" style="--col: {{ loop.index0 + 2 }}" data-col="{{ loop.index0 + 2 }}"><span>{{ room.name }}</span></h2>
+      {%- endfor %}
+
+      {%- for room in day.rooms %}
+      <div class="grid__stripe" style="--col: {{ loop.index0 + 2 }}" data-col="{{ loop.index0 + 2 }}" aria-hidden="true"></div>
+      {%- endfor %}
+
+      {%- for r in day.rules %}
+      <div class="grid__rule" style="--row: {{ r.row }}" aria-hidden="true"></div>
+      <p class="grid__hour" style="--row: {{ r.row }}" aria-hidden="true">{{ r.label }}</p>
+      {%- endfor %}
+
+      {%- for s in day.sessions %}
+      <article class="session session--{{ s.layout.tier }}" id="session-{{ s.id }}"
+               data-format="{{ s.format }}" data-language="{{ s.language }}" data-col="{{ s.col }}"
+               style="--col: {{ s.col }}; --row-start: {{ s.rowStart }}; --row-end: {{ s.rowEnd }}; --track: {{ s.colour }}; --lines: {{ s.layout.d }}; --lines-narrow: {{ s.layout.m }}">
+        <a class="session__link" href="{{ s.url | url }}">
+          {#- Only what the card is actually tall enough to hold. A 10-minute
+              lightning talk is 20px high and fits its title and nothing else;
+              the time and room stay in the hidden text below either way. #}
+          {%- if s.layout.meta %}
+          <span class="session__meta" aria-hidden="true">
+            <span class="session__time">{{ s.startUtc | time }}</span>
+            {%- if s.language %}<span class="session__lang">{{ s.language | upper }}</span>{% endif %}
+          </span>
+          {%- endif %}
+          <span class="session__title">{{ s.title }}</span>
+          {%- if s.layout.speaker and s.speakerLabel %}
+          <span class="session__speaker" aria-hidden="true">{{ s.speakerLabel }}</span>
+          {%- endif %}
+          <span class="visually-hidden">
+            <time datetime="{{ s.startUtc }}">{{ s.startUtc | time }}</time>–<time datetime="{{ s.endUtc }}">{{ s.endUtc | time }}</time>,
+            {{ s.roomName }}{% if s.speakerLabel %}, {{ s.speakerLabel }}{% endif %}
+          </span>
+        </a>
+      </article>
+      {%- endfor %}
+
+      <div class="now" id="now" hidden>
+        <span class="now__time" id="now-time"></span>
+      </div>
+    </div>
+  </div>
+</div>

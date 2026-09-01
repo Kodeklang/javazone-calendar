@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{ title }}</title>
+<meta name="description" content="{{ description }}">
+<meta name="theme-color" content="#153863">
+<meta name="app-version" content="{{ site.version }}">
+<meta name="base-path" content="{{ "/" | url }}">
+<link rel="manifest" href="{{ "/manifest.webmanifest" | url }}">
+<link rel="icon" href="{{ "/icons/icon.svg" | url }}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{ "/icons/icon-180.png" | url }}">
+{#- The build id on the stylesheet and script URLs is what lets a fresh page
+    carry fresh assets. The worker serves these cache-first under their URL,
+    so without it a page fetched past the caches (the update button, or a new
+    worker's precache) would still be styled by whatever the previous worker
+    had stored - and iOS Safari can keep a previous worker around for a long
+    time after a deploy. A new URL is a cache miss in any worker. #}
+<link rel="stylesheet" href="{{ "/css/fonts.css" | url }}?v={{ site.buildId }}">
+<link rel="stylesheet" href="{{ "/css/style.css" | url }}?v={{ site.buildId }}">
+{#- After the stylesheets, deliberately. A preload is fetched at the highest
+    priority there is, and these fonts are not needed for the first paint at
+    all - font-display: swap paints the text in a fallback immediately. Ahead
+    of the render-blocking CSS they simply queued the typography in front of
+    the few KB that actually gates painting, which Safari does not reorder the
+    way Chrome does. Only the four weights every page uses are listed: 500 and
+    italic 400 appear on one view each and can arrive late. #}
+{%- for f in ["montserrat-400", "montserrat-600", "montserrat-700", "montserrat-800"] %}
+<link rel="preload" href="{{ ("/css/fonts/" + f + "-latin.woff2") | url }}" as="font" type="font/woff2" crossorigin>
+{%- endfor %}
+<script defer src="{{ "/js/rum.js" | url }}?v={{ site.buildId }}"></script>
+</head>
+<body>
+{{ content | safe }}
+
+<p class="update" id="update" hidden>
+  <span data-en="The programme has been updated.">Programmet er oppdatert.</span>
+  <button type="button" id="update-reload" data-en="Reload">Last inn på nytt</button>
+</p>
+
+<script type="module" src="{{ "/js/app.js" | url }}?v={{ site.buildId }}"></script>
+</body>
+</html>

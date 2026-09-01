@@ -1,0 +1,600 @@
+/* JavaZone 2026 — programkalender
+   Tokens follow the Claude Design source: deep blue ground, a lighter blue
+   gradient for the app surface, Montserrat throughout, and the system
+   monospace for anything clock-like. */
+
+:root {
+  /* The design's surface gradient is #5c9eff -> #1868bd. Measured against the
+     light text it carries, that fails WCAG AA almost everywhere: body text
+     lands at 2.5:1 and the cyan time on a card at 1.4:1, where AA asks 4.5:1.
+     This is the same gradient walked down into the design's own deep blues
+     until the lightest stop clears 4.8:1 for every pair on the page, keeping
+     the hue, the direction and the light-on-blue character intact.
+     See README, "Contrast". */
+  --ground: #0a2747;
+  --surface-top: #153863;
+  --surface-mid: #102c4f;
+  --surface-bottom: #08203e;
+
+  --accent: #02dfff;
+  --heading: #8fe8f7;
+  --wordmark: #f0567a;
+  --now: #f0567a;
+
+  --ink: #e6f0ff;
+  --ink-strong: #ffffff;
+  --ink-mute: rgba(230, 240, 255, 0.86);
+  --ink-soft: rgba(230, 240, 255, 0.82);
+  --ink-faint: rgba(230, 240, 255, 0.8);
+  --label: rgba(230, 240, 255, 0.78);
+
+  --hair: rgba(255, 255, 255, 0.16);
+  --hair-soft: rgba(255, 255, 255, 0.14);
+  --deep: rgba(4, 44, 92, 0.55);
+  --deep-solid: rgba(6, 52, 105, 0.5);
+  --card-bg: rgba(255, 255, 255, 0.14);
+  --card-bd: rgba(255, 255, 255, 0.2);
+  --panel: rgba(255, 255, 255, 0.12);
+  --panel-bd: rgba(255, 255, 255, 0.18);
+
+  /* The sticky time gutter and room headers have cards scrolling underneath
+     them, so they need a fill of their own. A flat colour cannot match a
+     gradient that runs the height of a 1100px grid, so this is a translucent
+     deep blue over a blur: it takes its hue from whatever part of the gradient
+     is behind it. Without backdrop-filter the alpha alone still hides what
+     passes under. */
+  --chrome: rgba(6, 48, 96, 0.72);
+
+  --gutter-w: 64px;
+  --col-w: 152px;
+  --head-h: 44px;
+  --slot-h: 10.25px;        /* 5 minutes at the design's 2.05px per minute */
+
+  --sans: Montserrat, system-ui, -apple-system, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+@media (max-width: 720px) {
+  :root { --gutter-w: 56px; --col-w: 168px; }
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body { margin: 0; padding: 0; height: 100%; background: var(--ground); }
+
+/* How many title lines fit in a card is worked out at build time from a known
+   font size, so iOS must not be left free to inflate the text on its own. */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  overflow: hidden;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--ink-strong); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
+/* ------------------------------------------------------------------ shell */
+
+.app {
+  height: 100dvh; display: flex; flex-direction: column; overflow: hidden;
+  background: linear-gradient(180deg, var(--surface-top) 0%, var(--surface-mid) 46%, var(--surface-bottom) 100%);
+}
+
+.masthead {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 18px 12px; flex-shrink: 0;
+  color: var(--ink-strong);
+}
+
+/* Set in the markup as "JavaZone" and uppercased here, so the accessible name
+   and the page title stay in the conference's own casing. */
+.wordmark {
+  font-size: 22px; font-weight: 800; letter-spacing: 0.04em;
+  text-transform: uppercase; color: var(--wordmark);
+  text-shadow: 2px 2px 0 rgba(0, 40, 90, 0.35);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.wordmark--centred { flex: 1; text-align: center; }
+
+.back {
+  display: inline-flex; align-items: center; gap: 7px;
+  min-height: 34px; padding: 8px 16px 8px 12px;
+  border: 1px solid var(--panel-bd); border-radius: 999px;
+  background: var(--deep-solid);
+  color: var(--ink-strong); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
+}
+.back:hover { background: rgba(6, 52, 105, 0.75); color: var(--ink-strong); }
+.back__chevron { font-size: 15px; line-height: 1; }
+
+.lang {
+  flex-shrink: 0; display: inline-flex; overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.35); border-radius: 999px;
+  background: transparent; padding: 0; cursor: pointer;
+  font: inherit; font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+}
+.lang span { padding: 5px 9px; color: var(--ink-mute); }
+.lang__on { background: var(--ink); color: var(--ground) !important; }
+html[lang="en"] .lang__on { background: transparent; color: var(--ink-mute) !important; }
+html[lang="en"] .lang__off { background: var(--ink); color: var(--ground); }
+
+/* ------------------------------------------------------- day picker */
+
+.dayhead {
+  padding: 2px 18px 14px; flex-shrink: 0;
+  border-bottom: 1px solid var(--hair);
+}
+
+.dayhead__title {
+  margin: 0; font-size: 38px; font-weight: 800; line-height: 1;
+  letter-spacing: -0.01em; color: var(--heading);
+}
+.dayhead__when {
+  margin: 7px 0 0; font-size: 13px; font-weight: 500; color: var(--ink-mute);
+}
+
+.days { display: flex; gap: 9px; margin: 16px 0 0; padding: 0; list-style: none; }
+
+.day {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 1px;
+  padding: 10px 8px; border-radius: 13px; text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(6, 52, 105, 0.35);
+  color: rgba(230, 240, 255, 0.95);
+}
+.day:hover { color: var(--ink-strong); border-color: rgba(255, 255, 255, 0.4); }
+.day.is-current {
+  background: var(--accent); border-color: var(--accent); color: var(--ground);
+}
+.day.is-current:hover { color: var(--ground); }
+.day__dow { font-size: 14px; font-weight: 700; line-height: 1.2; }
+.day__date { font-size: 12px; font-weight: 500; opacity: 0.75; line-height: 1.4; }
+
+/* --------------------------------------------------------- filter chips */
+
+.tracks {
+  display: flex; gap: 8px; align-items: center;
+  margin: 0; padding: 11px 18px; list-style: none;
+  overflow-x: auto; flex-shrink: 0;
+  border-bottom: 1px solid var(--hair);
+  scrollbar-width: thin;
+}
+
+/* Keep the list semantics: display:contents can drop them in some AT. */
+.tracks li { display: flex; flex-shrink: 0; }
+
+.chip {
+  flex-shrink: 0; white-space: nowrap;
+  padding: 7px 15px; border-radius: 999px;
+  font: inherit; font-size: 13px; font-weight: 600;
+  color: var(--track); border: 1px solid var(--track); background: transparent;
+}
+
+/* The two facet groups read differently on purpose. A format chip is tinted
+   with the colour its cards carry on the grid, so picking one is visibly the
+   same thing as the stripe down the side of a card. Language is not a card
+   colour and must not pretend to be, so its chips stay neutral. */
+.chip--lang { --track: rgba(255, 255, 255, 0.42); color: var(--ink); }
+.chip--lang[aria-pressed="true"] { background: var(--ink); color: var(--ground); border-color: var(--ink); }
+
+/* The reset chip belongs to no facet, so it borrows the neutral chrome and
+   reads as pressed whenever nothing is filtered - the default state. */
+.chip--reset {
+  --track: rgba(255, 255, 255, 0.28);
+  background: rgba(6, 52, 105, 0.3); color: var(--ink-strong);
+}
+.chip--reset[aria-pressed="true"] { background: rgba(4, 36, 74, 0.85); color: var(--ink-strong); }
+
+button.chip { cursor: pointer; transition: opacity 0.12s ease, background-color 0.12s ease; }
+button.chip:hover { background: rgba(255, 255, 255, 0.14); }
+
+/* Chosen facets read as filled; the rest recede without disappearing, so the
+   row still shows what else the day has to offer. */
+.chip--format[aria-pressed="true"] {
+  background: var(--track); color: var(--ground); border-color: var(--track);
+}
+.chip--format[aria-pressed="true"]:hover { background: var(--track); }
+/* Muted, not unreadable: a muted chip is still a button with a label, so it
+   keeps enough opacity to clear AA (0.4 put the cyan one at 2.6:1). */
+.chip.is-muted { opacity: 0.72; }
+
+/* The detail page's format chip: outlined, never a control. */
+.chip--solid { background: color-mix(in srgb, var(--track) 14%, transparent); }
+
+/* Filtering removes rather than de-emphasises: a session outside the selection
+   leaves the layout entirely, and with it the accessibility tree.
+   #filter-status announces the result, which is the only thing left to go on.
+   The design dims non-matching cards to 26% instead, which reads as a
+   disabled control and puts white text below any usable contrast. */
+.session.is-filtered-out { display: none; }
+.session { transition: filter 0.15s ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  .session, button.chip { transition: none; }
+}
+
+/* Pressed states. The reset at the top of this file drops the tap highlight
+   iOS would otherwise draw, and every one of these starts a full page load, so
+   until the next page paints this is the only sign the tap landed at all.
+   Instant rather than transitioned - feedback that fades in is not feedback. */
+.day:active,
+.chip:active,
+.session:active,
+.back:active {
+  filter: brightness(0.9);
+  transition: none;
+}
+
+/* ----------------------------------------------------------------- grid */
+
+.grid-scroll {
+  flex: 1; overflow: auto; position: relative;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  padding-bottom: 24px;
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  /* The facet filter overrides --cols to collapse rooms nothing survives in.
+     Without JS the fallback gives every room an equal share. */
+  grid-template-columns: var(--cols, var(--gutter-w) repeat(var(--rooms), minmax(var(--col-w), 1fr)));
+  grid-template-rows: var(--head-h) repeat(var(--slots), var(--slot-h));
+  /* Fill the viewport on a sparse day such as the workshop day, which has four
+     rooms, but never squeeze the columns below their design width - past that
+     the grid scrolls sideways instead. --visible-rooms tracks the filter. */
+  width: 100%;
+  min-width: calc(var(--gutter-w) + var(--visible-rooms, var(--rooms)) * var(--col-w));
+}
+
+/* A room with no surviving session drops out entirely: its column is collapsed
+   to 0px and everything anchored to it is removed. */
+.grid [data-col].is-collapsed { display: none; }
+
+.grid__corner {
+  grid-column: 1; grid-row: 1;
+  position: sticky; top: 0; left: 0; z-index: 40;
+  display: flex; align-items: flex-end; justify-content: flex-end;
+  padding: 0 8px 8px 0;
+  background: var(--chrome);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+}
+.grid__corner abbr {
+  font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+  color: var(--ink-faint); text-decoration: none;
+}
+
+.grid__room {
+  grid-column: var(--col); grid-row: 1;
+  position: sticky; top: 0; z-index: 30;
+  margin: 0; padding: 0 10px 8px;
+  display: flex; align-items: flex-end;
+  font-size: 13px; font-weight: 700; color: var(--ink-strong);
+  background: var(--chrome);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-left: 1px solid var(--hair-soft);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+}
+/* A long room name wraps to the two lines the header has height for and is
+   clamped there. The clamp needs a block box of its own: text-overflow does
+   nothing on a flex container's anonymous item. */
+.grid__room span {
+  width: 100%; min-width: 0;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  overflow: hidden; line-height: 1.3; overflow-wrap: anywhere;
+}
+
+/* The column rules, painted behind everything. */
+.grid__stripe {
+  grid-column: var(--col); grid-row: 2 / -1; z-index: 0;
+  border-left: 1px solid var(--hair-soft);
+}
+
+.grid__rule {
+  grid-column: 2 / -1; grid-row: var(--row); z-index: 1;
+  height: 1px; background: rgba(255, 255, 255, 0.13);
+}
+
+.grid__hour {
+  grid-column: 1; grid-row: var(--row);
+  position: sticky; left: 0; z-index: 20;
+  margin: -7px 0 0; padding: 0 9px 0 4px;
+  justify-self: stretch; text-align: right;
+  font-family: var(--mono); font-size: 11px;
+  font-variant-numeric: tabular-nums; color: var(--ink-soft);
+}
+/* The topmost label would otherwise be pulled up under the sticky header. */
+.grid__hour:first-of-type { margin-top: 0; }
+
+/* The gutter needs a continuous backdrop while scrolling sideways. */
+.grid::before {
+  content: ""; grid-column: 1; grid-row: 2 / -1;
+  position: sticky; left: 0; z-index: 19;
+  background: var(--chrome);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+
+/* ------------------------------------------------------------- sessions */
+
+.session {
+  grid-column: var(--col); grid-row: var(--row-start) / var(--row-end);
+  z-index: 10; margin: 0 5px 4px; min-width: 0; overflow: hidden;
+  border-radius: 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-bd);
+  border-left: 3px solid var(--track);
+  box-shadow: 0 2px 10px rgba(3, 36, 74, 0.18);
+}
+.session:hover { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.34); }
+
+.session__link {
+  display: flex; flex-direction: column; align-items: stretch;
+  height: 100%; padding: 8px 10px 8px 9px; overflow: hidden;
+  color: var(--ink-strong);
+}
+.session__link:hover { color: var(--ink-strong); }
+
+/* The time and language row. Its height is part of the build-time card
+   geometry in _data/site.js, so the line-height here is not decorative. */
+.session__meta {
+  display: flex; align-items: center; gap: 7px; min-width: 0;
+  line-height: 1.2;
+}
+.session__time {
+  font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--track);
+  font-variant-numeric: tabular-nums;
+}
+.session__lang {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.08em; color: var(--ink-soft);
+}
+
+/* --lines is how many lines actually fit in this card, worked out from its
+   duration at build time (see cardLayout() in _data/site.js). Clamping to the
+   real height rather than to a duration bucket keeps long titles legible
+   instead of stopping at an arbitrary second line with space to spare. */
+.session__title {
+  --leading: 1.28;
+  margin-top: 5px;
+  font-size: 12.5px; font-weight: 700; line-height: var(--leading);
+  color: var(--ink-strong); text-wrap: pretty;
+  overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--lines, 2);
+  /* The clamp is what puts the ellipsis on. max-height repeats the same limit
+     in plain CSS so that a browser which declines to clamp still cuts between
+     two lines rather than slicing through the last one. */
+  max-height: calc(var(--lines, 2) * var(--leading) * 1em);
+  /* A compound like "Leverandørkjedeangrep" is wider than the column, and would
+     otherwise spill sideways out of the card. */
+  overflow-wrap: break-word;
+}
+
+.session__speaker {
+  margin-top: 4px; font-size: 11px; font-style: italic; line-height: 1.2;
+  color: var(--ink-mute);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* A 20-minute lightning talk is 41px tall: enough for the time row and one
+   line of title, once the padding and type come down. */
+.session--compact .session__link { padding: 3px 8px 3px 7px; }
+.session--compact .session__meta { gap: 5px; }
+.session--compact .session__time { font-size: 9px; }
+.session--compact .session__lang { font-size: 8px; }
+.session--compact .session__title { --leading: 1.25; margin-top: 2px; font-size: 11px; }
+
+/* A 10-minute one is 20px. Only the title fits at all; the time and room stay
+   in the card's hidden text, and the hour gutter is a row away. */
+.session--tight .session__link { padding: 2px 7px 2px 6px; }
+.session--tight .session__title { --leading: 1.1; margin-top: 0; font-size: 10px; }
+
+/* Narrow screens keep the same slot height but set the title a little smaller,
+   so one more line can fit in the same card. */
+@media (max-width: 720px) {
+  .session__title { font-size: 11.5px; }
+  .session__title,
+  .session--compact .session__title,
+  .session--tight .session__title {
+    -webkit-line-clamp: var(--lines-narrow, 2);
+    max-height: calc(var(--lines-narrow, 2) * var(--leading) * 1em);
+  }
+  .session__speaker { font-size: 10px; }
+}
+
+/* ------------------------------------------------------------- now line */
+
+/* Without this the `hidden` attribute loses to `display: flex` below and the
+   line shows on days that are not today. */
+.now[hidden] { display: none; }
+
+.now {
+  position: absolute; left: 0; right: 0; z-index: 25;
+  top: calc(var(--head-h) + var(--now-min) * var(--slot-h) / 5);
+  display: flex; align-items: center; height: 2px;
+  pointer-events: none;
+  background: var(--now);
+}
+.now__time {
+  position: sticky; left: 0; z-index: 2; flex-shrink: 0;
+  padding: 2px 5px; border-radius: 0 3px 3px 0;
+  background: var(--now); color: #3d0713;
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.04em; font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------- detail view */
+
+.app--detail { overflow: hidden; }
+
+/* The scroller spans the full width, so the wheel works anywhere on the page.
+   Capping .detail itself would leave the desktop margins outside any scroll
+   container - the reading column lives on the children instead. */
+.detail {
+  flex: 1; overflow-y: auto; overscroll-behavior: contain;
+  width: 100%;
+  padding: 26px 18px 56px;
+  display: flex; flex-direction: column; gap: 26px;
+  border-top: 1px solid var(--hair);
+}
+
+.detail > * { width: 100%; max-width: 816px; margin-inline: auto; }
+
+.detail__head { display: flex; flex-direction: column; gap: 14px; }
+
+.detail__meta {
+  margin: 0; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+.detail__day { font-size: 13px; font-weight: 600; color: var(--ink-mute); }
+
+.countdown {
+  font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--accent);
+}
+.countdown:empty { display: none; }
+
+.detail h1 {
+  margin: 0; font-size: 40px; font-weight: 800; line-height: 1.12;
+  letter-spacing: -0.015em; color: var(--ink-strong); text-wrap: pretty;
+}
+
+.pills, .tags { margin: 0; display: flex; gap: 10px; flex-wrap: wrap; }
+.tags { gap: 8px; }
+
+.pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 9px 16px; border-radius: 999px;
+  background: var(--deep); color: var(--ink-strong);
+  font-size: 13px; font-weight: 700; letter-spacing: 0.04em;
+}
+.pill--time {
+  font-family: var(--mono); color: var(--accent); letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.tag {
+  display: inline-flex; align-items: center;
+  padding: 6px 13px; border-radius: 8px;
+  background: var(--card-bg); border: 1px solid var(--panel-bd);
+  font-size: 12px; font-weight: 600; color: rgba(255, 255, 255, 0.95);
+}
+/* Upstream's suggestedKeywords are free text with no controlled vocabulary, so
+   they are shown as what they are - the speaker's own words - and not as a
+   filter the programme cannot actually support. */
+.tag--keyword { background: transparent; color: var(--ink-mute); font-weight: 500; }
+
+.detail__section { display: flex; flex-direction: column; gap: 12px; }
+
+.section__label {
+  margin: 0; font-family: var(--mono); font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.2em; color: var(--label);
+}
+
+.detail__body {
+  margin: 0; font-size: 16px; line-height: 1.7; color: #eef5ff;
+  text-wrap: pretty;
+}
+
+/* Workshop setup instructions: numbered steps and shell commands, whose line
+   breaks carry meaning. Scrolls rather than wraps a long command. */
+.detail__pre {
+  margin: 0; padding: 16px 18px; border-radius: 12px;
+  background: rgba(4, 44, 92, 0.4); border: 1px solid var(--panel-bd);
+  font-size: 14px; line-height: 1.6; color: #eef5ff;
+  white-space: pre-wrap; overflow-wrap: anywhere;
+}
+
+.speaker {
+  display: flex; flex-direction: column; gap: 16px;
+  padding: 22px; border: 1px solid var(--panel-bd); border-radius: 16px;
+  background: var(--panel);
+}
+.speaker__head { display: flex; gap: 16px; align-items: center; }
+
+/* Sleeping Pill publishes no speaker photos at all, so this monogram is the
+   artwork rather than a placeholder waiting for one. */
+.speaker__mono {
+  width: 60px; height: 60px; flex: none; border-radius: 999px;
+  background: rgba(4, 44, 92, 0.5); border: 1px solid rgba(255, 255, 255, 0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px; font-weight: 700; letter-spacing: 0.02em; color: var(--track);
+}
+.speaker__who { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.speaker__name { margin: 0; font-size: 19px; font-weight: 700; color: var(--ink-strong); }
+.speaker__links { margin: 0; display: flex; gap: 12px; flex-wrap: wrap; font-size: 13px; font-weight: 600; }
+.speaker__bio {
+  margin: 0; font-size: 15px; line-height: 1.65; color: rgba(230, 240, 255, 0.92);
+  text-wrap: pretty;
+}
+
+.parallel { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.parallel__item {
+  border: 1px solid var(--hair-soft); border-left: 3px solid var(--track);
+  border-radius: 12px; background: rgba(255, 255, 255, 0.1);
+}
+.parallel__item a {
+  display: flex; align-items: center; gap: 16px; padding: 14px 18px; color: var(--ink-strong);
+}
+.parallel__item a:hover { color: var(--ink-strong); background: rgba(255, 255, 255, 0.07); }
+.parallel__time {
+  flex-shrink: 0; font-family: var(--mono); font-size: 12px; font-weight: 700;
+  color: var(--ink-mute); font-variant-numeric: tabular-nums;
+}
+.parallel__title { flex: 1; font-size: 15px; font-weight: 700; min-width: 0; }
+.parallel__room {
+  font-size: 12.5px; font-weight: 600; color: var(--ink-soft); white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .masthead { padding: 16px 16px 10px; }
+  .wordmark { font-size: 19px; }
+  .dayhead { padding: 2px 16px 12px; }
+  .dayhead__title { font-size: 30px; }
+  .dayhead__when { font-size: 12px; }
+  .days { gap: 7px; margin-top: 13px; }
+  .day { padding: 8px 5px; border-radius: 12px; }
+  .day__dow { font-size: 12.5px; }
+  .day__date { font-size: 11px; }
+  .tracks { padding: 9px 16px; gap: 7px; }
+  .chip { padding: 6px 13px; font-size: 12px; }
+
+  .detail { padding: 20px 16px 44px; gap: 22px; }
+  .detail h1 { font-size: 26px; line-height: 1.15; }
+  .detail__body { font-size: 14.5px; line-height: 1.65; }
+  .pill { padding: 7px 13px; font-size: 12px; }
+  .speaker { padding: 16px; border-radius: 14px; }
+  .speaker__mono { width: 46px; height: 46px; font-size: 15px; }
+  .speaker__name { font-size: 15.5px; }
+  .speaker__bio { font-size: 14px; }
+  .parallel__item a { padding: 12px 14px; gap: 12px; }
+  .parallel__title { font-size: 14px; }
+}
+
+/* ------------------------------------------------------- update notice */
+
+.update {
+  position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%);
+  z-index: 100; margin: 0; display: flex; align-items: center; gap: 10px;
+  max-width: calc(100vw - 32px);
+  padding: 10px 12px 10px 16px; border-radius: 999px;
+  background: #04244a; color: var(--ink); font-size: 13px;
+  border: 1px solid var(--panel-bd);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+}
+.update[hidden] { display: none; }
+.update button {
+  padding: 6px 12px; border: 0; border-radius: 999px;
+  background: var(--accent); color: var(--ground);
+  font: inherit; font-size: 12px; font-weight: 700; cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; }
+}
