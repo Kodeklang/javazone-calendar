@@ -1,0 +1,87 @@
+name: Update programme and deploy
+
+# Hourly, on every push to main, and on demand. The fetch and the deploy live
+# in one job so a programme change flows straight through to gh-pages.
+on:
+  schedule:
+    - cron: "23 * * * *"
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  update-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Upstream sends no ETag and no Last-Modified, so there is nothing to make
+      # a conditional request against: every run transfers the whole programme
+      # and the diff below is what decides whether anything happened.
+      - name: Fetch the programme from Sleeping Pill
+        run: node scripts/fetch-program.mjs
+
+      - name: Commit programme changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/_data/program.json
+          if git diff --staged --quiet; then
+            echo "Programme unchanged."
+          else
+            # [skip ci] is belt and braces: GITHUB_TOKEN pushes do not retrigger
+            # workflows anyway, and this run continues on to build and deploy.
+            git commit -m "Update programme from Sleeping Pill [skip ci]"
+            git push origin HEAD:main
+          fi
+
+      - name: Build
+        run: npx @11ty/eleventy
+
+      - name: Publish to gh-pages
+        run: |
+          set -euo pipefail
+
+          # GitHub Pages would otherwise run the output through Jekyll and strip
+          # anything whose name starts with an underscore.
+          touch _site/.nojekyll
+
+          git fetch origin gh-pages --depth=1 || true
+          git worktree add --detach ../pages
+          cd ../pages
+
+          if git show-ref --quiet refs/remotes/origin/gh-pages; then
+            git checkout -B gh-pages origin/gh-pages
+          else
+            git checkout --orphan gh-pages
+          fi
+
+          # Replace the published tree wholesale. Emptying the index first means
+          # deletions are picked up as well as additions.
+          git rm -rf --cached . --quiet 2>/dev/null || true
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -a "$GITHUB_WORKSPACE/_site/." .
+
+          git add -A
+          if git diff --staged --quiet; then
+            echo "Built output unchanged - nothing to deploy, caches stay valid."
+          else
+            git commit -m "Deploy ${GITHUB_SHA::7}"
+            git push origin gh-pages
+          fi
