@@ -12,8 +12,8 @@
 
 const SDK = "/js/datadog/datadog-rum-slim.js";
 const CONFIG = {
-  "applicationId": "00000000-0000-0000-0000-000000000000",
-  "clientToken": "pubreplaceme00000000000000000000",
+  "applicationId": "ccc2ef8b-f479-448b-b099-fb05bec4dbb1",
+  "clientToken": "pubdb51dce078321c0855b9964fb21ba4dd",
   "site": "datadoghq.eu",
   "service": "javazone-calendar",
   "env": "prod",
