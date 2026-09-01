@@ -286,57 +286,45 @@ if (back && document.referrer) {
 
 /* ---------------------------------------------------------- programme update */
 
-const banner = document.getElementById("update");
-const built = document.querySelector('meta[name="app-version"]')?.content;
+// A deploy changes site.buildId, and buildId is what names the service
+// worker's cache. So the worker carrying a new build brings a fresh copy of
+// the whole programme - every page at once, not the one being looked at - and
+// getting that worker in *is* the update. It activates, claims this page, and
+// the controllerchange handler below reloads into the new build.
+//
+// This poll exists only for a window that never navigates. The browser checks
+// sw.js on navigation by itself, so a visitor moving around the programme is
+// already covered; a phone left open on one talk for an afternoon is not, and
+// would otherwise sit on the build it was opened with.
+//
+// Compared against the build rather than the programme hash on purpose. The
+// programme hash misses a layout change entirely - new photos on the detail
+// pages moved every rendered page without moving it - which left those pages
+// stale with nothing to notice it.
+const built = document.querySelector('meta[name="app-build"]')?.content;
+let asking = false;
 
 async function checkForUpdate() {
-  if (!banner || !built) return;
+  if (!built || asking) return;
+  asking = true;
   try {
-    // no-cache still revalidates, so this is a 304 with no body until the
-    // programme actually changes.
+    // no-cache still revalidates, so this is a 304 with no body until a deploy
+    // actually lands.
     const res = await fetch(`${BASE}version.json`, { cache: "no-cache" });
     if (!res.ok) return;
-    const { version } = await res.json();
-    if (version && version !== built) banner.hidden = false;
+    const { build } = await res.json();
+    if (!build || build === built) return;
+    // Nothing further to do here. The new worker skipWaiting()s as it
+    // installs, and the reload is on controllerchange.
+    const reg = await navigator.serviceWorker?.getRegistration();
+    await reg?.update();
   } catch {
-    /* offline: try again later */
+    /* offline, or no worker: the next tick tries again */
+  } finally {
+    asking = false;
   }
 }
 
-// Reloading on its own is not enough. Navigations are served from the cache, so
-// the reload renders the very page the banner is complaining about and the
-// banner comes back with it. Normally the new worker settles that within a
-// second - it takes over and reloads the document itself - but that handoff
-// needs the browser to notice a new sw.js, which iOS Safari checks for far less
-// eagerly than Chrome and a CDN can hold back for its own cache lifetime. A
-// button that only works once the worker cooperates is a button that looks
-// broken. So fetch this page past every cache first, store it, and reload into
-// it.
-async function reloadWithFreshPage() {
-  try {
-    const response = await fetch(location.href, { cache: "reload" });
-    if (response.ok && window.caches) {
-      for (const name of await caches.keys()) {
-        const cache = await caches.open(name);
-        // Only replace a copy that is actually held, so this never seeds a page
-        // into a cache the worker is on its way to deleting.
-        if (await cache.match(location.href)) {
-          await cache.put(location.href, response.clone());
-        }
-      }
-    }
-    // Nudge the worker too, so the rest of the programme catches up behind us.
-    await navigator.serviceWorker?.getRegistration().then((r) => r?.update());
-  } catch {
-    /* offline, or no cache to correct: the plain reload below still stands */
-  }
-  location.reload();
-}
-
-document.getElementById("update-reload")?.addEventListener("click", (event) => {
-  event.currentTarget.disabled = true;
-  reloadWithFreshPage();
-});
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") checkForUpdate();
 });

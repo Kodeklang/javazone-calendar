@@ -11,7 +11,7 @@
 // The cache name carries a hash of the programme *and* every shipped asset, so
 // any real change retires the old cache wholesale.
 
-const CACHE = "jz-2b44d722cbda";
+const CACHE = "jz-49f0b39c73cf";
 
 const BASE = "/";
 
@@ -25,10 +25,10 @@ const SHELL = [
   "/",
   "/dag/2/",
   "/dag/3/",
-  "/css/style.css?v=2b44d722cbda",
-  "/css/fonts.css?v=2b44d722cbda",
-  "/js/app.js?v=2b44d722cbda",
-  "/js/rum.js?v=2b44d722cbda",
+  "/css/style.css?v=49f0b39c73cf",
+  "/css/fonts.css?v=49f0b39c73cf",
+  "/js/app.js?v=49f0b39c73cf",
+  "/js/rum.js?v=49f0b39c73cf",
   "/manifest.webmanifest",
   "/icons/icon.svg",
   "/icons/icon-192.png",
@@ -182,12 +182,12 @@ const REST = [...new Set([
   "/program/kodearkeologer-pa-legacy-eventyr-7a7da44d/",
   "/program/spring-spock-vs-kotest-vs-junit-when-to-pick-which-one-d6ad9cb7/",
   "/program/stop-writing-terraform-build-developer-friendly-platforms-wi-2fb685db/",
+  "/program/retro-meets-ai-shipping-games-across-40-years-of-tech-02b863d3/",
   "/program/kotlin-coroutines-in-ktor-what-you-need-to-know-78314dc8/",
   "/program/a-journey-on-tour-with-java-code-on-it-s-way-through-the-jvm-08b03b16/",
   "/program/how-to-git-away-with-murder-d4eb6460/",
   "/program/generics-you-never-know-what-you-re-gonna-get-84c0346e/",
   "/program/reproducible-environments-why-docker-isn-t-enough-and-why-ni-3db5bd92/",
-  "/program/retro-meets-ai-shipping-games-across-40-years-of-tech-02b863d3/",
   "/program/the-sound-of-privacy-what-your-spotify-data-reveals-about-yo-a60438e6/",
   "/program/shader-sorcery-summon-surreal-scenery-471359a7/",
   "/program/how-i-built-my-own-intelligent-robot-arm-from-scratch-f0aeaff3/",
@@ -212,62 +212,62 @@ const REST = [...new Set([
   // so an uncached photo is a broken image in the hall rather than initials.
   // The ?v matches the src in program.njk exactly; a precache entry that does
   // not match the request it is meant to answer is dead weight.
-  "/photos/morten-nygaard-asnes.webp?v=2b44d722cbda",
-  "/photos/kristian-berg.webp?v=2b44d722cbda",
-  "/photos/hans-kristian-flaatten.webp?v=2b44d722cbda",
-  "/photos/radek-kargul.webp?v=2b44d722cbda",
-  "/photos/willem-jan-glerum.webp?v=2b44d722cbda",
-  "/photos/a-n-m-bazlur-rahman.webp?v=2b44d722cbda",
-  "/photos/piotr-laskawiec.webp?v=2b44d722cbda",
-  "/photos/ken-sipe.webp?v=2b44d722cbda",
-  "/photos/sam-bellen.webp?v=2b44d722cbda",
-  "/photos/christin-gorman.webp?v=2b44d722cbda",
-  "/photos/elise-kristiansen.webp?v=2b44d722cbda",
-  "/photos/knut-haugen.webp?v=2b44d722cbda",
-  "/photos/kevin-dubois.webp?v=2b44d722cbda",
-  "/photos/oystein-hagen-blixhavn.webp?v=2b44d722cbda",
-  "/photos/josh-long.webp?v=2b44d722cbda",
-  "/photos/johannes-bechberger.webp?v=2b44d722cbda",
-  "/photos/martin-skarsaune.webp?v=2b44d722cbda",
-  "/photos/aurora-scharff.webp?v=2b44d722cbda",
-  "/photos/nadia-tokerud.webp?v=2b44d722cbda",
-  "/photos/cay-horstmann.webp?v=2b44d722cbda",
-  "/photos/veronika-heimsbakk.webp?v=2b44d722cbda",
-  "/photos/akihiro-nishikawa.webp?v=2b44d722cbda",
-  "/photos/bruce-bujon.webp?v=2b44d722cbda",
-  "/photos/nikolai-norman-andersen.webp?v=2b44d722cbda",
-  "/photos/johannes-brodwall.webp?v=2b44d722cbda",
-  "/photos/mick-semb-wever.webp?v=2b44d722cbda",
-  "/photos/gaute-meek-olsen.webp?v=2b44d722cbda",
-  "/photos/jago-de-vreede.webp?v=2b44d722cbda",
-  "/photos/daniel-oh.webp?v=2b44d722cbda",
-  "/photos/adele-carpenter.webp?v=2b44d722cbda",
-  "/photos/anders-noras.webp?v=2b44d722cbda",
-  "/photos/piotr-przybyl.webp?v=2b44d722cbda",
-  "/photos/anders-sveen.webp?v=2b44d722cbda",
-  "/photos/alexander-chatzizacharias.webp?v=2b44d722cbda",
-  "/photos/gunnar-morling.webp?v=2b44d722cbda",
-  "/photos/pasha-finkelshteyn.webp?v=2b44d722cbda",
-  "/photos/georges-saab.webp?v=2b44d722cbda",
-  "/photos/marit-van-dijk.webp?v=2b44d722cbda",
-  "/photos/andres-almiray.webp?v=2b44d722cbda",
-  "/photos/totto-thor-henning-hetland.webp?v=2b44d722cbda",
-  "/photos/fredrik-lillemoen-eiding.webp?v=2b44d722cbda",
-  "/photos/baruch-sadogursky.webp?v=2b44d722cbda",
-  "/photos/ixchel-ruiz.webp?v=2b44d722cbda",
-  "/photos/morten-andersen-gott.webp?v=2b44d722cbda",
-  "/photos/tim-berglund.webp?v=2b44d722cbda",
-  "/photos/rafael-winterhalter.webp?v=2b44d722cbda",
-  "/photos/rustam-mehmandarov.webp?v=2b44d722cbda",
-  "/photos/einar-waaler-host.webp?v=2b44d722cbda",
-  "/photos/adam-warski.webp?v=2b44d722cbda",
-  "/photos/oleg-selajev.webp?v=2b44d722cbda",
-  "/photos/brian-vermeer.webp?v=2b44d722cbda",
-  "/photos/gerrit-grunwald.webp?v=2b44d722cbda",
-  "/photos/bram-janssens.webp?v=2b44d722cbda",
-  "/photos/leonard-sheng-sheng-lee.webp?v=2b44d722cbda",
-  "/photos/marten-range.webp?v=2b44d722cbda",
-  "/photos/patrick-baumgartner.webp?v=2b44d722cbda",
+  "/photos/morten-nygaard-asnes.webp?v=49f0b39c73cf",
+  "/photos/kristian-berg.webp?v=49f0b39c73cf",
+  "/photos/hans-kristian-flaatten.webp?v=49f0b39c73cf",
+  "/photos/radek-kargul.webp?v=49f0b39c73cf",
+  "/photos/willem-jan-glerum.webp?v=49f0b39c73cf",
+  "/photos/a-n-m-bazlur-rahman.webp?v=49f0b39c73cf",
+  "/photos/piotr-laskawiec.webp?v=49f0b39c73cf",
+  "/photos/ken-sipe.webp?v=49f0b39c73cf",
+  "/photos/sam-bellen.webp?v=49f0b39c73cf",
+  "/photos/christin-gorman.webp?v=49f0b39c73cf",
+  "/photos/elise-kristiansen.webp?v=49f0b39c73cf",
+  "/photos/knut-haugen.webp?v=49f0b39c73cf",
+  "/photos/kevin-dubois.webp?v=49f0b39c73cf",
+  "/photos/oystein-hagen-blixhavn.webp?v=49f0b39c73cf",
+  "/photos/josh-long.webp?v=49f0b39c73cf",
+  "/photos/johannes-bechberger.webp?v=49f0b39c73cf",
+  "/photos/martin-skarsaune.webp?v=49f0b39c73cf",
+  "/photos/aurora-scharff.webp?v=49f0b39c73cf",
+  "/photos/nadia-tokerud.webp?v=49f0b39c73cf",
+  "/photos/cay-horstmann.webp?v=49f0b39c73cf",
+  "/photos/veronika-heimsbakk.webp?v=49f0b39c73cf",
+  "/photos/akihiro-nishikawa.webp?v=49f0b39c73cf",
+  "/photos/bruce-bujon.webp?v=49f0b39c73cf",
+  "/photos/nikolai-norman-andersen.webp?v=49f0b39c73cf",
+  "/photos/johannes-brodwall.webp?v=49f0b39c73cf",
+  "/photos/mick-semb-wever.webp?v=49f0b39c73cf",
+  "/photos/gaute-meek-olsen.webp?v=49f0b39c73cf",
+  "/photos/jago-de-vreede.webp?v=49f0b39c73cf",
+  "/photos/daniel-oh.webp?v=49f0b39c73cf",
+  "/photos/adele-carpenter.webp?v=49f0b39c73cf",
+  "/photos/anders-noras.webp?v=49f0b39c73cf",
+  "/photos/piotr-przybyl.webp?v=49f0b39c73cf",
+  "/photos/anders-sveen.webp?v=49f0b39c73cf",
+  "/photos/alexander-chatzizacharias.webp?v=49f0b39c73cf",
+  "/photos/gunnar-morling.webp?v=49f0b39c73cf",
+  "/photos/pasha-finkelshteyn.webp?v=49f0b39c73cf",
+  "/photos/georges-saab.webp?v=49f0b39c73cf",
+  "/photos/marit-van-dijk.webp?v=49f0b39c73cf",
+  "/photos/andres-almiray.webp?v=49f0b39c73cf",
+  "/photos/totto-thor-henning-hetland.webp?v=49f0b39c73cf",
+  "/photos/fredrik-lillemoen-eiding.webp?v=49f0b39c73cf",
+  "/photos/baruch-sadogursky.webp?v=49f0b39c73cf",
+  "/photos/ixchel-ruiz.webp?v=49f0b39c73cf",
+  "/photos/morten-andersen-gott.webp?v=49f0b39c73cf",
+  "/photos/tim-berglund.webp?v=49f0b39c73cf",
+  "/photos/rafael-winterhalter.webp?v=49f0b39c73cf",
+  "/photos/rustam-mehmandarov.webp?v=49f0b39c73cf",
+  "/photos/einar-waaler-host.webp?v=49f0b39c73cf",
+  "/photos/adam-warski.webp?v=49f0b39c73cf",
+  "/photos/oleg-selajev.webp?v=49f0b39c73cf",
+  "/photos/brian-vermeer.webp?v=49f0b39c73cf",
+  "/photos/gerrit-grunwald.webp?v=49f0b39c73cf",
+  "/photos/bram-janssens.webp?v=49f0b39c73cf",
+  "/photos/leonard-sheng-sheng-lee.webp?v=49f0b39c73cf",
+  "/photos/marten-range.webp?v=49f0b39c73cf",
+  "/photos/patrick-baumgartner.webp?v=49f0b39c73cf",
   // Only ever fetched by an install prompt or the home screen, so they would
   // otherwise be the assets least likely to be cached when they are needed.
   "/icons/icon-180.png",
@@ -357,9 +357,6 @@ self.addEventListener("install", (event) => {
 
 self.addEventListener("activate", (event) => {
   event.waitUntil((async () => {
-    // Let the browser start a navigation's network request while this worker is
-    // still booting, so the two overlap instead of queueing.
-    await self.registration.navigationPreload?.enable();
     const names = await caches.keys();
     await Promise.all(names.filter((n) => n !== CACHE).map((n) => caches.delete(n)));
     // Claiming is what reloads a page sitting on the previous version.
@@ -381,16 +378,29 @@ self.addEventListener("activate", (event) => {
  *
  * Freshness does not depend on this path. A deploy changes CACHE, so the new
  * worker installs a fresh copy of every page and app.js reloads the document on
- * controllerchange; version.json is never served from here, so the update
- * banner still sees the truth.
+ * controllerchange; version.json is never served from here, so the poll that
+ * asks for that worker still sees the truth.
  */
 async function staleWhileRevalidate(event, request) {
   const cache = await caches.open(CACHE);
   const cached = await cache.match(request);
 
+  // fromNetwork, for the same reason the precache uses it, and this is the
+  // one place it was missed. GitHub Pages stamps every page max-age=600, so a
+  // plain fetch in the ten minutes after a deploy is answered from the
+  // browser's HTTP cache with the very bytes this is trying to replace - and
+  // then stores them under a cache name asserting they are the new build.
+  // warm() skips entries that are already present, so nothing ever corrects
+  // one: the page stays on the old build until someone presses reload on that
+  // exact page. That is what made a layout change take a click per page.
+  //
+  // Navigation preload is gone with it. Its response comes off the same HTTP
+  // cache and cannot be asked for anything else, so it can only reintroduce
+  // the problem - and with every page precached it was answering a request
+  // that almost never reached the network anyway.
   const fresh = (async () => {
-    const response = (await event.preloadResponse) || (await fetch(request));
-    if (response?.ok) await cache.put(request, response.clone());
+    const response = await fetch(fromNetwork(request));
+    if (response.ok) await cache.put(request, response.clone());
     return response;
   })();
 
