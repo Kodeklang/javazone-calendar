@@ -6405,6 +6405,40 @@
       ]
     },
     {
+      "id": "02b863d3-5f5a-4d80-94d7-a6d0cb9a1eef",
+      "slug": "retro-meets-ai-shipping-games-across-40-years-of-tech-02b863d3",
+      "title": "Retro Meets AI: Shipping Games Across 40 Years of Tech",
+      "dayId": "2026-09-03",
+      "roomId": "room-5",
+      "roomName": "Room 5",
+      "startUtc": "2026-09-03T13:40:00.000Z",
+      "endUtc": "2026-09-03T14:25:00.000Z",
+      "durationMin": 45,
+      "format": "presentation",
+      "language": "en",
+      "keywords": [
+        "Retro",
+        "AI",
+        "Claude",
+        "Amiga",
+        "Tools"
+      ],
+      "audience": "Anyone that is interested in AI, programming for old machine, and/or the combination of them.",
+      "description": [
+        "What happens when a modern AI coding assistant meets decades-old hardware—and today’s game engines?",
+        "In this talk, I share how I’ve used Claude Code as a creative and technical sidekick to build games across radically different platforms: from low-level development on the Commodore 64 and Amiga, to modern workflows in Unity.",
+        "I genuinely enjoy writing code—even Assembly—and don’t see AI as a replacement for that craft. Instead, I use it to remove friction: speeding up iteration, navigating obscure hardware constraints, and offloading the tedious parts so I can focus on what’s actually fun.",
+        "Working in Assembly, C, and C#, Claude Code has proven surprisingly effective—not just for generating code, but for navigating obscure systems and enabling rapid creation of custom tools—asset pipelines, data generators, and debugging utilities—that dramatically reduce the friction of retro development.",
+        "It acts less like a tool and more like an endlessly patient, optimistic collaborator who helps bridge knowledge gaps and unlock creative flow.",
+        "This talk explores practical examples, unexpected strengths (and limitations), and what it means to pair human intuition with AI when building games—and the tools around them—across 40 years of technology."
+      ],
+      "prerequisites": null,
+      "video": null,
+      "speakerIds": [
+        "ricki-sickenger"
+      ]
+    },
+    {
       "id": "78314dc8-8a5b-4aca-9795-f875c142cb04",
       "slug": "kotlin-coroutines-in-ktor-what-you-need-to-know-78314dc8",
       "title": "Kotlin Coroutines in Ktor: What you need to know",
@@ -6549,40 +6583,6 @@
       "video": null,
       "speakerIds": [
         "leonard-sheng-sheng-lee"
-      ]
-    },
-    {
-      "id": "02b863d3-5f5a-4d80-94d7-a6d0cb9a1eef",
-      "slug": "retro-meets-ai-shipping-games-across-40-years-of-tech-02b863d3",
-      "title": "Retro Meets AI: Shipping Games Across 40 Years of Tech",
-      "dayId": "2026-09-03",
-      "roomId": "room-1",
-      "roomName": "Room 1",
-      "startUtc": "2026-09-03T15:00:00.000Z",
-      "endUtc": "2026-09-03T15:45:00.000Z",
-      "durationMin": 45,
-      "format": "presentation",
-      "language": "en",
-      "keywords": [
-        "Retro",
-        "AI",
-        "Claude",
-        "Amiga",
-        "Tools"
-      ],
-      "audience": "Anyone that is interested in AI, programming for old machine, and/or the combination of them.",
-      "description": [
-        "What happens when a modern AI coding assistant meets decades-old hardware—and today’s game engines?",
-        "In this talk, I share how I’ve used Claude Code as a creative and technical sidekick to build games across radically different platforms: from low-level development on the Commodore 64 and Amiga, to modern workflows in Unity.",
-        "I genuinely enjoy writing code—even Assembly—and don’t see AI as a replacement for that craft. Instead, I use it to remove friction: speeding up iteration, navigating obscure hardware constraints, and offloading the tedious parts so I can focus on what’s actually fun.",
-        "Working in Assembly, C, and C#, Claude Code has proven surprisingly effective—not just for generating code, but for navigating obscure systems and enabling rapid creation of custom tools—asset pipelines, data generators, and debugging utilities—that dramatically reduce the friction of retro development.",
-        "It acts less like a tool and more like an endlessly patient, optimistic collaborator who helps bridge knowledge gaps and unlock creative flow.",
-        "This talk explores practical examples, unexpected strengths (and limitations), and what it means to pair human intuition with AI when building games—and the tools around them—across 40 years of technology."
-      ],
-      "prerequisites": null,
-      "video": null,
-      "speakerIds": [
-        "ricki-sickenger"
       ]
     },
     {
