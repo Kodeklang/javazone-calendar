@@ -56,7 +56,7 @@ eleventyComputed:
   <p class="visually-hidden" id="filter-status" role="status" aria-live="polite"></p>
 
   <div class="grid-scroll" id="grid-scroll">
-    <div class="grid" style="--rooms: {{ day.rooms | length }}; --visible-rooms: {{ day.rooms | length }}; --slots: {{ day.slots }}"
+    <div class="grid" style="--rooms: {{ day.rooms | length }}; --slots: {{ day.slots }}"
          data-day-start="{{ day.startUtc }}" data-slot-min="5">
 
       <div class="grid__corner"><abbr title="Norsk tid">CEST</abbr></div>

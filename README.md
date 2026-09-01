@@ -121,25 +121,29 @@ Chips inside one group are alternatives; the two groups narrow each other.
 "Lyntale + Norsk" means the Norwegian lightning talks. Only the values a day
 actually runs get a chip, so the workshop day does not offer Lyntale.
 
-This is a filter, not a de-emphasis: a hidden session leaves the accessibility
-tree along with the layout, so `#filter-status` announces what survived —
-"Viser Lyntale + Norsk: 15 sesjoner i 1 rom". A leading "Alt" chip clears
-everything. (The design dims non-matching cards to 26% opacity instead, which
-reads as a disabled control and puts white text far below any usable contrast.)
+**Selecting a filter greys the rest out; it never removes them.** A session
+outside the selection stays exactly where it is, so the grid keeps its shape,
+nothing reflows under the reader, and a talk that only just missed the filter is
+still there to be noticed. `#filter-status` reports the split —
+"Lyntale: 25 av 79 sesjoner markert, resten nedtonet". A leading "Alt" chip
+clears everything. Nothing leaves the accessibility tree, because nothing leaves
+the page.
 
-Which columns survive is worked out **in the browser**, from the sessions that
-actually match, rather than precomputed per chip as the reference does. With two
-facets that intersect, no per-chip column list could answer for a combination of
-them — and reading it off the surviving cards is exact either way.
+Greyed out by **draining the colour, not with `opacity`**. Opacity fades a
+card's text and its background toward the page at the same rate, so the contrast
+*inside* the card collapses: at 0.8 the time on a card falls to 3.8:1, and the
+design's 0.26 puts it at 1.6:1 — unreadable. Setting the dimmed colours
+explicitly instead keeps every pair at 5:1 or better, measured in the browser,
+while still reading as clearly secondary: the card fill halves in luminance, the
+title steps back from white, and the format accent on the left edge goes grey.
 
-Columns collapse by being set to `0px` rather than renumbered, so no session has
-to be repositioned. Clearing the selection removes the override and the
-stylesheet's own `grid-template-columns` takes over again, which is also what a
-visitor without JavaScript gets.
-
-This pays off better here than it did at the reference conference: all 43
-lightning talks run in one room, so picking Lyntale collapses Wednesday's eight
-columns to Room 6 alone and turns the grid into a readable single-track agenda.
+Because nothing is removed, no column can be empty, so **columns no longer
+collapse**. An earlier version zeroed the width of rooms the selection did not
+reach — picking Lyntale turned Wednesday's eight columns into Room 6 alone, a
+neat single-track agenda. That is incompatible with keeping non-matching
+sessions on screen, and it was the weaker of the two behaviours: it hid the
+context that makes a conference grid worth looking at. The trade is deliberate;
+restoring it would mean hiding cards again.
 
 The selection persists in `localStorage` under `jz-filters` and spans days. A day
 applies only the values it actually runs but keeps the rest stored, so stepping
@@ -167,14 +171,15 @@ and every other token intact:
 ```
 
 A handful of the faintest labels also moved up (`rgba(230,240,255,.6)` → `.78`),
-and muted filter chips went from 26% to 72% opacity — they are still buttons
-with labels, and 26% put the cyan one at 2.6:1.
+and an unselected filter chip went from 40% to 72% opacity — it is still a
+button with a label, and 40% put the cyan one at 2.6:1.
 
 Verified in the browser by compositing every element's real ancestor
 backgrounds against the gradient at its own y position: **40 text elements
-across the day grid and a detail page, zero failures.** The tightest are the
-JAVAZONE wordmark at 3.6:1 (large text, needs 3) and the time on a session card
-at 5.4:1.
+across the day grid and a detail page, zero failures**, plus every card in both
+the highlighted and greyed-out filter states. The tightest are the JAVAZONE
+wordmark at 3.6:1 (large text, needs 3), the time on a live card at 5.4:1, and
+the time on a greyed-out card at 5.6:1.
 
 To go back to the design's exact gradient, change those three tokens — the rest
 of the stylesheet is unchanged.

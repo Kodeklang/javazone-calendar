@@ -41,10 +41,14 @@ applyLang(currentLang());
 // and "Norsk" means the Norwegian lightning talks, which is the question
 // someone standing in a corridor actually has.
 //
-// Filtering is a real filter, not a de-emphasis: rooms nothing survives in
-// collapse away, and every other session leaves the grid - and with it the
-// accessibility tree, which is why the live region below reports what
-// survived. Picking nothing shows the whole day.
+// Filtering de-emphasises rather than removes. A session outside the selection
+// is greyed out but stays exactly where it is, so the grid keeps its shape,
+// nothing reflows under the reader, and a talk that nearly matched is still
+// there to be seen. Picking nothing shows the whole day at full strength.
+//
+// Because nothing leaves the grid, nothing leaves the accessibility tree
+// either - so the live region reports how many matched rather than being the
+// only remaining evidence of what happened.
 //
 // The selection spans days. A day only applies the values it actually runs;
 // the rest stay stored, so stepping to a day without them and back does not
@@ -96,35 +100,6 @@ if (chips.length) {
     );
   };
 
-  const gridEl = document.querySelector(".grid");
-  const columned = gridEl ? gridEl.querySelectorAll("[data-col]") : [];
-  const roomCount = gridEl ? Number(gridEl.style.getPropertyValue("--rooms")) : 0;
-
-  /**
-   * Collapse every room the selection does not reach. Columns are zeroed
-   * rather than renumbered, so nothing else on the grid has to move. A null
-   * `keep` means no filter at all. Returns how many rooms survived.
-   */
-  const applyColumns = (keep) => {
-    if (!gridEl) return 0;
-    if (!keep) {
-      gridEl.style.removeProperty("--cols");
-      gridEl.style.setProperty("--visible-rooms", String(roomCount));
-      for (const el of columned) el.classList.remove("is-collapsed");
-      return roomCount;
-    }
-    const widths = [];
-    for (let col = 2; col < roomCount + 2; col++) {
-      widths.push(keep.has(String(col)) ? "minmax(var(--col-w), 1fr)" : "0px");
-    }
-    gridEl.style.setProperty("--cols", `var(--gutter-w) ${widths.join(" ")}`);
-    gridEl.style.setProperty("--visible-rooms", String(Math.max(keep.size, 1)));
-    for (const el of columned) {
-      el.classList.toggle("is-collapsed", !keep.has(el.dataset.col));
-    }
-    return keep.size;
-  };
-
   // `announce` guards the live region: only a real click should speak. Writing
   // it on load or on a language switch would just be noise.
   const applyFilters = (selection, { announce = false, lang = currentLang() } = {}) => {
@@ -141,23 +116,17 @@ if (chips.length) {
     }
     resetChip?.setAttribute("aria-pressed", String(!anyPicked));
 
-    // Which columns survive is read off the sessions that survive, rather than
-    // precomputed per chip: with two facets that intersect, no per-chip column
-    // list could answer for a combination of them.
-    const keep = anyPicked ? new Set() : null;
-    let shown = 0;
+    let matched = 0;
     for (const session of allSessions) {
       const on = FACETS.every((facet) => {
         if (!picked[facet].size) return true;
         return picked[facet].has(session.dataset[facet] || "");
       });
-      session.classList.toggle("is-filtered-out", !on);
-      if (on) {
-        shown += 1;
-        keep?.add(session.dataset.col);
-      }
+      // No selection at all means no dimming: an unfiltered grid is not a grid
+      // where everything happens to match.
+      session.classList.toggle("is-dimmed", anyPicked && !on);
+      if (on) matched += 1;
     }
-    const rooms = applyColumns(keep);
 
     if (!filterStatus) return;
     if (!announce) {
@@ -171,10 +140,13 @@ if (chips.length) {
     const names = FACETS.flatMap((facet) =>
       [...picked[facet]].map((v) => labels.get(`${facet}:${v}`)?.textContent.trim() ?? v),
     );
-    const what = names.join(lang === "en" ? " + " : " + ");
+    const what = names.join(" + ");
+    // Nothing was removed, so this counts what stands out rather than what is
+    // left: "8 of 79 highlighted" is the honest description of the grid now.
+    const total = allSessions.length;
     filterStatus.textContent = lang === "en"
-      ? `Showing ${what}: ${shown} ${shown === 1 ? "session" : "sessions"} in ${rooms} ${rooms === 1 ? "room" : "rooms"}`
-      : `Viser ${what}: ${shown} ${shown === 1 ? "sesjon" : "sesjoner"} i ${rooms} rom`;
+      ? `${what}: ${matched} of ${total} ${total === 1 ? "session" : "sessions"} highlighted, the rest dimmed`
+      : `${what}: ${matched} av ${total} ${total === 1 ? "sesjon" : "sesjoner"} markert, resten nedtonet`;
   };
 
   for (const chip of chips) {

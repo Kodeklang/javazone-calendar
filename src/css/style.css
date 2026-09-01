@@ -209,13 +209,31 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 /* The detail page's format chip: outlined, never a control. */
 .chip--solid { background: color-mix(in srgb, var(--track) 14%, transparent); }
 
-/* Filtering removes rather than de-emphasises: a session outside the selection
-   leaves the layout entirely, and with it the accessibility tree.
-   #filter-status announces the result, which is the only thing left to go on.
-   The design dims non-matching cards to 26% instead, which reads as a
-   disabled control and puts white text below any usable contrast. */
-.session.is-filtered-out { display: none; }
-.session { transition: filter 0.15s ease; }
+/* Filtering de-emphasises rather than removes: a session outside the selection
+   stays where it is, so the grid keeps its shape and what else is on at the
+   same time stays readable.
+
+   Greyed out by draining the colour, not with `opacity`. Opacity fades a card's
+   text and its background towards the page at the same rate, so the contrast
+   *inside* the card collapses - even at 0.8 the time on a card falls to 3.8:1,
+   and the design's 0.26 puts it at 1.6:1. Setting the colours explicitly holds
+   every dimmed pair at 5:1 or better while still reading as clearly secondary:
+   the fill halves in luminance and the format accent goes grey. */
+.session.is-dimmed {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+  border-left-color: rgba(255, 255, 255, 0.3);
+}
+.session.is-dimmed:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+.session.is-dimmed .session__title { color: rgba(230, 240, 255, 0.78); }
+.session.is-dimmed .session__time,
+.session.is-dimmed .session__lang,
+.session.is-dimmed .session__speaker { color: rgba(230, 240, 255, 0.68); }
+
+.session { transition: background-color 0.15s ease, border-color 0.15s ease; }
 
 @media (prefers-reduced-motion: reduce) {
   .session, button.chip { transition: none; }
@@ -245,20 +263,14 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 .grid {
   position: relative;
   display: grid;
-  /* The facet filter overrides --cols to collapse rooms nothing survives in.
-     Without JS the fallback gives every room an equal share. */
-  grid-template-columns: var(--cols, var(--gutter-w) repeat(var(--rooms), minmax(var(--col-w), 1fr)));
+  grid-template-columns: var(--gutter-w) repeat(var(--rooms), minmax(var(--col-w), 1fr));
   grid-template-rows: var(--head-h) repeat(var(--slots), var(--slot-h));
   /* Fill the viewport on a sparse day such as the workshop day, which has four
      rooms, but never squeeze the columns below their design width - past that
-     the grid scrolls sideways instead. --visible-rooms tracks the filter. */
+     the grid scrolls sideways instead. */
   width: 100%;
-  min-width: calc(var(--gutter-w) + var(--visible-rooms, var(--rooms)) * var(--col-w));
+  min-width: calc(var(--gutter-w) + var(--rooms) * var(--col-w));
 }
-
-/* A room with no surviving session drops out entirely: its column is collapsed
-   to 0px and everything anchored to it is removed. */
-.grid [data-col].is-collapsed { display: none; }
 
 .grid__corner {
   grid-column: 1; grid-row: 1;
