@@ -607,22 +607,6 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 
 /* ------------------------------------------------------- update notice */
 
-.update {
-  position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%);
-  z-index: 100; margin: 0; display: flex; align-items: center; gap: 10px;
-  max-width: calc(100vw - 32px);
-  padding: 10px 12px 10px 16px; border-radius: 999px;
-  background: #04244a; color: var(--ink); font-size: 13px;
-  border: 1px solid var(--panel-bd);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
-}
-.update[hidden] { display: none; }
-.update button {
-  padding: 6px 12px; border: 0; border-radius: 999px;
-  background: var(--accent); color: var(--ground);
-  font: inherit; font-size: 12px; font-weight: 700; cursor: pointer;
-}
-
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior: auto !important; }
 }

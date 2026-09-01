@@ -172,8 +172,8 @@ self.addEventListener("activate", (event) => {
  *
  * Freshness does not depend on this path. A deploy changes CACHE, so the new
  * worker installs a fresh copy of every page and app.js reloads the document on
- * controllerchange; version.json is never served from here, so the update
- * banner still sees the truth.
+ * controllerchange; version.json is never served from here, so the poll that
+ * asks for that worker still sees the truth.
  */
 async function staleWhileRevalidate(event, request) {
   const cache = await caches.open(CACHE);

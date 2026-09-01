@@ -7,6 +7,11 @@
 <meta name="description" content="{{ description }}">
 <meta name="theme-color" content="#153863">
 <meta name="app-version" content="{{ site.version }}">
+{#- The programme hash above changes only when the programme does. This one
+    changes when anything shipped does - templates, CSS, JS, speaker photos -
+    and it is what names the service worker's cache, so it is the honest
+    answer to "is this page the build the server is serving". #}
+<meta name="app-build" content="{{ site.buildId }}">
 <meta name="base-path" content="{{ "/" | url }}">
 <link rel="manifest" href="{{ "/manifest.webmanifest" | url }}">
 <link rel="icon" href="{{ "/icons/icon.svg" | url }}" type="image/svg+xml">
@@ -33,11 +38,6 @@
 </head>
 <body>
 {{ content | safe }}
-
-<p class="update" id="update" hidden>
-  <span data-en="The programme has been updated.">Programmet er oppdatert.</span>
-  <button type="button" id="update-reload" data-en="Reload">Last inn på nytt</button>
-</p>
 
 <script type="module" src="{{ "/js/app.js" | url }}?v={{ site.buildId }}"></script>
 </body>
