@@ -123,8 +123,17 @@ caching. So the red now-line and the session countdown are both computed in the
 browser, and `version.json` carries a content hash rather than a build timestamp.
 
 The running app polls `version.json` (a 304 with no body until something changes)
-and offers a reload when the hash differs from the one it was built with. The
-service worker makes that reload instant and the site usable offline.
+and updates itself silently when the build id differs from the one it was built
+with — it asks the service worker to update, and the worker claiming the page
+reloads it. The service worker makes that reload instant and the site usable
+offline.
+
+`version.json` carries two hashes and the poll compares the **build** one.
+`version` covers `program.json` alone, so it says whether the programme moved;
+`build` covers everything shipped — templates, CSS, JS, speaker photos — and is
+what names the worker's cache. Comparing the programme hash missed layout
+changes entirely: adding speaker photos to the detail pages rewrote every page
+without touching it, so the pages went stale with nothing to notice.
 
 Offline means the whole programme, not just the pages that were visited. The
 worker takes all 181 entries — every day grid, all 155 talks, the subset fonts —
@@ -139,6 +148,13 @@ a deploy would otherwise run the previous bundle for that whole visit — the ne
 worker only takes over in the background. So the page reloads itself once when a
 new worker claims it, and `sw.js` is registered with `updateViaCache: "none"` so
 a deploy is noticed on the next visit rather than up to ten minutes later.
+
+Every request that fills the cache is made with `cache: "reload"`, including the
+background revalidation behind a served page. GitHub Pages stamps everything
+`max-age=600`, so a plain fetch in the ten minutes after a deploy is answered
+from the browser's HTTP cache with pre-deploy bytes — and storing those under a
+cache name that asserts they are the new build poisons the entry for good, since
+the warm pass skips anything already present.
 
 ## Filtering
 
