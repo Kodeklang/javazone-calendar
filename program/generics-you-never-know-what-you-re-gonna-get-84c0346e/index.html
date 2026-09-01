@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Generics – You Never Know What You’re Gonna Get · JavaZone 2026</title>
+<meta name="description" content="You might think Java is type-safe, but did you know you can *break* type safety too? It all comes down to variance: co-, contra-, and invariance.">
+<meta name="theme-color" content="#153863">
+<meta name="app-version" content="770b1ba4b1ef">
+<meta name="base-path" content="/">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="stylesheet" href="/css/fonts.css?v=456b724efaec">
+<link rel="stylesheet" href="/css/style.css?v=456b724efaec">
+<link rel="preload" href="/css/fonts/montserrat-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="/js/rum.js?v=456b724efaec"></script>
+</head>
+<body>
+<div class="app app--detail">
+  <div class="masthead">
+  
+    <a class="back" href="/dag/3/#session-84c0346e-23d3-48a5-823d-12854700002a" id="back">
+      <span class="back__chevron" aria-hidden="true">‹</span>
+      <span data-en="Programme">Program</span>
+    </a>
+  
+  <span class="wordmark wordmark--centred">JavaZone</span>
+  <button type="button" class="lang" id="lang" aria-label="Language / Språk">
+    <span class="lang__on">NO</span><span class="lang__off">EN</span>
+  </button>
+</div>
+
+
+  <main class="detail">
+    <header class="detail__head">
+      <p class="detail__meta">
+        <span class="chip chip--solid" style="--track: #ecd065"
+              data-en="Lightning talk">Lyntale</span>
+        <span class="detail__day" data-en="Thursday 3 September">Torsdag 3. september</span>
+        <span class="countdown" id="countdown"
+              data-start="2026-09-03T14:05:00.000Z" data-end="2026-09-03T14:25:00.000Z"></span>
+      </p>
+
+      <h1>Generics – You Never Know What You’re Gonna Get</h1>
+
+      <p class="pills">
+        <span class="pill pill--time">
+          <time datetime="2026-09-03T14:05:00.000Z">16:05</time>–<time datetime="2026-09-03T14:25:00.000Z">16:25</time>
+        </span>
+        <span class="pill">Room 6</span>
+      </p>
+
+      <p class="tags">
+        <span class="tag" data-en="English">Engelsk</span>
+        <span class="tag" data-en="20 min">20 min</span>
+        <span class="tag tag--keyword">generics</span>
+        <span class="tag tag--keyword">type erasure</span>
+        <span class="tag tag--keyword">covariant</span>
+        <span class="tag tag--keyword">contravariant</span>
+        <span class="tag tag--keyword">subtype</span>
+      </p>
+    </header>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Speaker">
+        Foredragsholder
+      </h2>
+      <article class="speaker">
+        <div class="speaker__head">
+          <span class="speaker__mono" style="--track: #ecd065" aria-hidden="true">BJ</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">Bram Janssens</h3>
+            <p class="speaker__links">
+              <a href="https://www.linkedin.com/in/s-a-janssens/" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+              <a href="https://bsky.app/profile/sajanssens.bsky.social" rel="noopener noreferrer" target="_blank">Bluesky</a>
+            </p>
+          </div>
+        </div>
+        <p class="speaker__bio">Hello, I'm Bram Janssens, I work as a trainer/consultant in The Netherlands. Throughout my career, I’ve alternated between teaching and software engineering—but at heart, I consider myself a teacher. I enjoy helping others, explaining complex topics clearly, and making a meaningful difference.</p>
+        <p class="speaker__bio">My motto: &quot;Actually, it’s quite simple!&quot;</p>
+        <p class="speaker__bio">While I'm happy to support others in any subject, my technical expertise lies in Java, thanks to years of hands-on experience. I'm also enthusiastic about Kotlin and enjoy exploring its modern features.</p>
+        <p class="speaker__bio">In my free time, I enjoy playing tennis, doing pub quizzes, brewing beer, and umpiring baseball.</p>
+        <p class="speaker__bio">📇 Digital business card: bramjanssens.nl</p>
+      </article>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="About this session">Om sesjonen</h2>
+      <p class="detail__body">You might think Java is type-safe, but did you know you can *break* type safety too? It all comes down to variance: co-, contra-, and invariance.</p>
+      <p class="detail__body">Maybe you’ve heard of these terms, but you’re not entirely sure what they mean or how to use them effectively. That was exactly my situation — even after more than ten years of experience with Java. I’ve noticed this same knowledge gap among the students I teach.</p>
+      <p class="detail__body">Type safety gives us reliability but also adds complexity compared to weakly, dynamically typed languages. Why do we even have types? What makes something a subtype? Do you think you can pass an `Integer` into a parameter of type `Number`? And what about a “type that has a type”? Generics are Java’s way of handling such cases, but they can introduce unexpected and sometimes seemingly illogical behavior. For example: Can you pass a `List&lt;Integer&gt;` into a parameter of type `List&lt;Number&gt;`? What is a capture, and why do you sometimes see errors like &quot;`add(capture of ? extends A)` cannot be applied to `S`&quot;?</p>
+      <p class="detail__body">In this talk, I’ll demystify these concepts and explain them in a way you’ll never forget. You’ll impress your colleagues, gain a competitive edge, and be better prepared to understand and write reusable (framework) code.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Who it is for">Passer for</h2>
+      <p class="detail__body">Attendees will walk away with not just understanding, but confidence—and a new ability to write safer, more expressive code. Moderate experience with Java is recommended.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="On at the same time">Samtidig i programmet</h2>
+      <ol class="parallel">
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/understanding-prompt-injection-techniques-challenges-and-adv-cf189c38/">
+            <time class="parallel__time" datetime="2026-09-03T13:40:00.000Z">15:40</time>
+            <span class="parallel__title">Understanding Prompt Injection - Techniques, Challenges, and Advanced Escalation</span>
+            <span class="parallel__room">Room 1</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/kodearkeologer-pa-legacy-eventyr-7a7da44d/">
+            <time class="parallel__time" datetime="2026-09-03T13:40:00.000Z">15:40</time>
+            <span class="parallel__title">Kodearkeologer på legacy eventyr</span>
+            <span class="parallel__room">Room 2</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/spring-spock-vs-kotest-vs-junit-when-to-pick-which-one-d6ad9cb7/">
+            <time class="parallel__time" datetime="2026-09-03T13:40:00.000Z">15:40</time>
+            <span class="parallel__title">Spring: Spock vs. Kotest vs. JUnit - When to Pick Which One?</span>
+            <span class="parallel__room">Room 3</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/stop-writing-terraform-build-developer-friendly-platforms-wi-2fb685db/">
+            <time class="parallel__time" datetime="2026-09-03T13:40:00.000Z">15:40</time>
+            <span class="parallel__title">Stop writing Terraform: Build developer-friendly platforms with Crossplane</span>
+            <span class="parallel__room">Room 4</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/a-journey-on-tour-with-java-code-on-it-s-way-through-the-jvm-08b03b16/">
+            <time class="parallel__time" datetime="2026-09-03T13:40:00.000Z">15:40</time>
+            <span class="parallel__title">A Journey - On tour with Java code on it’s way through the JVM</span>
+            <span class="parallel__room">Room 7</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/how-to-git-away-with-murder-d4eb6460/">
+            <time class="parallel__time" datetime="2026-09-03T13:40:00.000Z">15:40</time>
+            <span class="parallel__title">How to Git Away with Murder</span>
+            <span class="parallel__room">Room 8</span>
+          </a>
+        </li>
+      </ol>
+    </section>
+  </main>
+</div>
+
+
+<p class="update" id="update" hidden>
+  <span data-en="The programme has been updated.">Programmet er oppdatert.</span>
+  <button type="button" id="update-reload" data-en="Reload">Last inn på nytt</button>
+</p>
+
+<script type="module" src="/js/app.js?v=456b724efaec"></script>
+</body>
+</html>

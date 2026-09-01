@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bearer of Good News · JavaZone 2026</title>
+<meta name="description" content="OAuth 2.0 shipped in 2012 with good intentions and glaring gaps. Public clients leaked secrets. Bearer tokens could be stolen and replayed. Authorization...">
+<meta name="theme-color" content="#153863">
+<meta name="app-version" content="770b1ba4b1ef">
+<meta name="base-path" content="/">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="stylesheet" href="/css/fonts.css?v=456b724efaec">
+<link rel="stylesheet" href="/css/style.css?v=456b724efaec">
+<link rel="preload" href="/css/fonts/montserrat-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="/js/rum.js?v=456b724efaec"></script>
+</head>
+<body>
+<div class="app app--detail">
+  <div class="masthead">
+  
+    <a class="back" href="/dag/2/#session-b5aa1e6d-626a-4eaa-844f-185b9b4b2702" id="back">
+      <span class="back__chevron" aria-hidden="true">‹</span>
+      <span data-en="Programme">Program</span>
+    </a>
+  
+  <span class="wordmark wordmark--centred">JavaZone</span>
+  <button type="button" class="lang" id="lang" aria-label="Language / Språk">
+    <span class="lang__on">NO</span><span class="lang__off">EN</span>
+  </button>
+</div>
+
+
+  <main class="detail">
+    <header class="detail__head">
+      <p class="detail__meta">
+        <span class="chip chip--solid" style="--track: #02dfff"
+              data-en="Presentation">Foredrag</span>
+        <span class="detail__day" data-en="Wednesday 2 September">Onsdag 2. september</span>
+        <span class="countdown" id="countdown"
+              data-start="2026-09-02T07:00:00.000Z" data-end="2026-09-02T07:45:00.000Z"></span>
+      </p>
+
+      <h1>Bearer of Good News</h1>
+
+      <p class="pills">
+        <span class="pill pill--time">
+          <time datetime="2026-09-02T07:00:00.000Z">09:00</time>–<time datetime="2026-09-02T07:45:00.000Z">09:45</time>
+        </span>
+        <span class="pill">Room 8</span>
+      </p>
+
+      <p class="tags">
+        <span class="tag" data-en="English">Engelsk</span>
+        <span class="tag" data-en="45 min">45 min</span>
+        <span class="tag tag--keyword">Identity</span>
+        <span class="tag tag--keyword">Security</span>
+      </p>
+    </header>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Speaker">
+        Foredragsholder
+      </h2>
+      <article class="speaker">
+        <div class="speaker__head">
+          <span class="speaker__mono" style="--track: #02dfff" aria-hidden="true">SB</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">Sam Bellen</h3>
+            <p class="speaker__links">
+              <a href="https://www.linkedin.com/in/sambellen" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+              <a href="https://bsky.app/profile/sambego.tech" rel="noopener noreferrer" target="_blank">Bluesky</a>
+              <a href="https://x.com/sambego" rel="noopener noreferrer" target="_blank">X</a>
+            </p>
+          </div>
+        </div>
+        <p class="speaker__bio">Sam is a Principal Developer Advocate currently working at Auth0 by Okta. He loves everything identity and explaining complex topics clearly and understandably. You can find him on stage at developer events worldwide or simply having great conversations in the hallway.</p>
+      </article>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="About this session">Om sesjonen</h2>
+      <p class="detail__body">OAuth 2.0 shipped in 2012 with good intentions and glaring gaps. Public clients leaked secrets. Bearer tokens could be stolen and replayed. Authorization required users glued to their screens. Metadata lived in developer documentation rather than in discoverable endpoints. Token delegation meant copying credentials. Developers worked around these gaps with custom solutions and best practices until the spec formalized them.</p>
+      <p class="detail__body">OAuth 2.1 isn't a revolution; it's a consolidation. PKCE moves from optional to mandatory. DPoP adds cryptographic proof of possession to bearer tokens and guards against replay attacks. CIBA decouples authorization from your browser session. Client ID Metadata Documents, and Authorization Server Metadata turn configuration from copy-paste into discovery. Token Exchange lets services act on behalf of users without copying credentials, so secrets never have to leave the authorization server. Cross-App Access extends this further with identity assertion grants. Each piece solves a real problem; together they form modern OAuth.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Who it is for">Passer for</h2>
+      <p class="detail__body">We’ll assume some basic OAuth and OIDC knowledge and build on that, explaining each new concept from scratch.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="On at the same time">Samtidig i programmet</h2>
+      <ol class="parallel">
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/50-tips-pa-60-min-bli-bedre-med-ai-agenter-bf1d8198/">
+            <time class="parallel__time" datetime="2026-09-02T07:00:00.000Z">09:00</time>
+            <span class="parallel__title">50 tips på 60 min – bli bedre med AI-agenter</span>
+            <span class="parallel__room">Room 1</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/talking-to-machines-the-history-and-future-of-programming-la-f8eac465/">
+            <time class="parallel__time" datetime="2026-09-02T07:00:00.000Z">09:00</time>
+            <span class="parallel__title">Talking to Machines: The History and Future of Programming Languages</span>
+            <span class="parallel__room">Room 2</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/fra-spagetti-til-legoklosser-modularisert-arkitektur-og-tdd--e03d6415/">
+            <time class="parallel__time" datetime="2026-09-02T07:00:00.000Z">09:00</time>
+            <span class="parallel__title">Fra spagetti til legoklosser: Modularisert arkitektur og TDD i frontend</span>
+            <span class="parallel__room">Room 3</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/building-for-the-world-one-iteration-at-a-time-d48337af/">
+            <time class="parallel__time" datetime="2026-09-02T07:00:00.000Z">09:00</time>
+            <span class="parallel__title">Building for the World, One Iteration at a Time</span>
+            <span class="parallel__room">Room 4</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/async-is-the-new-goto-rethinking-structured-concurrency-d01d734f/">
+            <time class="parallel__time" datetime="2026-09-02T07:00:00.000Z">09:00</time>
+            <span class="parallel__title">Async is the New `goto`: Rethinking Structured Concurrency</span>
+            <span class="parallel__room">Room 5</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/da-pappa-delte-snuskete-innhold-pa-facebook-en-liten-histori-1e4eb325/">
+            <time class="parallel__time" datetime="2026-09-02T07:00:00.000Z">09:00</time>
+            <span class="parallel__title">Da pappa delte snuskete innhold på Facebook - en liten historie om hvorfor vi må ta hensyn til brukernes mentale modeller når vi lager nye datasystemer</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/slas-slos-and-slis-demystifying-sre-9ab58dfe/">
+            <time class="parallel__time" datetime="2026-09-02T07:00:00.000Z">09:00</time>
+            <span class="parallel__title">SLAs, SLOs, and SLIs: Demystifying SRE</span>
+            <span class="parallel__room">Room 7</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/47-000-millionaerer-d17ba5e3/">
+            <time class="parallel__time" datetime="2026-09-02T07:25:00.000Z">09:25</time>
+            <span class="parallel__title">47.000 millionærer</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+      </ol>
+    </section>
+  </main>
+</div>
+
+
+<p class="update" id="update" hidden>
+  <span data-en="The programme has been updated.">Programmet er oppdatert.</span>
+  <button type="button" id="update-reload" data-en="Reload">Last inn på nytt</button>
+</p>
+
+<script type="module" src="/js/app.js?v=456b724efaec"></script>
+</body>
+</html>

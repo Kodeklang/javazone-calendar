@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hvordan vi temmer en domenemodell med 1500+ klasser · JavaZone 2026</title>
+<meta name="description" content="Vi kjenner alle til smerten i overgangen mellom relasjonsdatabaser og objekter. Skaler opp til tusenvis av klasser, relasjoner og constraints fra en...">
+<meta name="theme-color" content="#153863">
+<meta name="app-version" content="770b1ba4b1ef">
+<meta name="base-path" content="/">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="stylesheet" href="/css/fonts.css?v=456b724efaec">
+<link rel="stylesheet" href="/css/style.css?v=456b724efaec">
+<link rel="preload" href="/css/fonts/montserrat-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="/js/rum.js?v=456b724efaec"></script>
+</head>
+<body>
+<div class="app app--detail">
+  <div class="masthead">
+  
+    <a class="back" href="/dag/3/#session-74caf7d7-4c7f-4729-a6ee-750555a27a4b" id="back">
+      <span class="back__chevron" aria-hidden="true">‹</span>
+      <span data-en="Programme">Program</span>
+    </a>
+  
+  <span class="wordmark wordmark--centred">JavaZone</span>
+  <button type="button" class="lang" id="lang" aria-label="Language / Språk">
+    <span class="lang__on">NO</span><span class="lang__off">EN</span>
+  </button>
+</div>
+
+
+  <main class="detail">
+    <header class="detail__head">
+      <p class="detail__meta">
+        <span class="chip chip--solid" style="--track: #ecd065"
+              data-en="Lightning talk">Lyntale</span>
+        <span class="detail__day" data-en="Thursday 3 September">Torsdag 3. september</span>
+        <span class="countdown" id="countdown"
+              data-start="2026-09-03T07:50:00.000Z" data-end="2026-09-03T08:10:00.000Z"></span>
+      </p>
+
+      <h1>Hvordan vi temmer en domenemodell med 1500+ klasser</h1>
+
+      <p class="pills">
+        <span class="pill pill--time">
+          <time datetime="2026-09-03T07:50:00.000Z">09:50</time>–<time datetime="2026-09-03T08:10:00.000Z">10:10</time>
+        </span>
+        <span class="pill">Room 6</span>
+      </p>
+
+      <p class="tags">
+        <span class="tag" data-en="Norwegian">Norsk</span>
+        <span class="tag" data-en="20 min">20 min</span>
+        <span class="tag tag--keyword">Domain-Driven Design</span>
+        <span class="tag tag--keyword">Kotlin</span>
+        <span class="tag tag--keyword">Code Generation</span>
+        <span class="tag tag--keyword">Graph-OOP impedance</span>
+        <span class="tag tag--keyword">Ontology</span>
+      </p>
+    </header>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Speakers">
+        Foredragsholdere
+      </h2>
+      <article class="speaker">
+        <div class="speaker__head">
+          <span class="speaker__mono" style="--track: #ecd065" aria-hidden="true">SB</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">Simen Burud</h3>
+          </div>
+        </div>
+        <p class="speaker__bio">Developer/data engineer.</p>
+      </article>
+      <article class="speaker">
+        <div class="speaker__head">
+          <span class="speaker__mono" style="--track: #ecd065" aria-hidden="true">HT</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">Herman Thieme</h3>
+          </div>
+        </div>
+        <p class="speaker__bio">Developer/data engineer.</p>
+      </article>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="About this session">Om sesjonen</h2>
+      <p class="detail__body">Vi kjenner alle til smerten i overgangen mellom relasjonsdatabaser og objekter. Skaler opp til tusenvis av klasser, relasjoner og constraints fra en internasjonal standard, og du ender med forenklinger og kode som ikke egentlig greier å uttrykke domenet skikkelig. For å strø salt i såret, innse at domenet egentlig ligner mer på en graf enn en haug tabeller.</p>
+      <p class="detail__body">Vi sto overfor akkurat dette. Standarden vi jobber mot er enorm, grafbasert, og skrevet for og av domeneeksperter med årevis av erfaring. For en utvikler er den nærmest uleselig. Men den er maskinlesbar. I stedet for å redusere standarden til noe en relasjonsdatabase kan håndtere, genererte vi Kotlin-kode direkte fra spesifikasjonen og bygget et tynt, fleksibelt abstrasjonslag mot grafdatabasen.</p>
+      <p class="detail__body">Resultatet: et felles vokabular mellom utviklere og domeneeksperter, interoperabilitet som følger standarden ut av boksen, og fordelene du forbinder med en liten håndskrevet modell, selv om standarden har tusenvis av klasser. Færre feil, raskere utvikling, og en kompilator og IDE som guider deg gjennom et domene du ikke trenger å forstå fullt ut på forhånd.</p>
+      <p class="detail__body">Dette er domenedrevet design slik det er ment: domenet uttrykt klart og tydelig, mens infrastruktur-koden ligger ryddig adskilt ved siden av.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Who it is for">Passer for</h2>
+      <p class="detail__body">Utviklere og arkitekter som jobber mot store eller komplekse domenemodeller, eller som har kjent på smerten ved å presse grafbaserte data inn i relasjonsdatabaser. Du trenger ikke kjenne til OWL eller grafdatabaser fra før, men erfaring med domenedrevet design og typesystemer i Java eller Kotlin gir mest utbytte.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="On at the same time">Samtidig i programmet</h2>
+      <ol class="parallel">
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/event-sourcing-the-only-sane-way-to-run-agentic-systems-13fb6b2e/">
+            <time class="parallel__time" datetime="2026-09-03T07:00:00.000Z">09:00</time>
+            <span class="parallel__title">Event Sourcing: The Only Sane Way to Run Agentic Systems</span>
+            <span class="parallel__room">Room 8</span>
+          </a>
+        </li>
+      </ol>
+    </section>
+  </main>
+</div>
+
+
+<p class="update" id="update" hidden>
+  <span data-en="The programme has been updated.">Programmet er oppdatert.</span>
+  <button type="button" id="update-reload" data-en="Reload">Last inn på nytt</button>
+</p>
+
+<script type="module" src="/js/app.js?v=456b724efaec"></script>
+</body>
+</html>

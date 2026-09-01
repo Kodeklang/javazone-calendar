@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cloud on Your Terms: Building Your Own Cloud-Native Platform · JavaZone 2026</title>
+<meta name="description" content="What if your cloud provider jacks up prices tomorrow? What if your government says yourdata can&amp;#39;t leave the country? What if the software your platform depends...">
+<meta name="theme-color" content="#153863">
+<meta name="app-version" content="770b1ba4b1ef">
+<meta name="base-path" content="/">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="stylesheet" href="/css/fonts.css?v=456b724efaec">
+<link rel="stylesheet" href="/css/style.css?v=456b724efaec">
+<link rel="preload" href="/css/fonts/montserrat-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="/js/rum.js?v=456b724efaec"></script>
+</head>
+<body>
+<div class="app app--detail">
+  <div class="masthead">
+  
+    <a class="back" href="/#session-d79dfb8b-fe09-4769-a230-3b8d2172bfa1" id="back">
+      <span class="back__chevron" aria-hidden="true">‹</span>
+      <span data-en="Programme">Program</span>
+    </a>
+  
+  <span class="wordmark wordmark--centred">JavaZone</span>
+  <button type="button" class="lang" id="lang" aria-label="Language / Språk">
+    <span class="lang__on">NO</span><span class="lang__off">EN</span>
+  </button>
+</div>
+
+
+  <main class="detail">
+    <header class="detail__head">
+      <p class="detail__meta">
+        <span class="chip chip--solid" style="--track: #93e195"
+              data-en="Workshop">Workshop</span>
+        <span class="detail__day" data-en="Tuesday 1 September">Tirsdag 1. september</span>
+        <span class="countdown" id="countdown"
+              data-start="2026-09-01T07:00:00.000Z" data-end="2026-09-01T11:00:00.000Z"></span>
+      </p>
+
+      <h1>Cloud on Your Terms: Building Your Own Cloud-Native Platform</h1>
+
+      <p class="pills">
+        <span class="pill pill--time">
+          <time datetime="2026-09-01T07:00:00.000Z">09:00</time>–<time datetime="2026-09-01T11:00:00.000Z">13:00</time>
+        </span>
+        <span class="pill">Workshop B</span>
+      </p>
+
+      <p class="tags">
+        <span class="tag" data-en="English">Engelsk</span>
+        <span class="tag" data-en="4h">4 t</span>
+        <span class="tag tag--keyword">Cloud</span>
+        <span class="tag tag--keyword">Kubernetes</span>
+        <span class="tag tag--keyword">Platform</span>
+        <span class="tag tag--keyword">Privacy</span>
+        <span class="tag tag--keyword">CNCF</span>
+        <span class="tag tag--keyword">GitOps</span>
+        <span class="tag tag--keyword">DevOps</span>
+        <span class="tag tag--keyword">PlatformEngineering</span>
+      </p>
+    </header>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Speakers">
+        Foredragsholdere
+      </h2>
+      <article class="speaker">
+        <div class="speaker__head">
+          <span class="speaker__mono" style="--track: #93e195" aria-hidden="true">HF</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">Hans Kristian Flaatten</h3>
+            <p class="speaker__links">
+              <a href="https://www.linkedin.com/in/hansflaatten/" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+              <a href="https://bsky.app/profile/starefossen.bsky.social" rel="noopener noreferrer" target="_blank">Bluesky</a>
+            </p>
+          </div>
+        </div>
+        <p class="speaker__bio">CNCF Ambassador, Google Developer Expert, Grafana Champion, co-host of Plattformpodden, platform engineer in the Norwegian government. Has broken enough production clusters to know how to build good ones.</p>
+      </article>
+      <article class="speaker">
+        <div class="speaker__head">
+          <span class="speaker__mono" style="--track: #93e195" aria-hidden="true">ØR</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">Øyind Randa</h3>
+          </div>
+        </div>
+        <p class="speaker__bio">Software Architect at NextGentel, Lead Organizer for GDG Bergen. Knows his way around distributed systems and has opinions about YAML.</p>
+      </article>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="About this session">Om sesjonen</h2>
+      <p class="detail__body">What if your cloud provider jacks up prices tomorrow? What if your government says your<br>data can't leave the country? What if the software your platform depends on gets<br>relicensed out from under you?</p>
+      <p class="detail__body">Good news: you can build your own platform. We'll do it in four hours, using only<br>open-source cloud-native tools, and you'll leave with something that actually runs — on<br>your own laptop, entirely offline — not just a slide deck.</p>
+      <p class="detail__body">## What we're building</p>
+      <p class="detail__body">Think of it as a &quot;cloud in a box&quot; — a self-hosted platform that gives your developers<br>everything they need, without anyone's permission:</p>
+      <p class="detail__body">- A **Kubernetes cluster** on Talos Linux (immutable, API-driven, no SSH — yes, really)<br>- **eBPF networking** with Cilium — you install the CNI yourself and watch the cluster<br>  come alive (there's no kube-proxy either)<br>- **GitOps delivery** with ArgoCD v3 — pointed at your cluster's *own* git server<br>  (in-cluster Gitea), because your platform shouldn't depend on GitHub being up<br>- **PostgreSQL-as-a-Service** via CloudNativePG<br>- **S3-compatible object storage** via RustFS (an open-source, Apache-2.0 alternative<br>  to MinIO, whose open-source edition was discontinued — a story we'll come back to)<br>- **Self-service infrastructure** with Crossplane v2 — one YAML claim, and an app<br>  appears with its database and bucket wired in<br>- **Serverless** with Knative — services that scale from zero while you watch<br>- **CI on your terms** with Argo Workflows + BuildKit + a Zot registry — your cluster<br>  builds its own images, no external CI touched<br>- **Durable messaging** with NATS JetStream<br>- **A cloud console you can actually read** — a real portal whose entire source ships<br>  in the repo (plus a Backstage demo for the enterprise-sized version)<br>- **Observability** with OpenTelemetry and the VictoriaMetrics stack, fronted by<br>  Grafana — your uploads traced end to end</p>
+      <p class="detail__body">That's a lot for four hours, and we won't go deep on every tool — the labs state<br>outcomes, not steps, and layered hints keep you moving. Along the way you'll also break<br>things on purpose and debug them (with or without an AI assistant — and learn why you<br>should double-check what it tells you).</p>
+      <p class="detail__body">## The ending is yours</p>
+      <p class="detail__body">The last hour is a choose-your-own-adventure: pick the door that matches why you came —<br>**app dev** (build a real service on your platform), **platform** (add a capability<br>yourself: cert-manager, or Kafka if your laptop is beefy), **security** (zero-trust<br>network policy against a live pipeline, image signing), or **infra** (Talos surgery,<br>etcd backups, Gateway API). The doors are open-ended by design: start in the room,<br>finish on the couch — the platform goes home with you and runs without internet.</p>
+      <p class="detail__body">## Before you come</p>
+      <p class="detail__body">**Do the prework.** It downloads ~7.5 GB of container images; conference WiFi will not<br>save you. You'll need Docker and a laptop with 16 GB RAM (32 GB recommended). Prior<br>Kubernetes experience helps but isn't required. Setup instructions:<br><a href="https://github.com/randax/Platform-Engineering-Workshop" rel="noopener noreferrer" target="_blank">https://github.com/randax/Platform-Engineering-Workshop</a></p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Who it is for">Passer for</h2>
+      <p class="detail__body">Developers, Architects, Sysadmins, DevOps</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Before you arrive">Forberedelser</h2>
+      <p class="detail__pre">Do this *before* the workshop. Seriously. The setup downloads ~7.5 GB of container images — conference WiFi carries keystrokes, not gigabytes. After these steps, the entire workshop runs offline on your laptop.
+
+1. Clone the repo:
+
+```bash
+git clone <a href="https://github.com/randax/Platform-Engineering-Workshop.git" rel="noopener noreferrer" target="_blank">https://github.com/randax/Platform-Engineering-Workshop.git</a>
+cd Platform-Engineering-Workshop
+```
+
+2. Install the pinned tools (uses [mise](<a href="https://mise.jdx.dev/" rel="noopener noreferrer" target="_blank">https://mise.jdx.dev/</a>) for version management — say yes when it offers to hook into your shell; it also gives you a workshop-only kubeconfig so your real clusters are never touched):
+
+```bash
+./scripts/dev-setup.sh
+```
+
+3. Pull the container images (go make coffee, this takes a while):
+
+```bash
+./scripts/cloudbox-init.sh
+```
+
+4. Verify everything works:
+
+```bash
+./scripts/install.sh --check
+```
+
+If step 4 prints all green, you're done. If it won't go green and the output can't help you fix it, the repo ships a devcontainer/Codespaces lifeboat with the exact same workshop content — see &quot;Plan B&quot; in the README.
+
+One more thing: re-run steps 3–4 in the last day or two before the workshop — the image list gets its final refresh about two days ahead, and a re-run only pulls what's new.
+
+Hardware — honest numbers: 16 GB RAM minimum (32 GB recommended, and close your Electron zoo on 16), 4 CPU cores, 40 GB free disk, Docker running (macOS: OrbStack or Docker Desktop with a raised memory limit; WSL2: raise the limit in .wslconfig). macOS and Linux fully supported; Windows/WSL2 is best-effort — if it fights you, the lifeboat has you covered. Bring your power supply.
+
+Prior Kubernetes experience helps but isn't required — the labs state outcomes and walk you there with layered hints. AI assistants are welcome, as tutors: the repo will coach them to help you learn rather than do the labs for you
+
+## Further reading
+
+- [CNCF Landscape](<a href="https://landscape.cncf.io/" rel="noopener noreferrer" target="_blank">https://landscape.cncf.io/</a>) — the full map of cloud-native projects
+- [Platform Engineering Roadmap](<a href="https://roadmap.sh/devops" rel="noopener noreferrer" target="_blank">https://roadmap.sh/devops</a>)
+- [Kubernetes Docs](<a href="https://kubernetes.io/docs/" rel="noopener noreferrer" target="_blank">https://kubernetes.io/docs/</a>)
+- [GitOps Principles](<a href="https://opengitops.dev/" rel="noopener noreferrer" target="_blank">https://opengitops.dev/</a>)</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="On at the same time">Samtidig i programmet</h2>
+      <ol class="parallel">
+        <li class="parallel__item" style="--track: #93e195">
+          <a href="/program/write-once-run-anywhere-a-hands-on-compose-multiplatform-wor-b887eba1/">
+            <time class="parallel__time" datetime="2026-09-01T07:00:00.000Z">09:00</time>
+            <span class="parallel__title">Write once, run anywhere: A Hands-on Compose Multiplatform Workshop</span>
+            <span class="parallel__room">Workshop A</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #93e195">
+          <a href="/program/create-your-own-role-playing-game-with-agentic-ai-using-spri-2aaaecf1/">
+            <time class="parallel__time" datetime="2026-09-01T07:00:00.000Z">09:00</time>
+            <span class="parallel__title">Create Your Own Role-Playing Game with Agentic AI using Spring AI (Delivered as a Workshop)</span>
+            <span class="parallel__room">Workshop C</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #93e195">
+          <a href="/program/red-light-green-light-997f247a/">
+            <time class="parallel__time" datetime="2026-09-01T07:00:00.000Z">09:00</time>
+            <span class="parallel__title">Red light, Green light!</span>
+            <span class="parallel__room">Workshop D</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #93e195">
+          <a href="/program/building-secure-ai-agents-with-quarkus-langchain4j-7209dd07/">
+            <time class="parallel__time" datetime="2026-09-01T09:15:00.000Z">11:15</time>
+            <span class="parallel__title">Building secure AI agents with Quarkus LangChain4j</span>
+            <span class="parallel__room">Workshop C</span>
+          </a>
+        </li>
+      </ol>
+    </section>
+  </main>
+</div>
+
+
+<p class="update" id="update" hidden>
+  <span data-en="The programme has been updated.">Programmet er oppdatert.</span>
+  <button type="button" id="update-reload" data-en="Reload">Last inn på nytt</button>
+</p>
+
+<script type="module" src="/js/app.js?v=456b724efaec"></script>
+</body>
+</html>

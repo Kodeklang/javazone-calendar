@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Magic of OpenTelemetry: Rewriting Your App in Production · JavaZone 2026</title>
+<meta name="description" content="OpenTelemetry makes traces, metrics, and logs appear as if by magic but what actually happens behind the JVM agent we routinely add to our applications?">
+<meta name="theme-color" content="#153863">
+<meta name="app-version" content="770b1ba4b1ef">
+<meta name="base-path" content="/">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="stylesheet" href="/css/fonts.css?v=456b724efaec">
+<link rel="stylesheet" href="/css/style.css?v=456b724efaec">
+<link rel="preload" href="/css/fonts/montserrat-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="/js/rum.js?v=456b724efaec"></script>
+</head>
+<body>
+<div class="app app--detail">
+  <div class="masthead">
+  
+    <a class="back" href="/dag/2/#session-b76bd602-d3e5-451e-9890-2ed1efa01bdd" id="back">
+      <span class="back__chevron" aria-hidden="true">‹</span>
+      <span data-en="Programme">Program</span>
+    </a>
+  
+  <span class="wordmark wordmark--centred">JavaZone</span>
+  <button type="button" class="lang" id="lang" aria-label="Language / Språk">
+    <span class="lang__on">NO</span><span class="lang__off">EN</span>
+  </button>
+</div>
+
+
+  <main class="detail">
+    <header class="detail__head">
+      <p class="detail__meta">
+        <span class="chip chip--solid" style="--track: #02dfff"
+              data-en="Presentation">Foredrag</span>
+        <span class="detail__day" data-en="Wednesday 2 September">Onsdag 2. september</span>
+        <span class="countdown" id="countdown"
+              data-start="2026-09-02T11:00:00.000Z" data-end="2026-09-02T12:00:00.000Z"></span>
+      </p>
+
+      <h1>The Magic of OpenTelemetry: Rewriting Your App in Production</h1>
+
+      <p class="pills">
+        <span class="pill pill--time">
+          <time datetime="2026-09-02T11:00:00.000Z">13:00</time>–<time datetime="2026-09-02T12:00:00.000Z">14:00</time>
+        </span>
+        <span class="pill">Room 4</span>
+      </p>
+
+      <p class="tags">
+        <span class="tag" data-en="English">Engelsk</span>
+        <span class="tag" data-en="1h">1 t</span>
+        <span class="tag tag--keyword">opentelemetry</span>
+        <span class="tag tag--keyword">instrumentation</span>
+        <span class="tag tag--keyword">jvm</span>
+        <span class="tag tag--keyword">agent</span>
+        <span class="tag tag--keyword">bytecode</span>
+      </p>
+    </header>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Speaker">
+        Foredragsholder
+      </h2>
+      <article class="speaker">
+        <div class="speaker__head">
+          <span class="speaker__mono" style="--track: #02dfff" aria-hidden="true">BB</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">Bruce Bujon</h3>
+            <p class="speaker__links">
+              <a href="https://www.linkedin.com/in/bruce-bujon/" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+              <a href="https://bsky.app/profile/hardcoding.fr" rel="noopener noreferrer" target="_blank">Bluesky</a>
+              <a href="https://x.com/HardCoding" rel="noopener noreferrer" target="_blank">X</a>
+            </p>
+          </div>
+        </div>
+        <p class="speaker__bio">Bruce Bujon is a Senior Software Engineer at Datadog, and lives near Paris. He spent about 15 years building distributed systems using the Java ecosystem. Today, he also leads the Paris JUG, and contributes to Open Source projects. When he is not working, he is probably reverse engineering some applications or soldering the quirky prototype of its next gadget.</p>
+      </article>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="About this session">Om sesjonen</h2>
+      <p class="detail__body">OpenTelemetry makes traces, metrics, and logs appear as if by magic but what actually happens behind the JVM agent we routinely add to our applications?</p>
+      <p class="detail__body">This talk goes where most developers never look. You’ll see how the OpenTelemetry agent sneaks into your JVM, intercepts class loading, and rewrites your application on the fly. We’ll explore the power of the javaagent mechanism, the Instrumentation API, and the internals of ByteBuddy that allow instrumenting Spring, Servlets, JDBC, or gRPC without changing a single line of your code. Your application is running, but not quite the way you think it is.</p>
+      <p class="detail__body">You’ll leave with a clear understanding of the real impact these changes can have in production: latency, allocations, potential conflicts, and behavior modified at runtime, along with practical techniques to diagnose what is really happening under the hood.</p>
+      <p class="detail__body">If you’re using OpenTelemetry without really knowing what it’s doing inside your JVM, or if you want to finally understand how an agent can rewrite your application in production, then welcome: this session opens the black box… and reveals the magic.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Who it is for">Passer for</h2>
+      <p class="detail__body">Developers using OpenTelemetry or any observability JVM agent. Engineers curious about the bytecode injection and its capabilities in general. No prior experience required.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="On at the same time">Samtidig i programmet</h2>
+      <ol class="parallel">
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/java-patterns-why-how-and-when-not-6092efef/">
+            <time class="parallel__time" datetime="2026-09-02T11:00:00.000Z">13:00</time>
+            <span class="parallel__title">Java Patterns: Why, How, and When Not</span>
+            <span class="parallel__room">Room 1</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/from-data-engineering-to-knowledge-engineering-in-the-blink--56bb956d/">
+            <time class="parallel__time" datetime="2026-09-02T11:00:00.000Z">13:00</time>
+            <span class="parallel__title">From Data Engineering to Knowledge Engineering in the blink of an eye</span>
+            <span class="parallel__room">Room 2</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/quantum-ready-java-a-practical-guide-to-post-quantum-cryptog-1e8c933f/">
+            <time class="parallel__time" datetime="2026-09-02T11:00:00.000Z">13:00</time>
+            <span class="parallel__title">Quantum-Ready Java: A Practical Guide to Post-Quantum Cryptography Migration</span>
+            <span class="parallel__room">Room 3</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/norsk-forskning-hva-gjor-norske-organisasjoner-med-agentisk--17861e6b/">
+            <time class="parallel__time" datetime="2026-09-02T11:00:00.000Z">13:00</time>
+            <span class="parallel__title">Norsk forskning: Hva gjør norske organisasjoner med agentisk utvikling</span>
+            <span class="parallel__room">Room 5</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/passkeys-enklere-enn-du-tror-slik-implementerer-du-stotte-fo-cb6bd929/">
+            <time class="parallel__time" datetime="2026-09-02T11:00:00.000Z">13:00</time>
+            <span class="parallel__title">Passkeys: Enklere enn du tror. Slik implementerer du støtte for det</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/no-more-magic-mastering-the-explicit-kotlin-stack-with-ktor--4443a9a9/">
+            <time class="parallel__time" datetime="2026-09-02T11:00:00.000Z">13:00</time>
+            <span class="parallel__title">No More Magic: Mastering the Explicit Kotlin Stack with Ktor, Exposed and Koin</span>
+            <span class="parallel__room">Room 7</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/fra-plastkort-til-protokoller-deling-av-data-fra-eu-si-digit-ad6c7094/">
+            <time class="parallel__time" datetime="2026-09-02T11:00:00.000Z">13:00</time>
+            <span class="parallel__title">Frå plastkort til protokoller: Deling av data fra EU si digitale identitetslommebok</span>
+            <span class="parallel__room">Room 8</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/knowing-without-knowing-2991d2ac/">
+            <time class="parallel__time" datetime="2026-09-02T11:25:00.000Z">13:25</time>
+            <span class="parallel__title">Knowing without Knowing</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/how-to-keep-secrets-from-your-agent-c14b5db1/">
+            <time class="parallel__time" datetime="2026-09-02T11:50:00.000Z">13:50</time>
+            <span class="parallel__title">How to Keep Secrets from your Agent</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+      </ol>
+    </section>
+  </main>
+</div>
+
+
+<p class="update" id="update" hidden>
+  <span data-en="The programme has been updated.">Programmet er oppdatert.</span>
+  <button type="button" id="update-reload" data-en="Reload">Last inn på nytt</button>
+</p>
+
+<script type="module" src="/js/app.js?v=456b724efaec"></script>
+</body>
+</html>

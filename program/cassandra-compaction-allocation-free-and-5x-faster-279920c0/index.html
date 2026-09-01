@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cassandra Compaction - Allocation Free, and 5x Faster · JavaZone 2026</title>
+<meta name="description" content="The Cassandra database is a widely deployed Java infrastructure piece, and a critical part of many services. A core part of it&amp;#39;s work is deduplicating and...">
+<meta name="theme-color" content="#153863">
+<meta name="app-version" content="770b1ba4b1ef">
+<meta name="base-path" content="/">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="stylesheet" href="/css/fonts.css?v=456b724efaec">
+<link rel="stylesheet" href="/css/style.css?v=456b724efaec">
+<link rel="preload" href="/css/fonts/montserrat-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="/js/rum.js?v=456b724efaec"></script>
+</head>
+<body>
+<div class="app app--detail">
+  <div class="masthead">
+  
+    <a class="back" href="/dag/3/#session-279920c0-0d3b-46ac-94c1-e4c94e61246b" id="back">
+      <span class="back__chevron" aria-hidden="true">‹</span>
+      <span data-en="Programme">Program</span>
+    </a>
+  
+  <span class="wordmark wordmark--centred">JavaZone</span>
+  <button type="button" class="lang" id="lang" aria-label="Language / Språk">
+    <span class="lang__on">NO</span><span class="lang__off">EN</span>
+  </button>
+</div>
+
+
+  <main class="detail">
+    <header class="detail__head">
+      <p class="detail__meta">
+        <span class="chip chip--solid" style="--track: #02dfff"
+              data-en="Presentation">Foredrag</span>
+        <span class="detail__day" data-en="Thursday 3 September">Torsdag 3. september</span>
+        <span class="countdown" id="countdown"
+              data-start="2026-09-03T09:40:00.000Z" data-end="2026-09-03T10:40:00.000Z"></span>
+      </p>
+
+      <h1>Cassandra Compaction - Allocation Free, and 5x Faster</h1>
+
+      <p class="pills">
+        <span class="pill pill--time">
+          <time datetime="2026-09-03T09:40:00.000Z">11:40</time>–<time datetime="2026-09-03T10:40:00.000Z">12:40</time>
+        </span>
+        <span class="pill">Room 2</span>
+      </p>
+
+      <p class="tags">
+        <span class="tag" data-en="English">Engelsk</span>
+        <span class="tag" data-en="1h">1 t</span>
+        <span class="tag tag--keyword">Cassandra</span>
+        <span class="tag tag--keyword">Performance</span>
+        <span class="tag tag--keyword">Profiling</span>
+      </p>
+    </header>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Speaker">
+        Foredragsholder
+      </h2>
+      <article class="speaker">
+        <div class="speaker__head">
+          <span class="speaker__mono" style="--track: #02dfff" aria-hidden="true">NW</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">Nitsan Wakart</h3>
+            <p class="speaker__links">
+              <a href="https://x.com/nitsanw" rel="noopener noreferrer" target="_blank">X</a>
+            </p>
+          </div>
+        </div>
+        <p class="speaker__bio">A blogger and a coder with a pedantic passion for performance. My work has spanned army intelligence systems, dot.com era startups, financial institutions and innovative product companies. A JVM Engineer for Apple by day, main contributor to lock free data structures library JCTools by night.</p>
+      </article>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="About this session">Om sesjonen</h2>
+      <p class="detail__body">The Cassandra database is a widely deployed Java infrastructure piece, and a critical part of many services. A core part of it's work is deduplicating and deleting data through periodic compactions. In this talk I will discuss a recent patch in which I re-implemented compaction to deliver a large performance improvement. This is an exploration of the delivery of a meaningful performance improvement to a long standing, industry standard, OSS project.</p>
+      <p class="detail__body">Key Takeaways:<br>- Picking the right target<br>- Setting meaningful goals and metrics<br>- The contribution process<br>- Re-occurring optimisation techniques</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Who it is for">Passer for</h2>
+      <p class="detail__body">Cassandra enthusiasts, Java performance enthusiasts, Intermediate/Senior Java eng</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="On at the same time">Samtidig i programmet</h2>
+      <ol class="parallel">
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/heis-fm-live-5381f76e/">
+            <time class="parallel__time" datetime="2026-09-03T09:40:00.000Z">11:40</time>
+            <span class="parallel__title">Heis.fm LIVE</span>
+            <span class="parallel__room">Room 1</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/gleam-and-beam-looking-beyond-the-jvm-861a5d27/">
+            <time class="parallel__time" datetime="2026-09-03T09:40:00.000Z">11:40</time>
+            <span class="parallel__title">Gleam and BEAM: Looking beyond the JVM</span>
+            <span class="parallel__room">Room 3</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/erstatningssystemfella-595f85e2/">
+            <time class="parallel__time" datetime="2026-09-03T09:40:00.000Z">11:40</time>
+            <span class="parallel__title">Erstatningssystemfella</span>
+            <span class="parallel__room">Room 4</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/the-right-300-tokens-beat-100k-noisy-ones-four-context-antip-36db26e6/">
+            <time class="parallel__time" datetime="2026-09-03T09:40:00.000Z">11:40</time>
+            <span class="parallel__title">The Right 300 Tokens Beat 100k Noisy Ones: Four Context Antipatterns That Kill Your AI Agent</span>
+            <span class="parallel__room">Room 5</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/gar-det-ingen-tog-c2323ef1/">
+            <time class="parallel__time" datetime="2026-09-03T09:40:00.000Z">11:40</time>
+            <span class="parallel__title">Går det ingen tog?!?!!</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/cra-security-deadlines-loom-what-senior-java-engineers-must--b94735b6/">
+            <time class="parallel__time" datetime="2026-09-03T09:40:00.000Z">11:40</time>
+            <span class="parallel__title">CRA security deadlines loom: What senior Java engineers must deliver by December 2027</span>
+            <span class="parallel__room">Room 7</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/jdk8-to-25-without-the-pain-engineering-a-modern-java-platfo-b65533ef/">
+            <time class="parallel__time" datetime="2026-09-03T09:40:00.000Z">11:40</time>
+            <span class="parallel__title">JDK8 to 25 Without the pain: Engineering a Modern Java Platform</span>
+            <span class="parallel__room">Room 8</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/nar-noen-tar-ansvar-c5f591a7/">
+            <time class="parallel__time" datetime="2026-09-03T10:05:00.000Z">12:05</time>
+            <span class="parallel__title">Når Noen™ tar ansvar</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/hva-skjedde-da-ai-kom-til-glow-c7593811/">
+            <time class="parallel__time" datetime="2026-09-03T10:20:00.000Z">12:20</time>
+            <span class="parallel__title">Hva skjedde da AI kom til Glow</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+      </ol>
+    </section>
+  </main>
+</div>
+
+
+<p class="update" id="update" hidden>
+  <span data-en="The programme has been updated.">Programmet er oppdatert.</span>
+  <button type="button" id="update-reload" data-en="Reload">Last inn på nytt</button>
+</p>
+
+<script type="module" src="/js/app.js?v=456b724efaec"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stop Writing API Clients — Let the Spec Do It · JavaZone 2026</title>
+<meta name="description" content="Every team has that one API client that someone wrote 18 months ago. And every time the backend changes, someone has to remember to update it manually — and...">
+<meta name="theme-color" content="#153863">
+<meta name="app-version" content="770b1ba4b1ef">
+<meta name="base-path" content="/">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="stylesheet" href="/css/fonts.css?v=456b724efaec">
+<link rel="stylesheet" href="/css/style.css?v=456b724efaec">
+<link rel="preload" href="/css/fonts/montserrat-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="/js/rum.js?v=456b724efaec"></script>
+</head>
+<body>
+<div class="app app--detail">
+  <div class="masthead">
+  
+    <a class="back" href="/dag/2/#session-4c36ab23-ba69-420a-becf-6c562e07fbe7" id="back">
+      <span class="back__chevron" aria-hidden="true">‹</span>
+      <span data-en="Programme">Program</span>
+    </a>
+  
+  <span class="wordmark wordmark--centred">JavaZone</span>
+  <button type="button" class="lang" id="lang" aria-label="Language / Språk">
+    <span class="lang__on">NO</span><span class="lang__off">EN</span>
+  </button>
+</div>
+
+
+  <main class="detail">
+    <header class="detail__head">
+      <p class="detail__meta">
+        <span class="chip chip--solid" style="--track: #ecd065"
+              data-en="Lightning talk">Lyntale</span>
+        <span class="detail__day" data-en="Wednesday 2 September">Onsdag 2. september</span>
+        <span class="countdown" id="countdown"
+              data-start="2026-09-02T13:15:00.000Z" data-end="2026-09-02T13:35:00.000Z"></span>
+      </p>
+
+      <h1>Stop Writing API Clients — Let the Spec Do It</h1>
+
+      <p class="pills">
+        <span class="pill pill--time">
+          <time datetime="2026-09-02T13:15:00.000Z">15:15</time>–<time datetime="2026-09-02T13:35:00.000Z">15:35</time>
+        </span>
+        <span class="pill">Room 6</span>
+      </p>
+
+      <p class="tags">
+        <span class="tag" data-en="English">Engelsk</span>
+        <span class="tag" data-en="20 min">20 min</span>
+        <span class="tag tag--keyword">OpenAPI</span>
+        <span class="tag tag--keyword">API design</span>
+        <span class="tag tag--keyword">code generation</span>
+        <span class="tag tag--keyword">developer tooling</span>
+        <span class="tag tag--keyword">REST</span>
+      </p>
+    </header>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Speaker">
+        Foredragsholder
+      </h2>
+      <article class="speaker">
+        <div class="speaker__head">
+          <span class="speaker__mono" style="--track: #ecd065" aria-hidden="true">RK</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">Rupinder Kaur</h3>
+            <p class="speaker__links">
+              <a href="https://www.linkedin.com/in/rupinder-kaur-7931a8189/" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+            </p>
+          </div>
+        </div>
+        <p class="speaker__bio">Rupinder Kaur is a tech lead and senior software developer with over 13 years of experience in web services and application development. She has progressed through roles as developer, senior developer, and scrum master before stepping into tech leadership — bringing both deep technical expertise and a collaborative, hands-on approach to guiding teams.</p>
+        <p class="speaker__bio">Her core strengths lie in building scalable backend systems using Java and Micronaut, cloud service automation, infrastructure as code, and CI/CD pipelines.</p>
+        <p class="speaker__bio">She is passionate about developer experience, practical tooling, and mentoring others to deliver their best work.</p>
+      </article>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="About this session">Om sesjonen</h2>
+      <p class="detail__body">Every team has that one API client that someone wrote 18 months ago. And every time the backend changes, someone has to remember to update it manually — and they don't.</p>
+      <p class="detail__body">OpenAPI + openapi-generator solves this completely. Your framework (Spring, Micronaut, FastAPI) already generates an OpenAPI spec at build time. One config file and one command later, you have a fully typed, auto-generated SDK in Python, TypeScript, Java, Go, or Kotlin — with Pydantic models, typed method signatures, and proper serialization. No hand-writing. No drift.</p>
+      <p class="detail__body">This talk shows the full pipeline end-to-end: how the spec is generated, how to configure the generator, what the output looks like, and how to wire it into your build process so the client is always in sync. We'll also cover the honest part — where generators fall short and how a small post-processing script handles the gaps.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Who it is for">Passer for</h2>
+      <p class="detail__body">Backend and full-stack developers who expose REST APIs and maintain clients across teams or languages. No prior OpenAPI experience needed — basic REST knowledge is enough. Especially valuable for teams where the API and its consumers are owned by different people.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="On at the same time">Samtidig i programmet</h2>
+      <ol class="parallel">
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/no-more-forks-policy-transformation-for-terraform-at-scale-85f27d93/">
+            <time class="parallel__time" datetime="2026-09-02T12:20:00.000Z">14:20</time>
+            <span class="parallel__title">No More Forks: Policy Transformation for Terraform at Scale</span>
+            <span class="parallel__room">Room 3</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/your-database-sprawl-is-a-1990s-workaround-give-it-a-kiss-9ae57287/">
+            <time class="parallel__time" datetime="2026-09-02T12:20:00.000Z">14:20</time>
+            <span class="parallel__title">Your Database Sprawl is a 1990s Workaround, Give it a KISS</span>
+            <span class="parallel__room">Room 5</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/gentle-introduction-to-lock-free-programming-in-java-5a6c19a4/">
+            <time class="parallel__time" datetime="2026-09-02T12:20:00.000Z">14:20</time>
+            <span class="parallel__title">Gentle Introduction to Lock-Free Programming in Java</span>
+            <span class="parallel__room">Room 8</span>
+          </a>
+        </li>
+      </ol>
+    </section>
+  </main>
+</div>
+
+
+<p class="update" id="update" hidden>
+  <span data-en="The programme has been updated.">Programmet er oppdatert.</span>
+  <button type="button" id="update-reload" data-en="Reload">Last inn på nytt</button>
+</p>
+
+<script type="module" src="/js/app.js?v=456b724efaec"></script>
+</body>
+</html>

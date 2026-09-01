@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Package-by-(sub)domain · JavaZone 2026</title>
+<meta name="description" content="Hvordan organiserer du koden din i pakker/moduler?">
+<meta name="theme-color" content="#153863">
+<meta name="app-version" content="770b1ba4b1ef">
+<meta name="base-path" content="/">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="stylesheet" href="/css/fonts.css?v=456b724efaec">
+<link rel="stylesheet" href="/css/style.css?v=456b724efaec">
+<link rel="preload" href="/css/fonts/montserrat-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="/js/rum.js?v=456b724efaec"></script>
+</head>
+<body>
+<div class="app app--detail">
+  <div class="masthead">
+  
+    <a class="back" href="/dag/3/#session-eea988e1-e6b2-4d3c-8b4e-55222738b226" id="back">
+      <span class="back__chevron" aria-hidden="true">‹</span>
+      <span data-en="Programme">Program</span>
+    </a>
+  
+  <span class="wordmark wordmark--centred">JavaZone</span>
+  <button type="button" class="lang" id="lang" aria-label="Language / Språk">
+    <span class="lang__on">NO</span><span class="lang__off">EN</span>
+  </button>
+</div>
+
+
+  <main class="detail">
+    <header class="detail__head">
+      <p class="detail__meta">
+        <span class="chip chip--solid" style="--track: #ecd065"
+              data-en="Lightning talk">Lyntale</span>
+        <span class="detail__day" data-en="Thursday 3 September">Torsdag 3. september</span>
+        <span class="countdown" id="countdown"
+              data-start="2026-09-03T12:20:00.000Z" data-end="2026-09-03T12:40:00.000Z"></span>
+      </p>
+
+      <h1>Package-by-(sub)domain</h1>
+
+      <p class="pills">
+        <span class="pill pill--time">
+          <time datetime="2026-09-03T12:20:00.000Z">14:20</time>–<time datetime="2026-09-03T12:40:00.000Z">14:40</time>
+        </span>
+        <span class="pill">Room 6</span>
+      </p>
+
+      <p class="tags">
+        <span class="tag" data-en="Norwegian">Norsk</span>
+        <span class="tag" data-en="20 min">20 min</span>
+        <span class="tag tag--keyword">Applikasjonsarkitektur</span>
+        <span class="tag tag--keyword">design</span>
+      </p>
+    </header>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Speaker">
+        Foredragsholder
+      </h2>
+      <article class="speaker">
+        <div class="speaker__head">
+          <span class="speaker__mono" style="--track: #ecd065" aria-hidden="true">TH</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">Terje Heen</h3>
+            <p class="speaker__links">
+              <a href="https://www.linkedin.com/in/terje-heen-82663b2/" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+            </p>
+          </div>
+        </div>
+        <p class="speaker__bio">Terje jobber som Principal Software Engineer i Telenor. Han har tidligere jobbet som konsulent i 15 år, og Nav i 8 år.</p>
+      </article>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="About this session">Om sesjonen</h2>
+      <p class="detail__body">Hvordan organiserer du koden din i pakker/moduler?</p>
+      <p class="detail__body">Da jeg begynte å utvikle software profesjonelt i 2001 lærte jeg å organisere koden i tekniske lag; package-by-layer. Dette opplevde jeg lenge som en bransjestandard, men rundt 2010 begynte jeg å utforske andre måter å organisere koden jeg jobbet på. Da oppdaget jeg at det er flere måter å gjøre dette på.</p>
+      <p class="detail__body">Jeg har gjort meg en god del gode erfaringer, men jeg har også gjort feil på veien som jeg ønsker å dele.</p>
+      <p class="detail__body">Mitt største ønske er å skape nysgjerrighet for å utforske andre måter å designe software på, samtidig som jeg er klar over at dette heller ikke er noen fasit.</p>
+      <p class="detail__body">Jeg har også erfart at hvordan jeg deler bort, ikke alltid treffer like godt. Jeg forsøker å lære av det, som jeg lærer av software og prøve nye angrepsvinkler. Derfor vil jeg denne gangen starte med å fortelle min historie og hvilke problemet det har løst, før jeg snakker om løsning.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Who it is for">Passer for</h2>
+      <p class="detail__body">Utviklere og arkitekter uavhengig av erfaringsnivå</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="On at the same time">Samtidig i programmet</h2>
+      <ol class="parallel">
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/the-ai-puppet-dance-2b23d759/">
+            <time class="parallel__time" datetime="2026-09-03T12:20:00.000Z">14:20</time>
+            <span class="parallel__title">The AI puppet dance</span>
+            <span class="parallel__room">Room 1</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/digipost-om-ux-i-norges-nye-virksomhetslommebok-5e04257b/">
+            <time class="parallel__time" datetime="2026-09-03T12:20:00.000Z">14:20</time>
+            <span class="parallel__title">Digipost om UX i Norges nye virksomhetslommebok</span>
+            <span class="parallel__room">Room 2</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/a-practical-guide-to-european-public-cloud-providers-95687d0d/">
+            <time class="parallel__time" datetime="2026-09-03T12:20:00.000Z">14:20</time>
+            <span class="parallel__title">A Practical Guide to European Public Cloud Providers</span>
+            <span class="parallel__room">Room 3</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/sikkerhet-fra-mangfold-38a08a7a/">
+            <time class="parallel__time" datetime="2026-09-03T12:20:00.000Z">14:20</time>
+            <span class="parallel__title">Sikkerhet fra mangfold</span>
+            <span class="parallel__room">Room 4</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/domain-driven-web-apis-89812007/">
+            <time class="parallel__time" datetime="2026-09-03T12:20:00.000Z">14:20</time>
+            <span class="parallel__title">Domain-driven web APIs</span>
+            <span class="parallel__room">Room 5</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/concurrency-testing-on-the-jvm-d8267b0c/">
+            <time class="parallel__time" datetime="2026-09-03T12:20:00.000Z">14:20</time>
+            <span class="parallel__title">Concurrency testing on the JVM</span>
+            <span class="parallel__room">Room 7</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/you-re-absolutely-right-it-was-your-home-directory-e92e66b5/">
+            <time class="parallel__time" datetime="2026-09-03T12:20:00.000Z">14:20</time>
+            <span class="parallel__title">You&#39;re absolutely right, it was your home directory!</span>
+            <span class="parallel__room">Room 8</span>
+          </a>
+        </li>
+      </ol>
+    </section>
+  </main>
+</div>
+
+
+<p class="update" id="update" hidden>
+  <span data-en="The programme has been updated.">Programmet er oppdatert.</span>
+  <button type="button" id="update-reload" data-en="Reload">Last inn på nytt</button>
+</p>
+
+<script type="module" src="/js/app.js?v=456b724efaec"></script>
+</body>
+</html>

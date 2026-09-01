@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bare spør! AI-agenter elsker produksjonsmetrikker · JavaZone 2026</title>
+<meta name="description" content="I fjor viste jeg på JavaZone hvordan OpenTelemetry og Java-agenter gir deg røntgensyn i produksjon. I år viser jeg hva som skjer når du kobler en AI-agent til...">
+<meta name="theme-color" content="#153863">
+<meta name="app-version" content="770b1ba4b1ef">
+<meta name="base-path" content="/">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="stylesheet" href="/css/fonts.css?v=456b724efaec">
+<link rel="stylesheet" href="/css/style.css?v=456b724efaec">
+<link rel="preload" href="/css/fonts/montserrat-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="/js/rum.js?v=456b724efaec"></script>
+</head>
+<body>
+<div class="app app--detail">
+  <div class="masthead">
+  
+    <a class="back" href="/dag/2/#session-691ca67c-ab2f-4ecc-a8eb-f60ebc85603b" id="back">
+      <span class="back__chevron" aria-hidden="true">‹</span>
+      <span data-en="Programme">Program</span>
+    </a>
+  
+  <span class="wordmark wordmark--centred">JavaZone</span>
+  <button type="button" class="lang" id="lang" aria-label="Language / Språk">
+    <span class="lang__on">NO</span><span class="lang__off">EN</span>
+  </button>
+</div>
+
+
+  <main class="detail">
+    <header class="detail__head">
+      <p class="detail__meta">
+        <span class="chip chip--solid" style="--track: #ecd065"
+              data-en="Lightning talk">Lyntale</span>
+        <span class="detail__day" data-en="Wednesday 2 September">Onsdag 2. september</span>
+        <span class="countdown" id="countdown"
+              data-start="2026-09-02T15:00:00.000Z" data-end="2026-09-02T15:20:00.000Z"></span>
+      </p>
+
+      <h1>Bare spør! AI-agenter elsker produksjonsmetrikker</h1>
+
+      <p class="pills">
+        <span class="pill pill--time">
+          <time datetime="2026-09-02T15:00:00.000Z">17:00</time>–<time datetime="2026-09-02T15:20:00.000Z">17:20</time>
+        </span>
+        <span class="pill">Room 6</span>
+      </p>
+
+      <p class="tags">
+        <span class="tag" data-en="Norwegian">Norsk</span>
+        <span class="tag" data-en="20 min">20 min</span>
+        <span class="tag tag--keyword">OpenTelemetry</span>
+        <span class="tag tag--keyword">AI Agents</span>
+        <span class="tag tag--keyword">Observability</span>
+        <span class="tag tag--keyword">Application Insights</span>
+        <span class="tag tag--keyword">Developer Experience</span>
+      </p>
+    </header>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Speaker">
+        Foredragsholder
+      </h2>
+      <article class="speaker">
+        <div class="speaker__head">
+          <span class="speaker__mono" style="--track: #ecd065" aria-hidden="true">AS</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">Anders Sveen</h3>
+            <p class="speaker__links">
+              <a href="https://www.linkedin.com/in/anderssv/" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+              <a href="https://bsky.app/profile/anders.f12.no" rel="noopener noreferrer" target="_blank">Bluesky</a>
+              <a href="https://x.com/anderssv" rel="noopener noreferrer" target="_blank">X</a>
+            </p>
+          </div>
+        </div>
+        <p class="speaker__bio">Anders Sveen har jobbet med utvikling i over 20 år og driver konsulentselskapet Mikill, der han kombinerer utvikling, rådgivning og mentoring. Han brenner for enkel og effektiv utvikling som løser reelle forretningsproblemer, med DevOps, observability, TDD og kontinuerlige leveranser som de viktigste verktøyene. Når AI øker farten på utviklingen er gode utviklingspraksiser bare viktigere. Den siste tiden har han jobbet mye med hvordan AI-agenter kan bli en naturlig del av prosessen, fra koding og testing til å snakke med produksjonsdata.</p>
+      </article>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="About this session">Om sesjonen</h2>
+      <p class="detail__body">I fjor viste jeg på JavaZone hvordan OpenTelemetry og Java-agenter gir deg røntgensyn i produksjon. I år viser jeg hva som skjer når du kobler en AI-agent til de samme dataene — og til kildekoden.</p>
+      <p class="detail__body">Dashboards krever at du vet hva du leter etter. Men hva om du bare kunne spørre? Med AI-agenter som har tilgang til kildekode metrikker og traces fra produksjon kan du stille spørsmål i naturlig språk, grave deg nedover i dataene, og gå rett fra innsikt til handling.</p>
+      <p class="detail__body">Foredraget starter med en rask oppsummering av observability fra fjorårets foredrag, før vi dykker ned i samtale som grensesnitt mot telemetri, og agenter som kryssrefererer produksjonsinformasjon mot kildekoden din.</p>
+      <p class="detail__body">Jeg viser eksempler fra reelle sesjoner viser jeg hele løpet. Fra du oppdager «vi har feil i produksjon» til agenten finner årsaken i koden, skriver en fix og lager en pull request.</p>
+      <p class="detail__body">Foredraget bygger på erfaringer fra over 60 reelle sesjoner med agenter og observability der det kombineres AppInsights-data, kildekode og git-historikk for å løse problemer som ingen av delene kunne løst alene.</p>
+      <p class="detail__body">Uansett om du så fjorårets foredrag eller er helt ny for temaet, vil jeg vise hvordan AI-agenter kan gjøre produksjonsdataene dine lettere å forstå og hvordan du kan løse problemer kjapt.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Who it is for">Passer for</h2>
+      <p class="detail__body">Utviklere og tech leads som jobber med produksjonssystemer og er nysgjerrige på hvordan AI-agenter kan brukes i praksis, utover ren kodegenerering. Du trenger ingen erfaring med OpenTelemetry eller Application Insights; foredraget dekker grunnlaget. Det hjelper å ha jobbet med mikrotjenester og å ha kjent på frustrasjonen av å feilsøke i produksjon.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="On at the same time">Samtidig i programmet</h2>
+      <ol class="parallel">
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/dream-machines-walled-gardens-85e7fd3d/">
+            <time class="parallel__time" datetime="2026-09-02T15:00:00.000Z">17:00</time>
+            <span class="parallel__title">Dream Machines &amp; Walled Gardens</span>
+            <span class="parallel__room">Room 1</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/bra-tools-ubrukelige-svar-laering-fra-ett-ar-med-mcp-1f42fc0f/">
+            <time class="parallel__time" datetime="2026-09-02T15:00:00.000Z">17:00</time>
+            <span class="parallel__title">Bra tools, ubrukelige svar: Læring fra ett år med MCP</span>
+            <span class="parallel__room">Room 2</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/building-production-ready-kubernetes-operators-a-practical-g-dc826b82/">
+            <time class="parallel__time" datetime="2026-09-02T15:00:00.000Z">17:00</time>
+            <span class="parallel__title">Building Production-Ready Kubernetes Operators: A Practical Guide</span>
+            <span class="parallel__room">Room 3</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/architecture-under-fire-the-decisions-nobody-tells-you-about-cfa314bb/">
+            <time class="parallel__time" datetime="2026-09-02T15:00:00.000Z">17:00</time>
+            <span class="parallel__title">Architecture Under Fire: The Decisions Nobody Tells You About</span>
+            <span class="parallel__room">Room 4</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/simd-for-java-how-elasticsearch-already-benefits-from-the-pa-77531d92/">
+            <time class="parallel__time" datetime="2026-09-02T15:00:00.000Z">17:00</time>
+            <span class="parallel__title">SIMD for Java: how Elasticsearch already benefits from the Panama Vector API</span>
+            <span class="parallel__room">Room 5</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/let-s-use-spring-boot-to-build-games-because-why-not-ddf116cb/">
+            <time class="parallel__time" datetime="2026-09-02T15:00:00.000Z">17:00</time>
+            <span class="parallel__title">Let’s use Spring Boot to build games, because why not?</span>
+            <span class="parallel__room">Room 7</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/demoscene-coding-kickstart-6e209473/">
+            <time class="parallel__time" datetime="2026-09-02T15:00:00.000Z">17:00</time>
+            <span class="parallel__title">Demoscene Coding Kickstart</span>
+            <span class="parallel__room">Room 8</span>
+          </a>
+        </li>
+      </ol>
+    </section>
+  </main>
+</div>
+
+
+<p class="update" id="update" hidden>
+  <span data-en="The programme has been updated.">Programmet er oppdatert.</span>
+  <button type="button" id="update-reload" data-en="Reload">Last inn på nytt</button>
+</p>
+
+<script type="module" src="/js/app.js?v=456b724efaec"></script>
+</body>
+</html>

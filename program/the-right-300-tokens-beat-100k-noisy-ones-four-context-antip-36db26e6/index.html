@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Right 300 Tokens Beat 100k Noisy Ones: Four Context Antipatterns That Kill Your AI Agent · JavaZone 2026</title>
+<meta name="description" content="Your agent has 100k tokens of context. It still forgets what you told it two messages ago. Prompt &amp;amp;quot;engineering&amp;amp;quot; taught us to craft the perfect...">
+<meta name="theme-color" content="#153863">
+<meta name="app-version" content="770b1ba4b1ef">
+<meta name="base-path" content="/">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="stylesheet" href="/css/fonts.css?v=456b724efaec">
+<link rel="stylesheet" href="/css/style.css?v=456b724efaec">
+<link rel="preload" href="/css/fonts/montserrat-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="/js/rum.js?v=456b724efaec"></script>
+</head>
+<body>
+<div class="app app--detail">
+  <div class="masthead">
+  
+    <a class="back" href="/dag/3/#session-36db26e6-297f-467e-b1bb-74aeae59a0bc" id="back">
+      <span class="back__chevron" aria-hidden="true">‹</span>
+      <span data-en="Programme">Program</span>
+    </a>
+  
+  <span class="wordmark wordmark--centred">JavaZone</span>
+  <button type="button" class="lang" id="lang" aria-label="Language / Språk">
+    <span class="lang__on">NO</span><span class="lang__off">EN</span>
+  </button>
+</div>
+
+
+  <main class="detail">
+    <header class="detail__head">
+      <p class="detail__meta">
+        <span class="chip chip--solid" style="--track: #02dfff"
+              data-en="Presentation">Foredrag</span>
+        <span class="detail__day" data-en="Thursday 3 September">Torsdag 3. september</span>
+        <span class="countdown" id="countdown"
+              data-start="2026-09-03T09:40:00.000Z" data-end="2026-09-03T10:25:00.000Z"></span>
+      </p>
+
+      <h1>The Right 300 Tokens Beat 100k Noisy Ones: Four Context Antipatterns That Kill Your AI Agent</h1>
+
+      <p class="pills">
+        <span class="pill pill--time">
+          <time datetime="2026-09-03T09:40:00.000Z">11:40</time>–<time datetime="2026-09-03T10:25:00.000Z">12:25</time>
+        </span>
+        <span class="pill">Room 5</span>
+      </p>
+
+      <p class="tags">
+        <span class="tag" data-en="English">Engelsk</span>
+        <span class="tag" data-en="45 min">45 min</span>
+      </p>
+    </header>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Speaker">
+        Foredragsholder
+      </h2>
+      <article class="speaker">
+        <div class="speaker__head">
+          <span class="speaker__mono" style="--track: #02dfff" aria-hidden="true">BS</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">Baruch Sadogursky</h3>
+            <p class="speaker__links">
+              <a href="https://www.linkedin.com/in/jbaruch/" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+              <a href="https://bsky.app/profile/jbaru.ch" rel="noopener noreferrer" target="_blank">Bluesky</a>
+              <a href="https://x.com/jbaruch" rel="noopener noreferrer" target="_blank">X</a>
+            </p>
+          </div>
+        </div>
+        <p class="speaker__bio">Baruch Sadogursky (@jbaruch) did Java before it had generics, DevOps before there was Docker, and DevRel before it had a name. He built DevRel at JFrog from a ten-person company through IPO, co-authored &quot;Liquid Software&quot; and &quot;DevOps Tools for Java Developers,&quot; and is a Java Champion, Microsoft MVP, and CNCF Ambassador alumni.</p>
+        <p class="speaker__bio">Today, he's obsessed with how AI agents actually write code. At Tessl, an AI agent enablement platform, Baruch focuses on context engineering, management, and sharing. On top of sharing context with AI agents, Baruch also shares knowledge with developers through blog posts, meetups, and conferences like DevNexus, QCon, Kubecon, and Devoxx, mostly about why vibecoding doesn't scale.</p>
+      </article>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="About this session">Om sesjonen</h2>
+      <p class="detail__body">Your agent has 100k tokens of context. It still forgets what you told it two messages ago. Prompt &quot;engineering&quot; taught us to craft the perfect instruction. Context engineering treats everything your agent knows as an engineering problem: what it sees, how it retrieves it, what it remembers, and how you prove any of it works.</p>
+      <p class="detail__body">This talk dissects four antipatterns killing your AI agents and the architectural fixes that actually work:</p>
+      <p class="detail__body">*  The Stuffed Prompt: You crammed everything upfront and hoped for the best. Static context doesn't scale. Dynamic loading and context refinement, fetching what's needed when it's needed, keeps you within your context window without losing signal. And yes, position matters: models do lose track of what's buried in the middle.</p>
+      <p class="detail__body">* The Wrong Tool for the Job: You picked one retrieval method and used it everywhere. RAG isn't always the answer. Neither are tools. Neither is an exact match. When do embeddings help, when does MCP give you precision, and when does a simple lookup beat both?</p>
+      <p class="detail__body">* The Goldfish Agent: Your AI agent forgets everything between sessions. Or worse, remembers everything forever. Short-term and long-term memory, pruning and compaction strategies: what to persist, what to summarize, where to store it, and when to let go.</p>
+      <p class="detail__body">* The Vibes Eval: You shipped because it &quot;felt right.&quot; You can't improve what you don't measure. Eval strategies that prove your context choices work — or expose the tokens you're wasting.</p>
+      <p class="detail__body">Your context window called. It wants its tokens back.</p>
+      <p class="detail__body">Bonus: Baruch uses a coding agent to demonstrate these patterns live, so you'll see how they work under the hood — but everything applies to AI agents in general.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Who it is for">Passer for</h2>
+      <p class="detail__body">Software engineers that work with AI agents and suffer from those anti-patterns</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="On at the same time">Samtidig i programmet</h2>
+      <ol class="parallel">
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/heis-fm-live-5381f76e/">
+            <time class="parallel__time" datetime="2026-09-03T09:40:00.000Z">11:40</time>
+            <span class="parallel__title">Heis.fm LIVE</span>
+            <span class="parallel__room">Room 1</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/cassandra-compaction-allocation-free-and-5x-faster-279920c0/">
+            <time class="parallel__time" datetime="2026-09-03T09:40:00.000Z">11:40</time>
+            <span class="parallel__title">Cassandra Compaction - Allocation Free, and 5x Faster</span>
+            <span class="parallel__room">Room 2</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/gleam-and-beam-looking-beyond-the-jvm-861a5d27/">
+            <time class="parallel__time" datetime="2026-09-03T09:40:00.000Z">11:40</time>
+            <span class="parallel__title">Gleam and BEAM: Looking beyond the JVM</span>
+            <span class="parallel__room">Room 3</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/erstatningssystemfella-595f85e2/">
+            <time class="parallel__time" datetime="2026-09-03T09:40:00.000Z">11:40</time>
+            <span class="parallel__title">Erstatningssystemfella</span>
+            <span class="parallel__room">Room 4</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/gar-det-ingen-tog-c2323ef1/">
+            <time class="parallel__time" datetime="2026-09-03T09:40:00.000Z">11:40</time>
+            <span class="parallel__title">Går det ingen tog?!?!!</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/cra-security-deadlines-loom-what-senior-java-engineers-must--b94735b6/">
+            <time class="parallel__time" datetime="2026-09-03T09:40:00.000Z">11:40</time>
+            <span class="parallel__title">CRA security deadlines loom: What senior Java engineers must deliver by December 2027</span>
+            <span class="parallel__room">Room 7</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/jdk8-to-25-without-the-pain-engineering-a-modern-java-platfo-b65533ef/">
+            <time class="parallel__time" datetime="2026-09-03T09:40:00.000Z">11:40</time>
+            <span class="parallel__title">JDK8 to 25 Without the pain: Engineering a Modern Java Platform</span>
+            <span class="parallel__room">Room 8</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/nar-noen-tar-ansvar-c5f591a7/">
+            <time class="parallel__time" datetime="2026-09-03T10:05:00.000Z">12:05</time>
+            <span class="parallel__title">Når Noen™ tar ansvar</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/hva-skjedde-da-ai-kom-til-glow-c7593811/">
+            <time class="parallel__time" datetime="2026-09-03T10:20:00.000Z">12:20</time>
+            <span class="parallel__title">Hva skjedde da AI kom til Glow</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+      </ol>
+    </section>
+  </main>
+</div>
+
+
+<p class="update" id="update" hidden>
+  <span data-en="The programme has been updated.">Programmet er oppdatert.</span>
+  <button type="button" id="update-reload" data-en="Reload">Last inn på nytt</button>
+</p>
+
+<script type="module" src="/js/app.js?v=456b724efaec"></script>
+</body>
+</html>

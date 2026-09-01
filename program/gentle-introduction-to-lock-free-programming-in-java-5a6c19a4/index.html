@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gentle Introduction to Lock-Free Programming in Java · JavaZone 2026</title>
+<meta name="description" content="Are you curious about lock-free programming but only familiar with using locks in concurrent Java? This talk is for you! We&amp;#39;ll make the concepts of lock-free...">
+<meta name="theme-color" content="#153863">
+<meta name="app-version" content="770b1ba4b1ef">
+<meta name="base-path" content="/">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="stylesheet" href="/css/fonts.css?v=456b724efaec">
+<link rel="stylesheet" href="/css/style.css?v=456b724efaec">
+<link rel="preload" href="/css/fonts/montserrat-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="/js/rum.js?v=456b724efaec"></script>
+</head>
+<body>
+<div class="app app--detail">
+  <div class="masthead">
+  
+    <a class="back" href="/dag/2/#session-5a6c19a4-1227-4312-8966-abb5791fbabd" id="back">
+      <span class="back__chevron" aria-hidden="true">‹</span>
+      <span data-en="Programme">Program</span>
+    </a>
+  
+  <span class="wordmark wordmark--centred">JavaZone</span>
+  <button type="button" class="lang" id="lang" aria-label="Language / Språk">
+    <span class="lang__on">NO</span><span class="lang__off">EN</span>
+  </button>
+</div>
+
+
+  <main class="detail">
+    <header class="detail__head">
+      <p class="detail__meta">
+        <span class="chip chip--solid" style="--track: #02dfff"
+              data-en="Presentation">Foredrag</span>
+        <span class="detail__day" data-en="Wednesday 2 September">Onsdag 2. september</span>
+        <span class="countdown" id="countdown"
+              data-start="2026-09-02T12:20:00.000Z" data-end="2026-09-02T13:20:00.000Z"></span>
+      </p>
+
+      <h1>Gentle Introduction to Lock-Free Programming in Java</h1>
+
+      <p class="pills">
+        <span class="pill pill--time">
+          <time datetime="2026-09-02T12:20:00.000Z">14:20</time>–<time datetime="2026-09-02T13:20:00.000Z">15:20</time>
+        </span>
+        <span class="pill">Room 8</span>
+      </p>
+
+      <p class="tags">
+        <span class="tag" data-en="English">Engelsk</span>
+        <span class="tag" data-en="1h">1 t</span>
+      </p>
+    </header>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Speakers">
+        Foredragsholdere
+      </h2>
+      <article class="speaker">
+        <div class="speaker__head">
+          <span class="speaker__mono" style="--track: #02dfff" aria-hidden="true">AG</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">Andrzej Grzesik</h3>
+            <p class="speaker__links">
+              <a href="https://x.com/ags313" rel="noopener noreferrer" target="_blank">X</a>
+            </p>
+          </div>
+        </div>
+        <p class="speaker__bio">ags likes distributed systems in all shapes and form. Coding since the age of 8, loves simplicity and continuous delivery. While he has written in many languages, he favours the JVM. Since „most software problems are people problems”, he stirs communities, organizes and speaks at conferences (proud to be a JavaONE Rockstar!). He is passionate about all things data, because science! In his spare time… cycling, photography and books. And he is a Java Champion!</p>
+      </article>
+      <article class="speaker">
+        <div class="speaker__head">
+          <span class="speaker__mono" style="--track: #02dfff" aria-hidden="true">JP</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">Jarosław Pałka</h3>
+          </div>
+        </div>
+        <p class="speaker__bio">For more than 20 years in the IT industry, as a database administrator, programmer, architect, manager, and “onsite disaster engineer”. I took part in small, medium, and nonsensically large projects carried out according to the rules “Waterfall”, Agile and in the absence of any methodologies, with the same always effect. Which led me to the conclusion that it doesn’t matter what you do as long as you do it in the simplest possible way and use the right tools to do the work for you. Recently I spent too much time exploring JVM’s best-kept secrets, reading about managed runtimes, parsers, and interpreters.</p>
+        <p class="speaker__bio">From time to time, you can hear my low-quality jokes about architecture at conferences in Poland.<br>I am also the author of a blog on <a href="http://geekyprimitives.com/" rel="noopener noreferrer" target="_blank">http://geekyprimitives.com/</a>, the occasional dictator in conferences program committees, brand, and full-time benchmarking infrastructure engineer at Neo4j.</p>
+      </article>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="About this session">Om sesjonen</h2>
+      <p class="detail__body">Are you curious about lock-free programming but only familiar with using locks in concurrent Java? This talk is for you! We'll make the concepts of lock-free programming approachable, starting with why it matters and the basics of progress guarantees. You’ll learn to differentiate between wait-freedom, lock-freedom, and obstruction-freedom, understanding why these guarantees are crucial.<br>We’ll explore essential lock-free programming idioms, like Compare-And-Swap (CAS) for atomic updates, markable references for efficient state management, and the sentinel node technique for simplifying concurrent data structures.<br>The infamous ABA problem will be demystified—what it is, why it’s problematic, and how to tackle it with techniques like versioning.<br>To see these concepts in action, we’ll implement three lock-free data structures in Java: a stack, a queue, and a linked list. These examples will highlight the practical application of lock-free techniques and the challenges they address.<br>Finally, we’ll discuss performance characteristics, comparing the benefits and limitations of lock-free programming versus traditional locking. You’ll learn when to use lock-free methods for better scalability and when sticking with locks might be more appropriate.<br>Join us to elevate your concurrent programming skills and confidently start experimenting with lock-free programming in your Java projects!</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Who it is for">Passer for</h2>
+      <p class="detail__body">Developers excited about performance.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="On at the same time">Samtidig i programmet</h2>
+      <ol class="parallel">
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/a-skifte-vinger-i-lufta-eller-hjul-mens-sykkelen-er-i-nedove-02dd2bd6/">
+            <time class="parallel__time" datetime="2026-09-02T12:20:00.000Z">14:20</time>
+            <span class="parallel__title">Å skifte vinger i lufta eller hjul mens sykkelen er i nedoverbakke: Modernisering av samfunnskritiske systemer uten høye skuldre</span>
+            <span class="parallel__room">Room 1</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/hexagonal-happiness-b655f6d1/">
+            <time class="parallel__time" datetime="2026-09-02T12:20:00.000Z">14:20</time>
+            <span class="parallel__title">Hexagonal happiness!</span>
+            <span class="parallel__room">Room 2</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/no-more-forks-policy-transformation-for-terraform-at-scale-85f27d93/">
+            <time class="parallel__time" datetime="2026-09-02T12:20:00.000Z">14:20</time>
+            <span class="parallel__title">No More Forks: Policy Transformation for Terraform at Scale</span>
+            <span class="parallel__room">Room 3</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/global-cultural-reflections-on-software-testing-practices-1234300a/">
+            <time class="parallel__time" datetime="2026-09-02T12:20:00.000Z">14:20</time>
+            <span class="parallel__title">Global Cultural Reflections on Software Testing Practices</span>
+            <span class="parallel__room">Room 4</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/your-database-sprawl-is-a-1990s-workaround-give-it-a-kiss-9ae57287/">
+            <time class="parallel__time" datetime="2026-09-02T12:20:00.000Z">14:20</time>
+            <span class="parallel__title">Your Database Sprawl is a 1990s Workaround, Give it a KISS</span>
+            <span class="parallel__room">Room 5</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/nyheter-i-javascript-es2026-efcc1030/">
+            <time class="parallel__time" datetime="2026-09-02T12:20:00.000Z">14:20</time>
+            <span class="parallel__title">Nyheter i JavaScript - ES2026</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/managing-the-chaos-automating-internal-dependency-upgrades-w-66e04b5d/">
+            <time class="parallel__time" datetime="2026-09-02T12:20:00.000Z">14:20</time>
+            <span class="parallel__title">Managing the chaos: Automating internal dependency upgrades with OpenRewrite</span>
+            <span class="parallel__room">Room 7</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/korleis-me-gjekk-fra-react-til-css-hos-designsystemet-538d7a0d/">
+            <time class="parallel__time" datetime="2026-09-02T12:35:00.000Z">14:35</time>
+            <span class="parallel__title">Korleis me gjekk frå React til CSS hos Designsystemet</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/fa-oversikt-over-json-med-jsonata-sporringer-d8c89901/">
+            <time class="parallel__time" datetime="2026-09-02T12:50:00.000Z">14:50</time>
+            <span class="parallel__title">Få oversikt over JSON med JSONata-spørringer</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/stop-writing-api-clients-let-the-spec-do-it-4c36ab23/">
+            <time class="parallel__time" datetime="2026-09-02T13:15:00.000Z">15:15</time>
+            <span class="parallel__title">Stop Writing API Clients — Let the Spec Do It</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+      </ol>
+    </section>
+  </main>
+</div>
+
+
+<p class="update" id="update" hidden>
+  <span data-en="The programme has been updated.">Programmet er oppdatert.</span>
+  <button type="button" id="update-reload" data-en="Reload">Last inn på nytt</button>
+</p>
+
+<script type="module" src="/js/app.js?v=456b724efaec"></script>
+</body>
+</html>

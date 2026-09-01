@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Immutable Linux - The Future of the desktop · JavaZone 2026</title>
+<meta name="description" content="As developers, we version-control our code, containerize our services, and declare our infrastructure as code. But when it comes to our own workstations? We&amp;#39;re...">
+<meta name="theme-color" content="#153863">
+<meta name="app-version" content="770b1ba4b1ef">
+<meta name="base-path" content="/">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="stylesheet" href="/css/fonts.css?v=456b724efaec">
+<link rel="stylesheet" href="/css/style.css?v=456b724efaec">
+<link rel="preload" href="/css/fonts/montserrat-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="/js/rum.js?v=456b724efaec"></script>
+</head>
+<body>
+<div class="app app--detail">
+  <div class="masthead">
+  
+    <a class="back" href="/dag/2/#session-0b189feb-694b-4024-a278-53eaa43441ff" id="back">
+      <span class="back__chevron" aria-hidden="true">‹</span>
+      <span data-en="Programme">Program</span>
+    </a>
+  
+  <span class="wordmark wordmark--centred">JavaZone</span>
+  <button type="button" class="lang" id="lang" aria-label="Language / Språk">
+    <span class="lang__on">NO</span><span class="lang__off">EN</span>
+  </button>
+</div>
+
+
+  <main class="detail">
+    <header class="detail__head">
+      <p class="detail__meta">
+        <span class="chip chip--solid" style="--track: #02dfff"
+              data-en="Presentation">Foredrag</span>
+        <span class="detail__day" data-en="Wednesday 2 September">Onsdag 2. september</span>
+        <span class="countdown" id="countdown"
+              data-start="2026-09-02T08:20:00.000Z" data-end="2026-09-02T09:05:00.000Z"></span>
+      </p>
+
+      <h1>Immutable Linux - The Future of the desktop</h1>
+
+      <p class="pills">
+        <span class="pill pill--time">
+          <time datetime="2026-09-02T08:20:00.000Z">10:20</time>–<time datetime="2026-09-02T09:05:00.000Z">11:05</time>
+        </span>
+        <span class="pill">Room 8</span>
+      </p>
+
+      <p class="tags">
+        <span class="tag" data-en="English">Engelsk</span>
+        <span class="tag" data-en="45 min">45 min</span>
+        <span class="tag tag--keyword">&#39;Linux&#39; &#39;Immutable Infrastructure&#39; &#39;NixOS&#39; &#39;Containers&#39; &#39;Developer Experience&#39;</span>
+      </p>
+    </header>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Speaker">
+        Foredragsholder
+      </h2>
+      <article class="speaker">
+        <div class="speaker__head">
+          <span class="speaker__mono" style="--track: #02dfff" aria-hidden="true">SB</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">Simon Bruce-Cassidy</h3>
+            <p class="speaker__links">
+              <a href="https://www.linkedin.com/in/simon-bruce-cassidy-4332033a0/" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+            </p>
+          </div>
+        </div>
+        <p class="speaker__bio">Simon has been around a while. His first job in IT, helping out with the IT systems at the school he attended, was in 1996. Some quick napkin math indicates was 30 years ago. Which would make him what the young-uns like to call old. Ah well, growing old is mandatory, growing up us optional. Just stay off the lawn. In the 30 years since his first IT job, he has worked on private cloud systems with 400 000 users, all the way down to 3 people who need a PC each, a networked printer, and somebody they can call when something isn't working. He has worked as an instructor for 100´s of students, stretching from single or multi day classes to full year vocational degrees, and holds a current Microsoft Certified Trainer certification. When not &quot;working&quot; he plays videogames with friends, keeps up to date on movies and TV-shows, and works on stuff in his home lab. With some vibecoding sprinkled in for good measure.</p>
+      </article>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="About this session">Om sesjonen</h2>
+      <p class="detail__body">As developers, we version-control our code, containerize our services, and declare our infrastructure as code. But when it comes to our own workstations? We're still manually installing packages, debugging broken updates, and praying that a kernel upgrade doesn't tank our day before a deadline.</p>
+      <p class="detail__body">Immutable Linux distributions flip this on its head. Your operating system becomes a versioned, reproducible artifact — built from a Containerfile or a declarative config file, atomically updated, and trivially rolled back when things go wrong.</p>
+      <p class="detail__body">In this talk, we'll explore two approaches reshaping how developers run Linux. First, Fedora Atomic and Universal Blue, where your OS is literally an OCI container image — built with the same Dockerfiles and CI/CD pipelines you already know, shipped through container registries, and deployed with `bootc`. If you can write a Dockerfile, you can build an operating system. Second, NixOS, where a single configuration file defines your entire system — packages, services, firewall rules, everything — and `nixos-rebuild switch` atomically applies it. Hand a colleague your config and they get your exact environment. No more &quot;works on my machine.&quot;</p>
+      <p class="detail__body">We'll demo atomic rollbacks, disposable dev environments with Toolbx and `nix develop`, and how Universal Blue's Bluefin ships a developer mode with VS Code, Podman, and Kubernetes tooling baked into the OS image. We'll also look at how `nix develop` can replace your project's README setup instructions with a single command that gives every contributor an identical development shell.</p>
+      <p class="detail__body">Whether you're tired of polluting your base system with project dependencies, managing a fleet of developer workstations, or just want an OS that treats reproducibility as a first-class citizen, this talk will change how you think about your desktop.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Who it is for">Passer for</h2>
+      <p class="detail__body">DevOps Engineers, Linux users, developers</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="On at the same time">Samtidig i programmet</h2>
+      <ol class="parallel">
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/the-positive-value-of-negative-space-d8028049/">
+            <time class="parallel__time" datetime="2026-09-02T08:20:00.000Z">10:20</time>
+            <span class="parallel__title">The positive value of negative space</span>
+            <span class="parallel__room">Room 1</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/let-s-break-some-wcag-rules-5ba26d74/">
+            <time class="parallel__time" datetime="2026-09-02T08:20:00.000Z">10:20</time>
+            <span class="parallel__title">Let&#39;s break some WCAG rules</span>
+            <span class="parallel__room">Room 2</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/fremtidens-applikasjoner-lages-for-maskiner-b20063ea/">
+            <time class="parallel__time" datetime="2026-09-02T08:20:00.000Z">10:20</time>
+            <span class="parallel__title">Fremtidens applikasjoner lages for maskiner</span>
+            <span class="parallel__room">Room 3</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/leveransekjedesikkerhet-i-praksis-34dc522e/">
+            <time class="parallel__time" datetime="2026-09-02T08:20:00.000Z">10:20</time>
+            <span class="parallel__title">Leveransekjedesikkerhet i praksis</span>
+            <span class="parallel__room">Room 4</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/sanntidsinformasjon-i-saksbehandlingssystemer-074fa6da/">
+            <time class="parallel__time" datetime="2026-09-02T08:20:00.000Z">10:20</time>
+            <span class="parallel__title">Sanntidsinformasjon i saksbehandlingssystemer</span>
+            <span class="parallel__room">Room 5</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/microsoft-monoculture-the-lock-in-nobody-talks-about-666922ab/">
+            <time class="parallel__time" datetime="2026-09-02T08:20:00.000Z">10:20</time>
+            <span class="parallel__title">Microsoft Monoculture: The Lock-in Nobody Talks About</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/self-healing-rollouts-automating-production-fixes-with-agent-e7a9e513/">
+            <time class="parallel__time" datetime="2026-09-02T08:20:00.000Z">10:20</time>
+            <span class="parallel__title">Self-Healing Rollouts: Automating Production Fixes with Agentic AI</span>
+            <span class="parallel__room">Room 7</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/how-do-we-version-software-e18fa8f1/">
+            <time class="parallel__time" datetime="2026-09-02T08:45:00.000Z">10:45</time>
+            <span class="parallel__title">How do we version software?</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/kotlin-extension-functions-en-advarsel-fra-skyttergravene-c1b449a3/">
+            <time class="parallel__time" datetime="2026-09-02T09:00:00.000Z">11:00</time>
+            <span class="parallel__title">Kotlin extension functions - en advarsel fra skyttergravene</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+      </ol>
+    </section>
+  </main>
+</div>
+
+
+<p class="update" id="update" hidden>
+  <span data-en="The programme has been updated.">Programmet er oppdatert.</span>
+  <button type="button" id="update-reload" data-en="Reload">Last inn på nytt</button>
+</p>
+
+<script type="module" src="/js/app.js?v=456b724efaec"></script>
+</body>
+</html>

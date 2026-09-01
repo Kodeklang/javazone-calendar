@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Decision Layer: Context Graphs for Spring AI · JavaZone 2026</title>
+<meta name="description" content="Multi-agent Spring AI systems share data but not reasoning. The reasoning behind each agent&amp;#39;s answer has no persistent form, and the next agent inherits the...">
+<meta name="theme-color" content="#153863">
+<meta name="app-version" content="770b1ba4b1ef">
+<meta name="base-path" content="/">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="stylesheet" href="/css/fonts.css?v=456b724efaec">
+<link rel="stylesheet" href="/css/style.css?v=456b724efaec">
+<link rel="preload" href="/css/fonts/montserrat-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="/js/rum.js?v=456b724efaec"></script>
+</head>
+<body>
+<div class="app app--detail">
+  <div class="masthead">
+  
+    <a class="back" href="/dag/3/#session-71a26d1c-2b8a-41ec-a02e-e119830a75a0" id="back">
+      <span class="back__chevron" aria-hidden="true">‹</span>
+      <span data-en="Programme">Program</span>
+    </a>
+  
+  <span class="wordmark wordmark--centred">JavaZone</span>
+  <button type="button" class="lang" id="lang" aria-label="Language / Språk">
+    <span class="lang__on">NO</span><span class="lang__off">EN</span>
+  </button>
+</div>
+
+
+  <main class="detail">
+    <header class="detail__head">
+      <p class="detail__meta">
+        <span class="chip chip--solid" style="--track: #02dfff"
+              data-en="Presentation">Foredrag</span>
+        <span class="detail__day" data-en="Thursday 3 September">Torsdag 3. september</span>
+        <span class="countdown" id="countdown"
+              data-start="2026-09-03T08:20:00.000Z" data-end="2026-09-03T09:05:00.000Z"></span>
+      </p>
+
+      <h1>The Decision Layer: Context Graphs for Spring AI</h1>
+
+      <p class="pills">
+        <span class="pill pill--time">
+          <time datetime="2026-09-03T08:20:00.000Z">10:20</time>–<time datetime="2026-09-03T09:05:00.000Z">11:05</time>
+        </span>
+        <span class="pill">Room 8</span>
+      </p>
+
+      <p class="tags">
+        <span class="tag" data-en="English">Engelsk</span>
+        <span class="tag" data-en="45 min">45 min</span>
+        <span class="tag tag--keyword">Spring AI</span>
+        <span class="tag tag--keyword">AI agents</span>
+        <span class="tag tag--keyword">Knowledge Graphs</span>
+        <span class="tag tag--keyword">Semantic layers</span>
+        <span class="tag tag--keyword">Enterprise AI</span>
+      </p>
+    </header>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Speakers">
+        Foredragsholdere
+      </h2>
+      <article class="speaker">
+        <div class="speaker__head">
+          <span class="speaker__mono" style="--track: #02dfff" aria-hidden="true">JW</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">James Ward</h3>
+            <p class="speaker__links">
+              <a href="https://www.linkedin.com/in/jamesward/" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+              <a href="https://x.com/JamesWard" rel="noopener noreferrer" target="_blank">X</a>
+            </p>
+          </div>
+        </div>
+        <p class="speaker__bio">Professional software developer since 1997, with much of that time spent helping developers build software that doesn't suck. A Typed Pure Functional Programming zealot who often compromises on his ideals to just get stuff done. Currently a Developer Advocate for AWS.</p>
+      </article>
+      <article class="speaker">
+        <div class="speaker__head">
+          <span class="speaker__mono" style="--track: #02dfff" aria-hidden="true">RK</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">Ryan Knight</h3>
+            <p class="speaker__links">
+              <a href="https://www.linkedin.com/in/ryanknight/" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+            </p>
+          </div>
+        </div>
+        <p class="speaker__bio">Ryan Knight is a Senior Partner Architect at Neo4j, where he works with AWS and Databricks to deliver public workshops and build Enterprise AI agents grounded in knowledge graphs. His work centers on how Knowledge Graphs can provide Enterprise agents the context for both data and decisions, grounded in a background in data engineering and distributed systems.</p>
+        <p class="speaker__bio">Prior to Neo4j, Ryan led Grand Cloud, a consultancy delivering data and generative AI solutions for clients ranging from startups to the Fortune 500. He has held senior architecture and advisory roles at Starbucks, Capital One, DataStax, and Lightbend.</p>
+      </article>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="About this session">Om sesjonen</h2>
+      <p class="detail__body">Multi-agent Spring AI systems share data but not reasoning. The reasoning behind each agent's answer has no persistent form, and the next agent inherits the same data and none of the context the others built. This talk presents a Context-Aware Advisor built on the Spring AI Advisor API that acts as the Decision Layer. It intercepts every query, persists a structured decision trace to Neo4j, and resolves subsequent queries through graph-enriched decision search.</p>
+      <p class="detail__body">The graph is the advantage. Vector search finds decisions that look similar; graph traversal follows the relationships that make a prior decision applicable. A query that surfaces a conflict resolution traverses to the policy that authorized it, the exception that modified it, and every account that resolution has since governed. That structural context is complete grounding: not proximity to a document, but position in the decision record.</p>
+      <p class="detail__body">The talk ends with a complete multi-agent Spring AI architecture where agents share not just data, but the reasoning behind every decision that came before.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Who it is for">Passer for</h2>
+      <p class="detail__body">Java and Spring developers building production AI applications. Spring AI exposure is helpful but not required. No graph database experience needed.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="On at the same time">Samtidig i programmet</h2>
+      <ol class="parallel">
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/getting-more-out-of-maven-eb71fbbf/">
+            <time class="parallel__time" datetime="2026-09-03T08:20:00.000Z">10:20</time>
+            <span class="parallel__title">Getting more out of Maven</span>
+            <span class="parallel__room">Room 1</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/35-minutes-ago-you-had-20-seconds-to-comply-a-survival-guide-b47b63d7/">
+            <time class="parallel__time" datetime="2026-09-03T08:20:00.000Z">10:20</time>
+            <span class="parallel__title">&quot;35 Minutes Ago, You Had 20 Seconds to Comply&quot;: A Survival Guide to Days of Future Past</span>
+            <span class="parallel__room">Room 2</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/feature-management-beyond-feature-flags-850d3f1f/">
+            <time class="parallel__time" datetime="2026-09-03T08:20:00.000Z">10:20</time>
+            <span class="parallel__title">Feature Management: Beyond Feature Flags</span>
+            <span class="parallel__room">Room 3</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/brukollapsen-som-bygde-en-bro-mellom-fag-og-it-11b26a0a/">
+            <time class="parallel__time" datetime="2026-09-03T08:20:00.000Z">10:20</time>
+            <span class="parallel__title">Brukollapsen som bygde en bro mellom fag og IT</span>
+            <span class="parallel__room">Room 4</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/trust-but-verify-skill-driven-development-for-the-sceptical--7ba94a91/">
+            <time class="parallel__time" datetime="2026-09-03T08:20:00.000Z">10:20</time>
+            <span class="parallel__title">Trust, But Verify: Skill-Driven Development for the Sceptical Java Developer</span>
+            <span class="parallel__room">Room 5</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/tilgjengelighet-utvikling-true-4f334bb4/">
+            <time class="parallel__time" datetime="2026-09-03T08:20:00.000Z">10:20</time>
+            <span class="parallel__title">Tilgjengelighet + utvikling = true</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/flyt-i-ai-ens-tid-nar-det-blir-lettere-a-lage-men-vanskelige-1d782b1f/">
+            <time class="parallel__time" datetime="2026-09-03T08:20:00.000Z">10:20</time>
+            <span class="parallel__title">Flyt i AI-ens tid: når det blir lettere å lage, men vanskeligere å bevege seg</span>
+            <span class="parallel__room">Room 7</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/rendering-3d-shadows-in-the-browser-with-three-js-16bc011e/">
+            <time class="parallel__time" datetime="2026-09-03T08:45:00.000Z">10:45</time>
+            <span class="parallel__title">Rendering 3D shadows in the browser with three.js</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+      </ol>
+    </section>
+  </main>
+</div>
+
+
+<p class="update" id="update" hidden>
+  <span data-en="The programme has been updated.">Programmet er oppdatert.</span>
+  <button type="button" id="update-reload" data-en="Reload">Last inn på nytt</button>
+</p>
+
+<script type="module" src="/js/app.js?v=456b724efaec"></script>
+</body>
+</html>

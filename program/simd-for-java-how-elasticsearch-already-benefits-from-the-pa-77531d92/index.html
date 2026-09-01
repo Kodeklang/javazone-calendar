@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SIMD for Java: how Elasticsearch already benefits from the Panama Vector API · JavaZone 2026</title>
+<meta name="description" content="Processing large amounts of data efficiently is a common challenge. Many workloads spend most of their time doing simple math on large arrays. Modern CPUs can...">
+<meta name="theme-color" content="#153863">
+<meta name="app-version" content="770b1ba4b1ef">
+<meta name="base-path" content="/">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="stylesheet" href="/css/fonts.css?v=456b724efaec">
+<link rel="stylesheet" href="/css/style.css?v=456b724efaec">
+<link rel="preload" href="/css/fonts/montserrat-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/css/fonts/montserrat-800-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script defer src="/js/rum.js?v=456b724efaec"></script>
+</head>
+<body>
+<div class="app app--detail">
+  <div class="masthead">
+  
+    <a class="back" href="/dag/2/#session-77531d92-493b-4c88-9a53-c1a939d179ed" id="back">
+      <span class="back__chevron" aria-hidden="true">‹</span>
+      <span data-en="Programme">Program</span>
+    </a>
+  
+  <span class="wordmark wordmark--centred">JavaZone</span>
+  <button type="button" class="lang" id="lang" aria-label="Language / Språk">
+    <span class="lang__on">NO</span><span class="lang__off">EN</span>
+  </button>
+</div>
+
+
+  <main class="detail">
+    <header class="detail__head">
+      <p class="detail__meta">
+        <span class="chip chip--solid" style="--track: #02dfff"
+              data-en="Presentation">Foredrag</span>
+        <span class="detail__day" data-en="Wednesday 2 September">Onsdag 2. september</span>
+        <span class="countdown" id="countdown"
+              data-start="2026-09-02T15:00:00.000Z" data-end="2026-09-02T15:45:00.000Z"></span>
+      </p>
+
+      <h1>SIMD for Java: how Elasticsearch already benefits from the Panama Vector API</h1>
+
+      <p class="pills">
+        <span class="pill pill--time">
+          <time datetime="2026-09-02T15:00:00.000Z">17:00</time>–<time datetime="2026-09-02T15:45:00.000Z">17:45</time>
+        </span>
+        <span class="pill">Room 5</span>
+      </p>
+
+      <p class="tags">
+        <span class="tag" data-en="English">Engelsk</span>
+        <span class="tag" data-en="45 min">45 min</span>
+        <span class="tag tag--keyword">java</span>
+        <span class="tag tag--keyword">SIMD</span>
+        <span class="tag tag--keyword">vector API</span>
+      </p>
+    </header>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Speaker">
+        Foredragsholder
+      </h2>
+      <article class="speaker">
+        <div class="speaker__head">
+          <span class="speaker__mono" style="--track: #02dfff" aria-hidden="true">PP</span>
+          <div class="speaker__who">
+            <h3 class="speaker__name">Piotr Przybył</h3>
+            <p class="speaker__links">
+              <a href="https://www.linkedin.com/in/piotrprzybyl/" rel="noopener noreferrer" target="_blank">LinkedIn</a>
+              <a href="https://bsky.app/profile/piotrprz.bsky.social" rel="noopener noreferrer" target="_blank">Bluesky</a>
+              <a href="https://x.com/pioorg" rel="noopener noreferrer" target="_blank">X</a>
+            </p>
+          </div>
+        </div>
+        <p class="speaker__bio">Notorious engineer at work and after hours, tracing meanders of the art of software engineering. Senior Developer Advocate for Elastic. Remote Software Gardener, mostly working in web-oriented Java gardens. Java Champion. Docker Captain. Testcontainers Champion. Programming usually in Java (since 1.3), Scala and Go, but in other languages too. Fan of agility, seen mostly as choosing the right tools and approaches after asking the right questions. Developer, trainer and conference speaker. In his talks, Piotr covers not only hardcore Java but also software architecture, computer security, and soft-skills.</p>
+      </article>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="About this session">Om sesjonen</h2>
+      <p class="detail__body">Processing large amounts of data efficiently is a common challenge. Many workloads spend most of their time doing simple math on large arrays. Modern CPUs can speed this up using SIMD, where one instruction processes multiple values at once, but using it from Java has traditionally been difficult and required native code.</p>
+      <p class="detail__body">The Panama Vector API changes this by letting developers express these operations directly in Java, while the JVM translates them into efficient CPU instructions.</p>
+      <p class="detail__body">Elasticsearch is a real-world example. Features like vector search and ES|QL rely on repeated operations over large datasets. Under the hood, Elasticsearch and Lucene use the Vector API to take advantage of SIMD on modern CPUs.</p>
+      <p class="detail__body">Using an incubating API in production is unusual. In this case, the performance gains make it worth it. This talk explores how Elasticsearch integrates the Vector API, how it enables or disables SIMD at runtime, and what this means for high performance Java.</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="Who it is for">Passer for</h2>
+      <p class="detail__body">This is for folks, who: have to process loads of data, and/or are intrigued how non-GA modern features make Java shine in prod</p>
+    </section>
+    <section class="detail__section">
+      <h2 class="section__label" data-en="On at the same time">Samtidig i programmet</h2>
+      <ol class="parallel">
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/dream-machines-walled-gardens-85e7fd3d/">
+            <time class="parallel__time" datetime="2026-09-02T15:00:00.000Z">17:00</time>
+            <span class="parallel__title">Dream Machines &amp; Walled Gardens</span>
+            <span class="parallel__room">Room 1</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/bra-tools-ubrukelige-svar-laering-fra-ett-ar-med-mcp-1f42fc0f/">
+            <time class="parallel__time" datetime="2026-09-02T15:00:00.000Z">17:00</time>
+            <span class="parallel__title">Bra tools, ubrukelige svar: Læring fra ett år med MCP</span>
+            <span class="parallel__room">Room 2</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/building-production-ready-kubernetes-operators-a-practical-g-dc826b82/">
+            <time class="parallel__time" datetime="2026-09-02T15:00:00.000Z">17:00</time>
+            <span class="parallel__title">Building Production-Ready Kubernetes Operators: A Practical Guide</span>
+            <span class="parallel__room">Room 3</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/architecture-under-fire-the-decisions-nobody-tells-you-about-cfa314bb/">
+            <time class="parallel__time" datetime="2026-09-02T15:00:00.000Z">17:00</time>
+            <span class="parallel__title">Architecture Under Fire: The Decisions Nobody Tells You About</span>
+            <span class="parallel__room">Room 4</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/bare-spor-ai-agenter-elsker-produksjonsmetrikker-691ca67c/">
+            <time class="parallel__time" datetime="2026-09-02T15:00:00.000Z">17:00</time>
+            <span class="parallel__title">Bare spør! AI-agenter elsker produksjonsmetrikker</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/let-s-use-spring-boot-to-build-games-because-why-not-ddf116cb/">
+            <time class="parallel__time" datetime="2026-09-02T15:00:00.000Z">17:00</time>
+            <span class="parallel__title">Let’s use Spring Boot to build games, because why not?</span>
+            <span class="parallel__room">Room 7</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #02dfff">
+          <a href="/program/demoscene-coding-kickstart-6e209473/">
+            <time class="parallel__time" datetime="2026-09-02T15:00:00.000Z">17:00</time>
+            <span class="parallel__title">Demoscene Coding Kickstart</span>
+            <span class="parallel__room">Room 8</span>
+          </a>
+        </li>
+        <li class="parallel__item" style="--track: #ecd065">
+          <a href="/program/de-usette-langtidskostnadene-med-dagens-ki-1f73fe75/">
+            <time class="parallel__time" datetime="2026-09-02T15:25:00.000Z">17:25</time>
+            <span class="parallel__title">De usette langtidskostnadene med dagens KI</span>
+            <span class="parallel__room">Room 6</span>
+          </a>
+        </li>
+      </ol>
+    </section>
+  </main>
+</div>
+
+
+<p class="update" id="update" hidden>
+  <span data-en="The programme has been updated.">Programmet er oppdatert.</span>
+  <button type="button" id="update-reload" data-en="Reload">Last inn på nytt</button>
+</p>
+
+<script type="module" src="/js/app.js?v=456b724efaec"></script>
+</body>
+</html>
