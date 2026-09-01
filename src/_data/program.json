@@ -874,9 +874,11 @@
       "id": "herman-thieme",
       "name": "Herman Thieme",
       "bio": [
-        "Developer/data engineer."
+        "Herman er konsulent i Bouvet og jobber i skjæringspunktet mellom programvareutvikling, data engineering og informasjonsmodellering. Han har bakgrunn fra både maskinlæring og systemutvikling, og er spesielt opptatt av hvordan teknologi kan gjøre komplekse domener enklere å forstå og jobbe med."
       ],
-      "links": {}
+      "links": {
+        "linkedin": "https://no.linkedin.com/in/herman-vestvik-thieme-1a917641a"
+      }
     },
     {
       "id": "havard-haug",
@@ -2401,7 +2403,8 @@
       "description": [
         "Have you ever worked on a project where the history of the system vanished? Ten years have passed, no one from the original team works there anymore, and no one understands what the data even does anymore. We have all been there. Usually we store the current state, but that looses information about the journey - all that valuable context about what happened over time.",
         "What if we could change it? What if you didn't just have the current state of the application, but also how it got there!<br>This might sound like magic, but it is possible through Event Sourcing! In this workshop, we introduce concepts around Event Sourcing and how it can be used to orchestrate an online store. We want to show how you define events, create and listen to event-streams, and how you can build database models through events.",
-        "This workshop is on an introductory level and fits well for developers who want to learn basic Event Sourcing techniques."
+        "This workshop is on an introductory level and fits well for developers who want to learn basic Event Sourcing techniques.",
+        "<a href=\"https://github.com/TechedLemur/event-sourcing-workshop-java\" rel=\"noopener noreferrer\" target=\"_blank\">https://github.com/TechedLemur/event-sourcing-workshop-java</a>"
       ],
       "prerequisites": "Laptop with Java and Docker installed and any basic IDE",
       "video": null,
