@@ -214,10 +214,14 @@ Day windows come from the data rather than the design's assumed 08:45–16:15.
 
 ## Real User Monitoring
 
-`src/_data/rum.js` carries **placeholder** Datadog credentials. Replace
-`applicationId` and `clientToken` with the real values for this application
-before the numbers mean anything; until then the SDK loads and its intake
-requests are rejected, which costs nothing and collects nothing.
+`src/_data/rum.js` carries the Datadog application id and client token. Both are
+public by design — browser RUM tokens are write-only intake credentials meant to
+be shipped to every visitor, and grant no read access to the organisation.
+
+`env` is `prod` only under CI, because GitHub Actions is the only thing that
+publishes; a developer running `eleventy --serve` reports as `dev` and never
+lands in production data. That value is folded into the asset hash, so a local
+build and a CI build of identical source produce different build ids by design.
 
 The SDK is 143KB on a page whose own script is 10KB, so it is loaded on idle
 rather than blocking the document — see `src/rum.njk`.

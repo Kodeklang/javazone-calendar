@@ -5,18 +5,14 @@
 // The application id and client token are public by design. Datadog's browser
 // tokens are write-only intake credentials meant to be shipped to every
 // visitor; they grant no read access to the organisation.
-//
-// TODO: replace both with the real values for this application in Datadog.
-// Until then RUM initialises against an id that does not exist and its intake
-// requests are rejected, which costs nothing but collects nothing either.
 
 import { readFileSync } from "node:fs";
 
 const pkg = JSON.parse(readFileSync(new URL("../../package.json", import.meta.url), "utf8"));
 
 export default {
-  applicationId: "00000000-0000-0000-0000-000000000000",
-  clientToken: "pubreplaceme00000000000000000000",
+  applicationId: "ccc2ef8b-f479-448b-b099-fb05bec4dbb1",
+  clientToken: "pubdb51dce078321c0855b9964fb21ba4dd",
   site: "datadoghq.eu",
   service: "javazone-calendar",
 
