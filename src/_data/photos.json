@@ -1,0 +1,286 @@
+{
+  "size": 120,
+  "source": "bluesky",
+  "speakers": {
+    "a-n-m-bazlur-rahman": {
+      "handle": "bazlur.ca",
+      "cid": "bafkreicnws4g2cnuia7evmtkzvfhuj72j7sf3f5ddumjwyrzofzvsha5xy",
+      "file": "a-n-m-bazlur-rahman.webp"
+    },
+    "adam-warski": {
+      "handle": "warski.org",
+      "cid": "bafkreia4wpnlgbbmlfpgppowup3vhshzaaw3aonuslnm3apk5b5a34gzve",
+      "file": "adam-warski.webp"
+    },
+    "adele-carpenter": {
+      "handle": "97adele.bsky.social",
+      "cid": "bafkreidhfkcjqk4gvunvxdscpxkfe54etzlcvc6nos34a7eak43ogphpne",
+      "file": "adele-carpenter.webp"
+    },
+    "akihiro-nishikawa": {
+      "handle": "logico-jp.dev",
+      "cid": "bafkreiayl5djzoxdami62a3vdc7dwhouwwh2obcbvc4zdkbqk7kzyi2jzi",
+      "file": "akihiro-nishikawa.webp"
+    },
+    "alexander-chatzizacharias": {
+      "handle": "glycin.bsky.social",
+      "cid": "bafkreia53bwdnhmnuccqs4ubkfdysrabbfkkksklewcpw3dazbbugpzcru",
+      "file": "alexander-chatzizacharias.webp"
+    },
+    "anders-noras": {
+      "handle": "andersnoras.com",
+      "cid": "bafkreied6mmcw3x3wktqxaspsjk5yjptwhwscrn3632uj4lqdbgq3eda6e",
+      "file": "anders-noras.webp"
+    },
+    "anders-sveen": {
+      "handle": "anders.f12.no",
+      "cid": "bafkreidhv4jrkbesk7zaq2zme7ewjizi7s7lqlwefravpw7pzwfftzumr4",
+      "file": "anders-sveen.webp"
+    },
+    "andres-almiray": {
+      "handle": "andresalmiray.com",
+      "cid": "bafkreih5bzo6u5orvigmor62jq6zfkhtsrg2mu6mancjacxsd7ghzpkjg4",
+      "file": "andres-almiray.webp"
+    },
+    "aurora-scharff": {
+      "handle": "aurorascharff.no",
+      "cid": "bafkreihgjylgvg5yiqb5p2v4momppduafacrzdch2av7twbysqhjpc3b4e",
+      "file": "aurora-scharff.webp"
+    },
+    "baruch-sadogursky": {
+      "handle": "jbaru.ch",
+      "cid": "bafkreig6lnqof5yevod6asl52qkouarigo7dhev3v3yz45i4ncpeejppxm",
+      "file": "baruch-sadogursky.webp"
+    },
+    "bram-janssens": {
+      "handle": "sajanssens.bsky.social",
+      "cid": "bafkreiegecsspkisn4ucl5ox7u3qlfoo5ofe3i4mb2pdm3tqrp72vyyraa",
+      "file": "bram-janssens.webp"
+    },
+    "brian-vermeer": {
+      "handle": "brianvermeer.nl",
+      "cid": "bafkreiftbohpyegrenlzkxohwftn4jft44kaikglltybgbsyyrp7cooa2y",
+      "file": "brian-vermeer.webp"
+    },
+    "bruce-bujon": {
+      "handle": "hardcoding.fr",
+      "cid": "bafkreigg3zv3ifian4hugilmdldoblnt5i37qqd226pmur3aqeyrobasl4",
+      "file": "bruce-bujon.webp"
+    },
+    "cay-horstmann": {
+      "handle": "horstmann.com",
+      "cid": "bafkreibwelfzspt4dk2dwfqrv3whj4ltfyv23dd7i6aejfk5izv34vodku",
+      "file": "cay-horstmann.webp"
+    },
+    "christin-gorman": {
+      "handle": "christingorman.bsky.social",
+      "cid": "bafkreifbxvxei6tu4vaagkmlmv4qmz6hwifdlan4hadga53r4mhk4ayquy",
+      "file": "christin-gorman.webp"
+    },
+    "daniel-oh": {
+      "handle": "danieloh30.bsky.social",
+      "cid": "bafkreihgv4kgkqndknxiqmmvp27nzh6g7w6bgvan2ntirjnm5eumfgvwi4",
+      "file": "daniel-oh.webp"
+    },
+    "einar-waaler-host": {
+      "handle": "einarwh.bsky.social",
+      "cid": "bafkreien3fq24uw3xey3cp6n2zemz65jf2kb5dnn2zvl6x5sjsqcfauny4",
+      "file": "einar-waaler-host.webp"
+    },
+    "elise-kristiansen": {
+      "handle": "frkfrontend.no",
+      "cid": "bafkreicy6nylj3k6c53sc6me3laarai7t453hywbg67qdsqhul42yq6emm",
+      "file": "elise-kristiansen.webp"
+    },
+    "fredrik-lillemoen-eiding": {
+      "handle": "eidi.ng",
+      "cid": "bafkreie6mcadd4rz4j43snuugzbih3cncjcrmy5blkfgyhk6o54hnwg7bu",
+      "file": "fredrik-lillemoen-eiding.webp"
+    },
+    "gaute-meek-olsen": {
+      "handle": "gaute.bsky.social",
+      "cid": "bafkreiccmdzxebb6ndr52saumcxrzkphuel3dqll7rnxdbbloc6b7s7v7e",
+      "file": "gaute-meek-olsen.webp"
+    },
+    "georges-saab": {
+      "handle": "gsaab.bsky.social",
+      "cid": "bafkreieqx4i6lvb2fvax2ayctt5x3pfisn64aqqdgbpjb5xihnwv4ojkju",
+      "file": "georges-saab.webp"
+    },
+    "gerrit-grunwald": {
+      "handle": "hansolo.eu",
+      "cid": "bafkreiguaibtsoyx5os526o3dq7md43q6gn4nmkqccdnw3pdx6znvyueii",
+      "file": "gerrit-grunwald.webp"
+    },
+    "gunnar-morling": {
+      "handle": "gunnarmorling.dev",
+      "cid": "bafkreiavmhv2ukenwlkcbtjq6qwsrjsddwxl3til4t432swj7qdrka6y6m",
+      "file": "gunnar-morling.webp"
+    },
+    "hans-kristian-flaatten": {
+      "handle": "starefossen.bsky.social",
+      "cid": "bafkreihprhytoclg2n6ptxrh76owovnokxgarf7me74yzqhot6bnj2h74u",
+      "file": "hans-kristian-flaatten.webp"
+    },
+    "ixchel-ruiz": {
+      "handle": "ixchelruiz.bsky.social",
+      "cid": "bafkreibd5qfg3jtdbj2pv42yvnmjhrr4u5cuexf43ydhiwhmggy6ocw6li",
+      "file": "ixchel-ruiz.webp"
+    },
+    "jago-de-vreede": {
+      "handle": "jagovreede.bsky.social",
+      "cid": "bafkreifn3mf2lj4lqd5n642fyfipt3hwbv53psfv5ruvl3ggn25u3dxrtq",
+      "file": "jago-de-vreede.webp"
+    },
+    "johannes-bechberger": {
+      "handle": "mostlynerdless.de",
+      "cid": "bafkreiadyr2rxn43tbcnv36ohvsnygkahxhk7vgkxmgazeqlnjn3q5dkee",
+      "file": "johannes-bechberger.webp"
+    },
+    "johannes-brodwall": {
+      "handle": "jhannes.bsky.social",
+      "cid": "bafkreighx2sovtgbohyuadqlevc5yllfv2z2nygntjdrxl4iwsesrqlm74",
+      "file": "johannes-brodwall.webp"
+    },
+    "josh-long": {
+      "handle": "Starbuxman.joshlong.com",
+      "cid": "bafkreid7gqcgskdnmydthlqx36dmvi4xo25s4bxk2go4rnf75nmnddpq6i",
+      "file": "josh-long.webp"
+    },
+    "ken-sipe": {
+      "handle": "kensipe.bsky.social",
+      "cid": "bafkreign7qab63vkh7o34uu62vcoq5yb4ozhiijqr7domgwl6xc4wqt3xu",
+      "file": "ken-sipe.webp"
+    },
+    "kevin-dubois": {
+      "handle": "kevindubois.com",
+      "cid": "bafkreie2txbnqzn4cy6vicvv3qqq3owqiifu2cqcyuydz3rwzq7zxdwoci",
+      "file": "kevin-dubois.webp"
+    },
+    "knut-haugen": {
+      "handle": "knuthaug.bsky.social",
+      "cid": "bafkreiavrkasjvxuogh3jgxpkbnd3cqrfmkuxill5gd2o44stw642v3wwq",
+      "file": "knut-haugen.webp"
+    },
+    "kristian-berg": {
+      "handle": "rasmantuta.bsky.social",
+      "cid": "bafkreibc3ypu4z7axev7zvnozkrc53vzq4xieo4np675byatelql3hylt4",
+      "file": "kristian-berg.webp"
+    },
+    "leonard-sheng-sheng-lee": {
+      "handle": "sheeeng.bsky.social",
+      "cid": "bafkreigoztfgtf7jrsss5ftd6ezseap2a2ucojo6mtrde7hwtehkkp2z4y",
+      "file": "leonard-sheng-sheng-lee.webp"
+    },
+    "marit-van-dijk": {
+      "handle": "maritvandijk.bsky.social",
+      "cid": "bafkreigcyzeqgnpar3lonjhxxfwz7depn2v34psa7l4dtc36ogn7lcx3ry",
+      "file": "marit-van-dijk.webp"
+    },
+    "marten-range": {
+      "handle": "rangemarten.bsky.social",
+      "cid": "bafkreiarmxljixoss5xrh5duw62r3kzdn2rlzoefh4arqfs5rtwdqnzfxq",
+      "file": "marten-range.webp"
+    },
+    "martin-skarsaune": {
+      "handle": "martinskarsaune.bsky.social",
+      "cid": "bafkreieoqvem5hlgspxdvuiq5pgywazpuqgm7mgtc5zg4mlspmx7p6tox4",
+      "file": "martin-skarsaune.webp"
+    },
+    "mick-semb-wever": {
+      "handle": "mck.semb.wever.org",
+      "cid": "bafkreics7yfvuia3gkxq5bjsi5nd2xruylf7jm7ks62tpnlamdxixwunp4",
+      "file": "mick-semb-wever.webp"
+    },
+    "morten-andersen-gott": {
+      "handle": "mortenag.bsky.social",
+      "cid": "bafkreigf3g5jkzxlwddlfq4vgny3wxbrirw35zqcceyipexs36j4a5ixa4",
+      "file": "morten-andersen-gott.webp"
+    },
+    "morten-nygaard-asnes": {
+      "handle": "mortenaa.bsky.social",
+      "cid": "bafkreihasmttqlu44jxb6ecrz2bwfejhyzyu75z3iqnhfw5lb2rd5ktxoa",
+      "file": "morten-nygaard-asnes.webp"
+    },
+    "nadia-tokerud": {
+      "handle": "nakri.no",
+      "cid": "bafkreiciw6mkzll4woghvsryk4bwxl25srafqmvyt7iqdzvlpn5cf3gb6u",
+      "file": "nadia-tokerud.webp"
+    },
+    "nikolai-norman-andersen": {
+      "handle": "nikolaia.com",
+      "cid": "bafkreical62ndq5uv3uzuuqrxj7p2ssj7jppijmbwmnl5pmkarw3ijcmiy",
+      "file": "nikolai-norman-andersen.webp"
+    },
+    "oleg-selajev": {
+      "handle": "shelajev.bsky.social",
+      "cid": "bafkreie5lb7mndlsup4ipkfrouffj7wufples4nfs4pjgwezwzgphegyyy",
+      "file": "oleg-selajev.webp"
+    },
+    "oystein-hagen-blixhavn": {
+      "handle": "blixhavn.bsky.social",
+      "cid": "bafkreibxuu4vpexhomoybz2xemt74d6yjfle4pj77gksvs3azll63exrj4",
+      "file": "oystein-hagen-blixhavn.webp"
+    },
+    "pasha-finkelshteyn": {
+      "handle": "asm0dey.site",
+      "cid": "bafkreihq3rw7fgaoreofua62wf7stfafv43yp6vt4z32umtw7ybmmml65a",
+      "file": "pasha-finkelshteyn.webp"
+    },
+    "patrick-baumgartner": {
+      "handle": "patbaumgartner.com",
+      "cid": "bafkreiabivuqrr75rzwlmkgzbpbb565hyofbmjrrxe3ivaiafcbzu3qtba",
+      "file": "patrick-baumgartner.webp"
+    },
+    "piotr-laskawiec": {
+      "handle": "piotrlaskawiec.bsky.social",
+      "cid": "bafkreiggx4ocg5j44d2rzhed5h4pumbfpgm6qhnct4psfhh4mhru7uykvq",
+      "file": "piotr-laskawiec.webp"
+    },
+    "piotr-przybyl": {
+      "handle": "piotrprz.bsky.social",
+      "cid": "bafkreiakpjuenf2lr47v7ypo6iancedpjqaahijk77v4gexhikvczlpzm4",
+      "file": "piotr-przybyl.webp"
+    },
+    "radek-kargul": {
+      "handle": "kargul.fit",
+      "cid": "bafkreia4eowhuxcuvvro6chygjubpbbzxjf3mepxymrcfre2ycp7qle644",
+      "file": "radek-kargul.webp"
+    },
+    "rafael-winterhalter": {
+      "handle": "rafaelcodes.bsky.social",
+      "cid": "bafkreigutlqxffxomop4cleuwbxftlbe2ah5ccpdvqnat23ivshtk3nzwu",
+      "file": "rafael-winterhalter.webp"
+    },
+    "rustam-mehmandarov": {
+      "handle": "rustam.no",
+      "cid": "bafkreicz2a6otpm5t36f7kchunb3drqyophnmd4ogh4lpqbvwnj5dc2z24",
+      "file": "rustam-mehmandarov.webp"
+    },
+    "sam-bellen": {
+      "handle": "sambego.tech",
+      "cid": "bafkreievtzdh7igob7trau6ksdnh7long6ps27yc3ngtbyhernt5neik7m",
+      "file": "sam-bellen.webp"
+    },
+    "tim-berglund": {
+      "handle": "tlberglund.bsky.social",
+      "cid": "bafkreiambsnyg7yx7x27xgrgto5pyucovtd3s76d3ouort6njpvh3bgufu",
+      "file": "tim-berglund.webp"
+    },
+    "totto-thor-henning-hetland": {
+      "handle": "javatotto.bsky.social",
+      "cid": "bafkreibwxdjswqijek6ir5w7456dpcp7t2cfaqqiu4da6uhs52ucknp44i",
+      "file": "totto-thor-henning-hetland.webp"
+    },
+    "veronika-heimsbakk": {
+      "handle": "veronahe.bsky.social",
+      "cid": "bafkreibnzt5pgxqcobmczsbge7rp5vk2vuuxuovis4johksalmlij5vuwi",
+      "file": "veronika-heimsbakk.webp"
+    },
+    "willem-jan-glerum": {
+      "handle": "wjglerum.nl",
+      "cid": "bafkreieylbw5lrfzt6f5r2gis2ja2ss4omfkok76tkgznlacob53c3z2ey",
+      "file": "willem-jan-glerum.webp"
+    }
+  }
+}
