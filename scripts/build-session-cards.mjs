@@ -29,9 +29,11 @@
 // colours, the font size and line breaks the fitter chose for this particular
 // title, and every setting either file is encoded with - so a change to the
 // design regenerates the whole set on its own, with nothing to remember to
-// bump. It is also why RASTER holds the WebP's settings rather than the
-// encoder call reaching for them itself: a knob outside the hash could change
-// 310 files while the manifest went on calling them current.
+// bump. It is also why RASTER holds every encoder setting either file is made
+// with, down to the kernel the wordmark is scaled by, rather than the calls
+// reaching for them themselves: a knob outside the hash could change 310 files
+// while the manifest went on calling them current. Nothing here can pass one
+// either, since neither `render` nor `wordmark` takes an override.
 //
 // Nothing here belongs in the service worker's precache; see the note at
 // SHELL in src/sw.njk.
