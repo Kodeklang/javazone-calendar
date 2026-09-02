@@ -263,6 +263,24 @@ function wordBoundary(chars, max) {
 }
 
 /**
+ * The ellipsis that says a cut happened, put on the end of what the cut left
+ * behind - and put there on its own. A cut lands wherever `wordBoundary`
+ * found a space, which every so often is the space after the end of a
+ * sentence, and appending to that unexamined spells `.…` or `?…`. The two
+ * marks are then claiming the same thing about the same place and only one
+ * of them is true: the sentence did not end there, the text ran out. So the
+ * trailing whitespace and punctuation go and the ellipsis stays - the same
+ * debris, at the same seam, that `splitAbstract` strips off the front of the
+ * continuation.
+ *
+ * Every character this can strip is in the BMP, so it cannot undo
+ * `truncate`'s care over surrogate pairs by taking half of one.
+ */
+function withEllipsis(text) {
+  return `${text.replace(/[\s.,;:!?…]+$/, "")}…`;
+}
+
+/**
  * Cut plain text at a word boundary so a truncated description never ends
  * mid-word. Spreading into an array first splits on code points rather than
  * UTF-16 code units, so a cut can never land inside a surrogate pair - an
@@ -274,7 +292,7 @@ function truncate(text, max) {
   const chars = [...text];
   const end = wordBoundary(chars, max);
   if (end === chars.length) return text;
-  return `${chars.slice(0, end).join("").trimEnd()}…`;
+  return withEllipsis(chars.slice(0, end).join(""));
 }
 
 /**
@@ -294,7 +312,7 @@ function splitAbstract(text, max) {
   const chars = [...text];
   const end = wordBoundary(chars, max);
   if (end === chars.length) return { head: text, rest: "" };
-  const head = `${chars.slice(0, end).join("").trimEnd()}…`;
+  const head = withEllipsis(chars.slice(0, end).join(""));
   let start = end;
   while (start < chars.length && /[\s,;:.!?…\-–—]/.test(chars[start])) start++;
   return { head, rest: chars.slice(start).join("") };
