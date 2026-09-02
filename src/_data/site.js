@@ -182,17 +182,25 @@ function plainText(html) {
   return decodeEntities(html.replace(/<[^>]*>/g, ""));
 }
 
-// The ellipsis itself counts toward the budget, and is added only when
-// something was actually cut - a description that already fits must not
-// gain one it doesn't need.
+// The budget counts code points, not UTF-16 code units, and the ellipsis
+// itself counts toward it, added only when something was actually cut - a
+// description that already fits must not gain one it doesn't need.
 const META_DESCRIPTION_MAX = 160;
 
-/** Cut plain text at a word boundary so a truncated description never ends mid-word. */
+/**
+ * Cut plain text at a word boundary so a truncated description never ends
+ * mid-word. Spreading into an array first splits on code points rather than
+ * UTF-16 code units, so a cut can never land inside a surrogate pair - an
+ * emoji, or an astral character `decodeEntities` produced via
+ * `String.fromCodePoint` from a numeric entity - and leave a lone surrogate
+ * (invalid UTF-16) in the output.
+ */
 function truncate(text, max) {
-  if (text.length <= max) return text;
-  const cut = text.slice(0, max - 1);
+  const chars = [...text];
+  if (chars.length <= max) return text;
+  const cut = chars.slice(0, max - 1);
   const lastSpace = cut.lastIndexOf(" ");
-  return `${(lastSpace > 0 ? cut.slice(0, lastSpace) : cut).trimEnd()}…`;
+  return `${(lastSpace > 0 ? cut.slice(0, lastSpace) : cut).join("").trimEnd()}…`;
 }
 
 const days = program.days.map((day, index) => {
