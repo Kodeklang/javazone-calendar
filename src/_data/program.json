@@ -977,15 +977,6 @@
       }
     },
     {
-      "id": "jaroslaw-palka",
-      "name": "Jarosław Pałka",
-      "bio": [
-        "For more than 20 years in the IT industry, as a database administrator, programmer, architect, manager, and “onsite disaster engineer”. I took part in small, medium, and nonsensically large projects carried out according to the rules “Waterfall”, Agile and in the absence of any methodologies, with the same always effect. Which led me to the conclusion that it doesn’t matter what you do as long as you do it in the simplest possible way and use the right tools to do the work for you. Recently I spent too much time exploring JVM’s best-kept secrets, reading about managed runtimes, parsers, and interpreters.",
-        "From time to time, you can hear my low-quality jokes about architecture at conferences in Poland.<br>I am also the author of a blog on <a href=\"http://geekyprimitives.com/\" rel=\"noopener noreferrer\" target=\"_blank\">http://geekyprimitives.com/</a>, the occasional dictator in conferences program committees, brand, and full-time benchmarking infrastructure engineer at Neo4j."
-      ],
-      "links": {}
-    },
-    {
       "id": "jean-tuffier",
       "name": "Jean Tuffier",
       "bio": [
@@ -3962,8 +3953,7 @@
       "prerequisites": null,
       "video": null,
       "speakerIds": [
-        "andrzej-grzesik",
-        "jaroslaw-palka"
+        "andrzej-grzesik"
       ]
     },
     {
