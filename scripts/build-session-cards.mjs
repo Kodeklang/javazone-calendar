@@ -108,18 +108,24 @@ async function pool(items, worker) {
 }
 
 /**
- * Break `text` into lines no wider than `width`, set at `size` in weight 800.
+ * Break `text` into lines no wider than `width`, set at `size` in weight 800,
+ * and say whether a word had to be cut through to manage it.
  *
  * Greedy, which is what a headline wants: the first line should be as full as
- * it can be, because that is the line a reader's eye lands on. A single word
- * too wide to fit on a line of its own is broken across lines rather than
- * allowed off the edge - no title needs that today, but a title is free text
- * and one long URL-shaped token would otherwise silently lose its tail.
+ * it can be, because that is the line a reader's eye lands on.
+ *
+ * A word too wide for a line of its own is broken mid-word rather than allowed
+ * off the edge, and `broke` is how `fit` finds out. That flag matters more here
+ * than it would in English: Norwegian writes a noun phrase as one word, and
+ * "leveransekjedesikkerhet" or "sanntidsinformasjon" is wider at 112px than the
+ * whole card. Splitting one reads as a typo, so the break is a last resort and
+ * the caller is told it happened rather than handed a plausible-looking result.
  */
 function wrap(text, size, width, measure) {
   const fits = (s) => measure(s, size, 800) <= width;
   const lines = [];
   let line = "";
+  let broke = false;
 
   const flush = () => {
     if (line) lines.push(line);
@@ -136,6 +142,7 @@ function wrap(text, size, width, measure) {
       line = word;
       continue;
     }
+    broke = true;
     let rest = word;
     while (rest && !fits(rest)) {
       let cut = rest.length - 1;
@@ -147,30 +154,44 @@ function wrap(text, size, width, measure) {
   }
   flush();
 
-  return lines;
+  return { lines, broke };
 }
 
 /**
- * The largest step from SIZES at which `title` still fits the title band, and
- * the lines it breaks into there.
+ * The largest step from SIZES at which `title` fits the title band with every
+ * word whole, and the lines it breaks into there.
  *
- * A title that will not fit even at the smallest step is cut at a word
- * boundary and given an ellipsis, rather than being shrunk further: below
- * about 50px the title stops being readable at the size a feed renders a card,
- * and a title nobody can read is worse than one that trails off. Nothing in
- * the 2026 programme reaches that point - the longest fits at 52px - so this
- * is the guard rather than the common path.
+ * Filling the band is not enough on its own to accept a step. A step that only
+ * fits because `wrap` cut a word in half satisfies the line count exactly as
+ * well as one that did not, and four sessions in the 2026 programme landed
+ * there - "Leveransekjedesikk / erhet", "Erstatningssyste / mfella". All four
+ * fit whole a step or two further down, so a step that broke a word is set
+ * aside and the ladder is walked to the end; the broken one is only used if no
+ * step can hold the longest word at all, which is the URL-shaped token this
+ * guards against and no title today.
+ *
+ * A title that will not fit even at the smallest step is cut at a word boundary
+ * and given an ellipsis rather than being shrunk further: below about 50px the
+ * title stops being readable at the size a feed renders a card, and a title
+ * nobody can read is worse than one that trails off. Nothing in the 2026
+ * programme reaches that point - the longest fits at 52px.
  */
 function fit(title, width, measure) {
   const rows = (size) => Math.max(1, Math.floor((TITLE_BOTTOM - TITLE_TOP) / (size * LINE)));
 
+  let broken = null;
   for (const size of SIZES) {
-    const lines = wrap(title, size, width, measure);
-    if (lines.length <= rows(size)) return { size, lines };
+    const { lines, broke } = wrap(title, size, width, measure);
+    if (lines.length > rows(size)) continue;
+    if (!broke) return { size, lines };
+    // The largest step that fits at all, in case every step has to break this
+    // word. Held rather than returned, so that a smaller whole one still wins.
+    broken ??= { size, lines };
   }
+  if (broken) return broken;
 
   const size = SIZES.at(-1);
-  const lines = wrap(title, size, width, measure).slice(0, rows(size));
+  const lines = wrap(title, size, width, measure).lines.slice(0, rows(size));
   let last = lines.at(-1).split(" ");
   while (last.length > 1 && measure(`${last.join(" ")}…`, size, 800) > width) last.pop();
   lines[lines.length - 1] = `${last.join(" ")}…`;
