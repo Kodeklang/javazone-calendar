@@ -32,40 +32,24 @@ import { createHash } from "node:crypto";
 import { mkdir, readdir, readFile, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { HEIGHT, WIDTH, esc, withCardRenderer } from "../lib/card-renderer.mjs";
+import {
+  GROUND_BOTTOM,
+  GROUND_TOP,
+  HEIGHT,
+  INK,
+  LEFT,
+  MARK_Y,
+  MUTED,
+  RIGHT,
+  WIDTH,
+  esc,
+  withCardRenderer,
+} from "../lib/card-renderer.mjs";
 import site from "../src/_data/site.js";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const CARD_DIR = path.join(ROOT, "src/cards");
 const MANIFEST_FILE = path.join(ROOT, "src/_data/cards.json");
-
-// JavaZone's own 2026 wordmark, vendored from
-// https://2026.javazone.no/assets/JZ26-Logo-OnlyText-transp-BDAN5ewJ.png on
-// 2026-09-02. Theirs, not ours: it is on the card because the card is about
-// their conference. Vendored rather than fetched at generation time because
-// that filename is content-hashed and will change under us on their next
-// deploy, and a build that quietly stopped finding it would draw 155 cards
-// with a hole in the corner before anybody noticed.
-const WORDMARK_FILE = path.join(ROOT, "src/icons/javazone-wordmark.png");
-
-// The site's own colours, exactly as src/icons/og.png sets them: the dark
-// blues are manifest.njk's theme-color and background_color, and the muted
-// blue is site.js's FALLBACK_COLOUR.
-const INK = "#ffffff";
-const MUTED = "#aecfff";
-const GROUND_TOP = "#153862";
-const GROUND_BOTTOM = "#0a2747";
-
-// Margins wide enough that a platform trimming a few pixels off the edge of
-// the card takes nothing with it.
-const LEFT = 88;
-const RIGHT = WIDTH - 88;
-
-// The wordmark is upstream's asset and the widest thing on the card, so it is
-// deliberately held down to a size the title can dominate: at Slack's rendered
-// width the card is 360px across and this is 108px of it.
-const MARK_W = 360;
-const MARK_Y = 62;
 
 // The band the title is set in, between the wordmark and the meta line. Its
 // top and bottom are fixed and the block is centred inside them, so a
@@ -92,8 +76,7 @@ const CONCURRENCY = 4;
 // How the cards are rasterised, as opposed to how they are drawn. Palette,
 // because on this design it halves the file for pixels nobody can tell apart -
 // the argument, and the measurements behind it, are at `render` in
-// lib/card-renderer.mjs. src/icons/og.png does not get this and stays full
-// colour; it is committed art that must not move.
+// lib/card-renderer.mjs.
 //
 // Named rather than passed inline because it goes into the hash below as well
 // as into the render: the raster settings decide the pixels just as much as the
@@ -210,8 +193,8 @@ function fit(title, width, measure) {
   return { size, lines };
 }
 
-/** The card, as SVG. `mark` is the wordmark as a data URI. */
-function card({ title, facts, formatName, colour, mark, markHeight }, measure) {
+/** The card, as SVG. `mark` is what the renderer's `wordmark()` handed back. */
+function card({ title, facts, formatName, colour, mark }, measure) {
   const { size, lines } = fit(title, RIGHT - LEFT, measure);
 
   // The block is centred in the band, so the gap above a short title matches
@@ -242,8 +225,8 @@ function card({ title, facts, formatName, colour, mark, markHeight }, measure) {
        border, so the unfurl and the programme agree at a glance. -->
   <rect width="14" height="${HEIGHT}" fill="${colour}"/>
 
-  <image x="${LEFT}" y="${MARK_Y}" width="${MARK_W}" height="${markHeight}" href="${mark}"/>
-  <text x="${RIGHT}" y="${MARK_Y + Math.round(markHeight / 2) + 13}" text-anchor="end"
+  ${mark.image}
+  <text x="${RIGHT}" y="${MARK_Y + Math.round(mark.height / 2) + 13}" text-anchor="end"
         font-family="Montserrat" font-weight="600" font-size="36" fill="${colour}">${esc(formatName)}</text>
 
   ${title_}
@@ -281,33 +264,8 @@ let drawn = 0;
 let bytes = 0;
 const errors = [];
 
-const entries = await withCardRenderer(chars, async ({ render, measure, sharp }) => {
-  // Scaled here rather than in the SVG: librsvg would resample it with a box
-  // filter on every one of the 155 cards, where doing it once through libvips
-  // is both sharper and, at this reduction, a great deal faster.
-  //
-  // Quantised on the way in as well. Now that the finished card is quantised
-  // too this is worth only about 0.4 kB of the file, but it takes the base64
-  // in the SVG source from 32.5 kB to 9.2 kB, and that source is parsed and
-  // decoded once per session.
-  const scaled = await sharp(WORDMARK_FILE)
-    .resize({ width: MARK_W })
-    .png({ palette: true, dither: 0, compressionLevel: 9 })
-    .toBuffer();
-  const { height: markHeight } = await sharp(scaled).metadata();
-  const mark = `data:image/png;base64,${scaled.toString("base64")}`;
-
-  // What the wordmark stands in as while a card is being hashed. The scaled
-  // bytes themselves must not reach the hash: libvips' quantiser is
-  // deterministic for a given version, but not necessarily identical between
-  // this laptop and the runner, and a hash that disagreed across the two would
-  // have each of them redrawing all 155 cards over the other's. The vendored
-  // file and the width it is drawn at are the things a design change actually
-  // moves, so they are what is recorded.
-  const markKey = `wordmark:${createHash("sha256")
-    .update(await readFile(WORDMARK_FILE))
-    .digest("hex")
-    .slice(0, 16)}@${MARK_W}`;
+const entries = await withCardRenderer(chars, async ({ render, measure, wordmark }) => {
+  const mark = await wordmark();
 
   return pool(site.sessions, async (session) => {
     const file = `${session.slug}.png`;
@@ -319,12 +277,11 @@ const entries = await withCardRenderer(chars, async ({ render, measure, sharp })
           formatName: session.formatName.no,
           colour: session.colour,
           mark,
-          markHeight,
         },
         measure,
       );
       const hash = createHash("sha256")
-        .update(svg.replace(mark, markKey))
+        .update(svg.replace(mark.href, mark.key))
         .update(JSON.stringify(RASTER))
         .digest("hex")
         .slice(0, 16);

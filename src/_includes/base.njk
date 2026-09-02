@@ -28,11 +28,15 @@
 {#- A session sets shareImage to its own card (program.11tydata.js); everything
     else, the day grids included, unfurls with the site-wide one. Both are
     1200x630, so the dimensions below hold either way - they are here so an
-    unfurler can reserve the space before the image arrives. #}
+    unfurler can reserve the space before the image arrives.
+
+    The site-wide card's own description is built from the words
+    scripts/build-og-card.mjs draws on it, so the two cannot drift apart. #}
+{%- set shareAlt = shareImageAlt or ("Mørkeblå plakat med JavaZone-logoen og teksten " + site.event.name + ", Program, " + site.event.dateRange.no + ".") %}
 <meta property="og:image" content="{{ (shareImage or '/icons/og.png') | absUrl }}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="{{ shareImageAlt or 'Mørkeblå plakat med et søylediagram og teksten JavaZone 2026, Program, 1.–3. september 2026.' }}">
+<meta property="og:image:alt" content="{{ shareAlt }}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#153863">
 <meta name="app-version" content="{{ site.version }}">
