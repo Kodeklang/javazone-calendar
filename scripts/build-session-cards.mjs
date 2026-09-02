@@ -18,11 +18,12 @@
 // hash of the drawing instructions for each card, and a card whose hash has
 // not moved is left alone.
 //
-// The hash is taken over the finished SVG rather than over the fields it was
-// built from. It covers strictly more - the title, format, day, time and room,
-// but also the wordmark, the palette, and the font size and line breaks the
-// fitter chose for this particular title - so a change to the design
-// regenerates the whole set on its own, with nothing to remember to bump.
+// The hash is taken over the finished SVG and the raster settings, rather than
+// over the fields the SVG was built from. That covers strictly more - the
+// title, format, day, time and room, but also the wordmark, the colours, the
+// font size and line breaks the fitter chose for this particular title, and
+// how the result is turned into pixels - so a change to the design regenerates
+// the whole set on its own, with nothing to remember to bump.
 //
 // Nothing here belongs in the service worker's precache; see the note at
 // SHELL in src/sw.njk.
@@ -87,6 +88,17 @@ const META_BASELINE = 556;
 // rather than in completion order, so an unchanged programme keeps producing
 // an identically ordered manifest.
 const CONCURRENCY = 4;
+
+// How the cards are rasterised, as opposed to how they are drawn. Palette,
+// because on this design it halves the file for pixels nobody can tell apart -
+// the argument, and the measurements behind it, are at `render` in
+// lib/card-renderer.mjs. src/icons/og.png does not get this and stays full
+// colour; it is committed art that must not move.
+//
+// Named rather than passed inline because it goes into the hash below as well
+// as into the render: the raster settings decide the pixels just as much as the
+// SVG does, so changing them has to redraw the set.
+const RASTER = { palette: true };
 
 // A card that fails to rasterise is not a reason to prune every other card off
 // the disk. Past this share of failures the run writes nothing and exits
@@ -274,11 +286,10 @@ const entries = await withCardRenderer(chars, async ({ render, measure, sharp })
   // filter on every one of the 155 cards, where doing it once through libvips
   // is both sharper and, at this reduction, a great deal faster.
   //
-  // Quantised, unlike the cards themselves, and this is the one place it pays.
-  // The wordmark is a smooth two-stop gradient that survives a palette without
-  // a visible seam, and a full-colour one leaves 30 kB of near-identical pink
-  // in every card it is composited into - a third of the whole set's weight in
-  // the repository, for pixels nobody can tell apart.
+  // Quantised on the way in as well. Now that the finished card is quantised
+  // too this is worth only about 0.4 kB of the file, but it takes the base64
+  // in the SVG source from 32.5 kB to 9.2 kB, and that source is parsed and
+  // decoded once per session.
   const scaled = await sharp(WORDMARK_FILE)
     .resize({ width: MARK_W })
     .png({ palette: true, dither: 0, compressionLevel: 9 })
@@ -312,12 +323,16 @@ const entries = await withCardRenderer(chars, async ({ render, measure, sharp })
         },
         measure,
       );
-      const hash = createHash("sha256").update(svg.replace(mark, markKey)).digest("hex").slice(0, 16);
+      const hash = createHash("sha256")
+        .update(svg.replace(mark, markKey))
+        .update(JSON.stringify(RASTER))
+        .digest("hex")
+        .slice(0, 16);
 
       const before = previous[session.id];
       if (before?.hash === hash && before.file === file && onDisk.has(file)) return [session.id, before];
 
-      const png = await render(svg);
+      const png = await render(svg, RASTER);
       await writeFile(path.join(CARD_DIR, file), png);
       drawn++;
       bytes += png.length;
