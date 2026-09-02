@@ -7,6 +7,7 @@
   "scripts": {
     "fetch": "node scripts/fetch-program.mjs",
     "photos": "node scripts/fetch-photos.mjs",
+    "og": "node scripts/build-og-card.mjs",
     "build": "eleventy",
     "start": "eleventy --serve"
   },
