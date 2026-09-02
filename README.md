@@ -236,6 +236,14 @@ the way out. That origin is what gives every page its `<link rel="canonical">`
 too — the github.io mirror builds the same pages, and without one a crawler
 sees two URLs for identical content and has to guess which to rank.
 
+Set the two together or neither: `PATH_PREFIX` on its own folds the prefix into
+every absolute URL while `SITE_URL` still names the custom domain, which serves
+the site from its root, so `og:url`, `og:image` and `canonical` all come out
+pointing at `https://javazone.kodeklang.dev/javazone-calendar/…` and 404. CI
+sets neither, so this only ever bites a developer building the mirror by hand —
+`PATH_PREFIX=/javazone-calendar/ SITE_URL=https://<user>.github.io npm run
+build` is the pair that works.
+
 **A repeated `og:image` is not a format negotiation, and each card is now
 offered exactly once.** Every card used to be published twice, as a PNG and as
 a lossless WebP, listed in that order on the reading that a consumer picks the
