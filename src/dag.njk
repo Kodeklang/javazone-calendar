@@ -5,9 +5,6 @@ pagination:
   alias: day
 permalink: "{{ day.url }}"
 layout: base.njk
-eleventyComputed:
-  title: "{{ day.longLabel.no }} · Program · JavaZone 2026"
-  description: "Programmet for {{ day.longLabel.no }} på JavaZone 2026, {{ site.event.venue }}."
 ---
 <div class="app">
   {% include "masthead.njk" %}

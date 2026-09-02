@@ -5,10 +5,6 @@ pagination:
   alias: session
 permalink: "{{ session.url }}"
 layout: base.njk
-eleventyComputed:
-  title: "{{ session.title }} · JavaZone 2026"
-  description: "{{ session.description[0] | striptags | truncate(160) if session.description.length else session.title }}"
-  back: "{{ session.day.url }}#session-{{ session.id }}"
 ---
 <div class="app app--detail">
   {% include "masthead.njk" %}

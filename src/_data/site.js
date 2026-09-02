@@ -150,6 +150,51 @@ const clock = new Intl.DateTimeFormat("nb-NO", {
   timeZone: "Europe/Oslo", hour: "2-digit", minute: "2-digit", hour12: false,
 });
 
+// Named entities scripts/fetch-program.mjs's escapeHtml can produce, plus the
+// ones upstream Sleeping Pill text already contains. `&amp;` is decoded last,
+// or an upstream `&amp;quot;` would collapse straight to `"` instead of the
+// `&quot;` it is meant to spell.
+const NAMED_ENTITIES = {
+  "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'", "&apos;": "'",
+  "&nbsp;": " ",
+};
+
+/**
+ * Decode the HTML entities in text pulled out of markup, so that when a
+ * template hands it to Nunjucks it is escaped exactly once rather than
+ * carrying entity text that Nunjucks then escapes a second time.
+ */
+function decodeEntities(s) {
+  let out = s
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(Number(dec)));
+  for (const [entity, char] of Object.entries(NAMED_ENTITIES)) out = out.split(entity).join(char);
+  return out.split("&amp;").join("&");
+}
+
+/**
+ * A session description paragraph is already-escaped, linkified HTML (see
+ * `paragraphs` in fetch-program.mjs). Metadata fields want plain prose
+ * instead, so the tags are dropped and what they leave behind - entity text,
+ * since stripping a tag does not undo the escaping inside it - is decoded.
+ */
+function plainText(html) {
+  return decodeEntities(html.replace(/<[^>]*>/g, ""));
+}
+
+// The ellipsis itself counts toward the budget, and is added only when
+// something was actually cut - a description that already fits must not
+// gain one it doesn't need.
+const META_DESCRIPTION_MAX = 160;
+
+/** Cut plain text at a word boundary so a truncated description never ends mid-word. */
+function truncate(text, max) {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max - 1);
+  const lastSpace = cut.lastIndexOf(" ");
+  return `${(lastSpace > 0 ? cut.slice(0, lastSpace) : cut).trimEnd()}…`;
+}
+
 const days = program.days.map((day, index) => {
   const sessions = program.sessions.filter((s) => s.dayId === day.id);
 
@@ -252,6 +297,14 @@ const sessions = program.sessions.map((s) => {
     // Built from the pinned event.site rather than a literal, so bumping the
     // edition stays the one-line change in fetch-program.mjs that SLUG is.
     officialUrl: `${program.event.site.replace(/\/$/, "")}/program/${s.id}/`,
+    // For <meta name="description">: plain prose, not the linkified HTML the
+    // page body renders, and short enough that Nunjucks' single escape pass
+    // never trips a viewer's 160-character line in search results or a share
+    // card. Falls back to the title for the handful of sessions Sleeping Pill
+    // publishes with no abstract at all.
+    metaDescription: s.description.length
+      ? truncate(plainText(s.description[0]), META_DESCRIPTION_MAX)
+      : s.title,
     formatName: formatById.get(s.format)?.name ?? { no: s.format, en: s.format },
     languageName: s.language ? languageById.get(s.language)?.name ?? null : null,
     day: {
@@ -272,7 +325,13 @@ const sessions = program.sessions.map((s) => {
 // The service worker's cache name must change when *any* shipped asset
 // changes, not just the programme, or a CSS edit would never reach a client.
 
-/** Every .njk under src, in a fixed order: readdir's is not one. */
+/**
+ * Every .njk under src, plus its .11tydata.js siblings (program.11tydata.js,
+ * dag.11tydata.js), in a fixed order: readdir's is not one. The data files
+ * shape a page's `<title>` and description just as much as the template
+ * markup does, so they have to retire the cache the same way an edit to the
+ * .njk itself would.
+ */
 function templates(dir) {
   const found = [];
   const entries = readdirSync(dir, { withFileTypes: true })
@@ -280,7 +339,7 @@ function templates(dir) {
   for (const entry of entries) {
     const p = path.join(dir, entry.name);
     if (entry.isDirectory()) found.push(...templates(p));
-    else if (entry.name.endsWith(".njk")) found.push(p);
+    else if (entry.name.endsWith(".njk") || entry.name.endsWith(".11tydata.js")) found.push(p);
   }
   return found;
 }
