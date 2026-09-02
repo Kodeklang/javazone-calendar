@@ -248,6 +248,21 @@ const META_DESCRIPTION_MAX = 160;
 const SHARE_TITLE_MAX = 110;
 
 /**
+ * The code-point index within `chars` where a cut at `max` characters
+ * should land: the last space before the limit, so neither a truncation nor
+ * a continuation of the same text ever splits a word. Falls back to the
+ * limit itself when no space exists to fall back to. Shared by `truncate`
+ * and `splitAbstract` below so the two never disagree about where a given
+ * cut actually falls.
+ */
+function wordBoundary(chars, max) {
+  if (chars.length <= max) return chars.length;
+  const window = chars.slice(0, max - 1);
+  const lastSpace = window.lastIndexOf(" ");
+  return lastSpace > 0 ? lastSpace : window.length;
+}
+
+/**
  * Cut plain text at a word boundary so a truncated description never ends
  * mid-word. Spreading into an array first splits on code points rather than
  * UTF-16 code units, so a cut can never land inside a surrogate pair - an
@@ -257,10 +272,32 @@ const SHARE_TITLE_MAX = 110;
  */
 function truncate(text, max) {
   const chars = [...text];
-  if (chars.length <= max) return text;
-  const cut = chars.slice(0, max - 1);
-  const lastSpace = cut.lastIndexOf(" ");
-  return `${(lastSpace > 0 ? cut.slice(0, lastSpace) : cut).join("").trimEnd()}…`;
+  const end = wordBoundary(chars, max);
+  if (end === chars.length) return text;
+  return `${chars.slice(0, end).join("").trimEnd()}…`;
+}
+
+/**
+ * Split one abstract across og:title and og:description without either
+ * repeating the other. `head` is exactly what `truncate` would produce - the
+ * opening, cut at the same word boundary via the same `wordBoundary`, with
+ * an ellipsis only when something was actually cut. `rest` is everything
+ * after that boundary, so og:description can pick the sentence up where
+ * og:title left off rather than start over from the beginning. It comes
+ * back stripped of the word break itself and of any punctuation the cut
+ * left dangling (a trailing comma, colon or dash before the next clause) so
+ * the continuation opens on a fresh word, never on debris from the seam -
+ * and it comes back empty when `head` already is the whole abstract, which
+ * is `shareDescription`'s signal that there is nothing left to continue.
+ */
+function splitAbstract(text, max) {
+  const chars = [...text];
+  const end = wordBoundary(chars, max);
+  if (end === chars.length) return { head: text, rest: "" };
+  const head = `${chars.slice(0, end).join("").trimEnd()}…`;
+  let start = end;
+  while (start < chars.length && /[\s,;:.!?…\-–—]/.test(chars[start])) start++;
+  return { head, rest: chars.slice(start).join("") };
 }
 
 /**
@@ -297,29 +334,28 @@ function factsLine(s, day, speakers) {
 }
 
 /**
- * og:description for a session: the facts above, then as much of the
- * abstract as the same 160-character budget `metaDescription` uses leaves
- * over. A crawler unfurling a link gets more from confirming day, time, room
- * and speaker than from half a sentence of abstract, so once the facts alone
- * leave too little room for a meaningful clause the abstract is dropped
- * rather than shortened to nothing.
+ * og:description for a session: the facts above, then the abstract picking
+ * up exactly where og:title stopped.
  *
- * The rule this keeps to: og:title and og:description must never carry the
- * same sentence twice, because Slack and Discord render both at once. When
- * `abstract` is short enough that og:title already shows it in full (or a
- * session has none, and og:title falls back to the session's own title),
- * the description drops the abstract and states the facts alone rather than
- * repeat what the title just said. When the abstract runs past og:title's
- * budget, the two are fine to overlap on their opening words - one is a cut
- * headline, the other a fuller clause, not the same sentence twice.
+ * The card the description sits next to already carries the title, the day,
+ * the time and the room, so the title and description slots are the only
+ * two places left to say something the reader doesn't already have - and
+ * Slack and Discord render both at once, so spending either on a repeat of
+ * the other wastes it rather than adding to it. One abstract is therefore
+ * split, never duplicated: `titleSplit.rest` is everything og:title's own
+ * cut left off (see `splitAbstract`), so the description continues the same
+ * sentence instead of restating its opening. When there is nothing left to
+ * continue - the abstract was short enough that og:title already carries
+ * all of it, or there is no abstract at all - the description falls back to
+ * the facts alone, which is still new information and repeats nothing.
  */
-function shareDescription(s, day, speakers, abstract) {
+function shareDescription(s, day, speakers, titleSplit) {
   const facts = factsLine(s, day, speakers);
-  if (!abstract || [...abstract].length <= SHARE_TITLE_MAX) return facts;
+  if (!titleSplit || !titleSplit.rest) return facts;
   const joiner = " — ";
   const budget = META_DESCRIPTION_MAX - facts.length - joiner.length;
   if (budget < 20) return facts;
-  return `${facts}${joiner}${truncate(abstract, budget)}`;
+  return `${facts}${joiner}${truncate(titleSplit.rest, budget)}`;
 }
 
 const days = program.days.map((day, index) => {
@@ -414,10 +450,13 @@ const sessions = program.sessions.map((s) => {
     .map((id) => speakersById.get(id))
     .filter(Boolean)
     .map((p) => ({ ...p, initials: initials(p.name), photo: photo(p.id) }));
-  // Computed once and shared by shareTitle and shareDescription below. They
-  // need to agree on what og:title actually shows before shareDescription
-  // can decide whether repeating it would duplicate a sentence.
+  // The one abstract og:title and og:description split between them - see
+  // `splitAbstract`. Computed once, from the joined `abstractText`, and
+  // shared below: shareDescription reads its continuation off `titleSplit`
+  // rather than re-deriving where og:title cut, so the two can never
+  // disagree about the seam between them.
   const abstract = abstractText(s);
+  const titleSplit = abstract ? splitAbstract(abstract, SHARE_TITLE_MAX) : null;
 
   return {
     ...s,
@@ -448,10 +487,11 @@ const sessions = program.sessions.map((s) => {
     // Pill sometimes opens with a subtitle fragment that says nothing on its
     // own. A session with no abstract falls back to its own title, same as
     // `metaDescription` does.
-    shareTitle: abstract ? truncate(abstract, SHARE_TITLE_MAX) : s.title,
+    shareTitle: titleSplit ? titleSplit.head : s.title,
     // For og:description, which unlike <meta name="description"> above leads
-    // with the facts a share card is actually for - see `shareDescription`.
-    shareDescription: shareDescription(s, day, speakers, abstract),
+    // with the facts a share card is actually for, then continues og:title's
+    // abstract rather than repeating it - see `shareDescription`.
+    shareDescription: shareDescription(s, day, speakers, titleSplit),
     // The same facts unjoined, for the two places that set them as type
     // rather than as prose: the session's own share card, and the alt text
     // describing it.
