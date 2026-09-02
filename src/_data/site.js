@@ -229,11 +229,19 @@ function plainText(html) {
  * into one string. The leading dash such a fragment opens with is stripped
  * last, since it reads as a broken sentence at the head of a headline, not
  * as a title's own opening.
+ *
+ * Runs of whitespace are collapsed on the way out. An abstract is HTML, where
+ * a double space, a newline and an indent all render as one space and mean
+ * nothing, but every field built from this one is a single line of prose in an
+ * attribute, where they survive verbatim: six of the 155 descriptions carried
+ * a double space into `<meta name="description">` and one a quadruple. Only
+ * runs are touched, so a deliberate lone non-breaking space - "300 €" is the
+ * one in this programme - is left as the author set it.
  */
 function abstractText(s) {
   if (!s.description.length) return "";
   const joined = s.description.join(" ").replace(/<br\s*\/?>/gi, " ");
-  return plainText(joined).replace(/^[-–—]\s*/, "");
+  return plainText(joined).replace(/\s{2,}/g, " ").replace(/^[-–—]\s*/, "");
 }
 
 // The budget counts code points, not UTF-16 code units, and the ellipsis

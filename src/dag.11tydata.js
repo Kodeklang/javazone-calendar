@@ -23,6 +23,20 @@ export default {
     // name, the title minus its " · JavaZone 2026" suffix.
     shareTitle: (data) =>
       data.day.index === 0 ? "Programmet, dag for dag" : `${data.day.longLabel.no} · Program`,
-    shareDescription: description,
+    // og:title and og:description are rendered together, so the front page's
+    // pair has to say one thing: a headline promising all three days over a
+    // description that narrows to the first was the unfurl contradicting
+    // itself on the most-shared URL there is. The other two days keep the day
+    // description, because for them the headline names that day too.
+    //
+    // `description` above is left naming day one for both, and that is not the
+    // same oversight: it is <meta name="description">, which sits under a
+    // <title> that names day one as well, and the page really is day one's
+    // grid. The share pair is where the front page is the whole programme.
+    shareDescription: (data) =>
+      data.day.index === 0
+        ? `Hele programmet for JavaZone 2026, alle tre dagene, med tider, rom og ` +
+          `foredragsholdere. ${data.site.event.venue}, ${data.site.event.dateRange.no}.`
+        : description(data),
   },
 };
