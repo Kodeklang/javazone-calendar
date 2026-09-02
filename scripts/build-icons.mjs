@@ -17,7 +17,7 @@
 // after FONTCONFIG_FILE is in place.
 //
 // Duke is JavaZone's own mascot, used here with the organisers' permission. He
-// is vendored as src/icons/javazone-duke.png rather than fetched, because
+// is vendored as src/logos/javazone-duke.png rather than fetched, because
 // upstream serves him under a content-hashed filename that changes on every
 // deploy of theirs - a build that fetched him would break without warning. The
 // vendored file is
@@ -28,8 +28,14 @@
 // alpha bounding box ending on the last row before the pink wordmark below him
 // starts. He is the whole of the vendored file, so nothing downstream has to
 // know where the wordmark was. The separate
-// src/icons/javazone-wordmark.png is the other half of the same logo and
+// src/logos/javazone-wordmark.png is the other half of the same logo and
 // belongs to the session share cards; the two are not interchangeable.
+//
+// src/logos is where they live rather than src/icons because src/icons is
+// passthrough-copied wholesale: a build input sitting in it was published at
+// our own domain, and these two are JavaZone's trademarked marks, not ours to
+// serve to anyone who guesses the path. src/css/fonts is the same arrangement
+// for the same reason - the subsetter's input, kept out of what is copied.
 
 import { writeFileSync } from "node:fs";
 import path from "node:path";
@@ -37,7 +43,7 @@ import path from "node:path";
 import sharp from "sharp";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
-const SOURCE = path.join(ROOT, "src/icons/javazone-duke.png");
+const SOURCE = path.join(ROOT, "src/logos/javazone-duke.png");
 const OUT_DIR = path.join(ROOT, "src/icons");
 
 // The gradient the retired src/icons/icon.svg used, kept unchanged so an

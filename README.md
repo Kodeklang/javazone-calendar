@@ -266,8 +266,16 @@ JavaZone's own, used with the organisers' permission, and they are two halves of
 one logo doing jobs the other cannot. A mascot is still recognisable as 16
 pixels in a tab strip, where a wordmark is a grey smear; a wordmark names whose
 conference this is on a card 1200 pixels wide, where the mascot alone would not.
-They live as two files — `src/icons/javazone-duke.png` and
-`src/icons/javazone-wordmark.png` — and are not interchangeable.
+They live as two files — `src/logos/javazone-duke.png` and
+`src/logos/javazone-wordmark.png` — and are not interchangeable.
+
+`src/logos/` exists so that neither is published. It is input to the two
+generators and nothing else: no page, tag or manifest links to either file, and
+they sat in `src/icons/` — a directory Eleventy passthrough-copies wholesale —
+until that meant 186 kB of JavaZone's trademarked marks being served from a
+domain that is not theirs, to nobody. `src/css/fonts` is kept out of what is
+copied for the same reason, and this is the same arrangement: build inputs live
+under `src/`, but only in a directory nothing copies.
 
 ## Filtering
 
@@ -470,7 +478,7 @@ because it is the only one the programme moves under: run it by hand like these,
 and CI runs it hourly beside the photo fetch. See [Share cards](#share-cards).
 
 The icon is JavaZone's own Duke, used with the organisers' permission, over the
-blue the app has always used. He is vendored as `src/icons/javazone-duke.png`
+blue the app has always used. He is vendored as `src/logos/javazone-duke.png`
 rather than fetched, because upstream serves him under a content-hashed filename
 that changes on every deploy of theirs. The favicon is drawn from a much tighter
 crop than the launcher icon — at 16px the whole mascot is a smudge, and only the
