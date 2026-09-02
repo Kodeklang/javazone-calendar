@@ -42,10 +42,11 @@ eleventyComputed:
         {%- endfor %}
       </p>
 
-      {#- A quiet link under the tags, as the design has it. The data-en span
-          is nested rather than sitting on the anchor itself because
-          applyLang() assigns textContent, which on the anchor would take the
-          arrow with it.
+      {#- Two quiet controls under the tags, as the design has them. The
+          data-en spans are nested rather than sitting on the anchor itself
+          because applyLang() assigns textContent, which on the anchor would
+          take the arrow with it. data-no is spelled out so that same first
+          touch cannot latch onto a transient "Kopiert".
 
           Like the speaker links below, the new tab is signalled visually and
           not announced - the arrow is decorative and there is no spoken
@@ -56,7 +57,13 @@ eleventyComputed:
           <span data-en="View on javazone.no" data-no="Se på javazone.no">Se på javazone.no</span>
           <span class="linkrow__ext" aria-hidden="true">↗</span>
         </a>
+        {#- Hidden until app.js reveals it: with no clipboard there is nothing
+            for it to do, and a button that does nothing is worse than none. #}
+        <button type="button" class="linkrow__item" id="copy-link" hidden>
+          <span id="copy-label" data-en="Copy link" data-no="Kopier lenke">Kopier lenke</span>
+        </button>
       </p>
+      <p class="visually-hidden" id="copy-status" role="status" aria-live="polite"></p>
     </header>
 
     {%- if session.speakers.length %}

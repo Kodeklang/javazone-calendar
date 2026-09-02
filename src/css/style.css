@@ -502,8 +502,10 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
    filter the programme cannot actually support. */
 .tag--keyword { background: transparent; color: var(--ink-mute); font-weight: 500; }
 
-/* The design puts this under the tags as quiet underlined text rather than a
-   button: it is secondary to reading the session itself.
+/* The design puts these two directly under the tags as quiet underlined text
+   rather than buttons: they are secondary to reading the session itself. The
+   pair has to read as one row, so the copy control gets its button chrome
+   taken off and both are drawn from the same rule.
    Measured at 6.1:1 against the lightest surface stop, so unlike the gradient
    the design's own .72 stands - see README, "Contrast". */
 .linkrow { margin: 0; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
@@ -511,19 +513,19 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 .linkrow__item {
   display: inline-flex; align-items: center; gap: 6px;
   margin: 0; padding: 0 0 1px;
-  border-bottom: 1px solid rgba(230, 240, 255, 0.3);
-  font-size: 13px; font-weight: 600;
+  border: 0; border-bottom: 1px solid rgba(230, 240, 255, 0.3);
+  background: none; font: inherit; font-size: 13px; font-weight: 600;
   color: rgba(230, 240, 255, 0.72);
-  position: relative;
+  cursor: pointer; position: relative;
 }
-/* Overrides the global a:hover, which would otherwise take it to white
-   without moving the underline with it. */
+/* Overrides the global a:hover as well, so the link and the button light up
+   together rather than the anchor alone going white. */
 .linkrow__item:hover { color: var(--ink-strong); border-bottom-color: var(--ink-strong); }
 
-/* 13px text on a 1px underline is a 17px tap target, and this is a standalone
-   control rather than a link inside a sentence, so the inline exemption to
-   WCAG 2.5.8 does not cover it. This grows the hit area to 24px without
-   moving the underline off the text; at an 18px gap they never overlap. */
+/* 13px text on a 1px underline is a 17px tap target, and these are standalone
+   controls rather than links inside a sentence, so the inline exemption to
+   WCAG 2.5.8 does not cover them. This grows the hit area to 24px without
+   moving the underline off the text; at an 18px gap the two never overlap. */
 .linkrow__item::after {
   content: ""; position: absolute; left: 0; right: 0;
   top: 50%; height: 24px; transform: translateY(-50%);
