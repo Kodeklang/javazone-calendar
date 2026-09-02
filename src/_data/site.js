@@ -561,6 +561,13 @@ function templates(dir) {
 // which `raw` already covers.
 const assetHash = createHash("sha256").update(raw).update(photosRaw);
 for (const f of [
+  // This file, for the same reason the .11tydata.js siblings below are in the
+  // list: every page's `<title>`, description, og:title and og:description are
+  // computed here, so a change to a truncation budget or to how an abstract is
+  // turned into prose rewrites the markup of every page. Left out, an edit
+  // here would ship pages the worker's cache name still calls current, which is
+  // exactly the staleness the cache name exists to prevent.
+  new URL("./site.js", import.meta.url),
   new URL("../css/style.css", import.meta.url),
   new URL("../css/fonts.css", import.meta.url),
   new URL("../js/app.js", import.meta.url),
