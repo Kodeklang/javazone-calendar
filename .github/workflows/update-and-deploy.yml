@@ -44,17 +44,26 @@ jobs:
       - name: Fetch speaker photos from Bluesky
         run: node scripts/fetch-photos.mjs
 
+      # Same reasoning again: a card is keyed on a hash of what it draws, so a
+      # session whose title, format, day, time and room are unchanged is left
+      # exactly as it was and the run costs nothing. Setting type through
+      # librsvg depends on the host's fonts, which is why these are rendered
+      # here and committed rather than drawn during the build.
+      - name: Render the per-session share cards
+        run: node scripts/build-session-cards.mjs
+
       - name: Commit programme changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add src/_data/program.json src/_data/photos.json src/photos
+          git add src/_data/cards.json src/cards
           if git diff --staged --quiet; then
-            echo "Programme and photos unchanged."
+            echo "Programme, photos and cards unchanged."
           else
             # [skip ci] is belt and braces: GITHUB_TOKEN pushes do not retrigger
             # workflows anyway, and this run continues on to build and deploy.
-            git commit -m "Update programme and photos [skip ci]"
+            git commit -m "Update programme, photos and cards [skip ci]"
             git push origin HEAD:main
           fi
 
