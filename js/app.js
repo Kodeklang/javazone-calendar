@@ -263,6 +263,92 @@ if (countdown) {
   setInterval(() => render(currentLang()), 30_000);
 }
 
+/* ------------------------------------------------------------- copy link */
+
+const copyButton = document.getElementById("copy-link");
+
+if (copyButton) {
+  const copyLabel = document.getElementById("copy-label");
+  const copyStatus = document.getElementById("copy-status");
+
+  // The markup ships it hidden. Reading the clipboard API is the whole of what
+  // this control does, so it only earns its place once there is script to do it.
+  copyButton.hidden = false;
+
+  const FLASH_MS = 1800;
+  let flashTimer;
+
+  // This site's own address for the session, not javazone.no's: the point of
+  // the button is to hand someone the page being looked at. Rebuilt from
+  // origin and path rather than taken from location.href, so a "?v=" or a
+  // "#session-..." picked up on the way here is not passed on to anyone else.
+  const sessionUrl = () => location.origin + location.pathname;
+
+  const resting = (lang) => (lang === "en" ? copyLabel.dataset.en : copyLabel.dataset.no);
+
+  const flash = (ok) => {
+    const lang = currentLang();
+    // Said out loud as well as shown. The label changing under the pointer is
+    // the whole feedback for a sighted visitor and none of it for a screen
+    // reader, which would otherwise be told nothing happened at all.
+    copyLabel.textContent = ok
+      ? (lang === "en" ? "Copied" : "Kopiert")
+      : (lang === "en" ? "Couldn't copy" : "Kunne ikke kopiere");
+    copyStatus.textContent = ok
+      ? (lang === "en" ? "Link copied to the clipboard" : "Lenken er kopiert")
+      : (lang === "en" ? "Could not copy the link" : "Kunne ikke kopiere lenken");
+
+    clearTimeout(flashTimer);
+    flashTimer = setTimeout(() => {
+      copyLabel.textContent = resting(currentLang());
+      copyStatus.textContent = "";
+    }, FLASH_MS);
+  };
+
+  // Everything current reaches the first branch: this site is HTTPS, and
+  // localhost counts as a secure context too. The second is for a checkout
+  // served over plain HTTP on a LAN address, where navigator.clipboard is
+  // simply absent - deprecated, but it is what still works there.
+  const write = async (text) => {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+    const field = document.createElement("textarea");
+    field.value = text;
+    field.setAttribute("readonly", "");
+    // Off-screen rather than hidden: a display:none field cannot be selected.
+    field.style.cssText = "position:fixed;top:-9999px;opacity:0";
+    document.body.appendChild(field);
+    field.select();
+    try {
+      if (!document.execCommand("copy")) throw new Error("execCommand refused");
+    } finally {
+      field.remove();
+    }
+  };
+
+  copyButton.addEventListener("click", async () => {
+    try {
+      await write(sessionUrl());
+      flash(true);
+    } catch {
+      // Permission refused, or no clipboard at all. Saying so beats a label
+      // that claims a copy the visitor will not find when they paste.
+      flash(false);
+    }
+  });
+
+  // applyLang rewrites the label from its data-* pair, so a switch mid-flash
+  // already lands on the right resting text; this just drops the timer that
+  // would otherwise rewrite it a second time, and clears the stale
+  // announcement left in the language nobody is reading any more.
+  onLangChange.push(() => {
+    clearTimeout(flashTimer);
+    copyStatus.textContent = "";
+  });
+}
+
 /* ------------------------------------------------------------------ back */
 
 // The href is a real link to the day grid so this works without JS; when the
