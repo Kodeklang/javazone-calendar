@@ -528,6 +528,16 @@ const sessions = program.sessions.map((s) => {
       weekday: day.weekday, dateLabel: day.dateLabel, longLabel: day.longLabel,
     },
     speakers,
+    // The same names as one Norwegian phrase, for prose that has to say them
+    // rather than list them: og:image:alt describes a card that now draws
+    // every one of them, and a reader who cannot see the card wants the
+    // sentence it would have read as. Kept here beside the names themselves
+    // so the join is written once, in the language everything a crawler sees
+    // is written in.
+    speakerList:
+      speakers.length > 1
+        ? `${speakers.slice(0, -1).map((p) => p.name).join(", ")} og ${speakers.at(-1).name}`
+        : speakers[0]?.name ?? "",
     parallel: overlapping.map((o) => ({
       id: o.id, title: o.title, roomName: o.roomName, startUtc: o.startUtc,
       url: `/program/${o.slug}/`, colour: colourOf(o.format),

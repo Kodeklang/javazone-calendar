@@ -86,7 +86,13 @@ two accounts have set no avatar, two do not resolve under any spelling.
 So most speakers keep the monogram, permanently. `.speaker__mono` and
 `.speaker__photo` are therefore given identical geometry at both breakpoints, so a
 list mixing them reads as one treatment rather than a half-finished import. Any
-change to the circle belongs in both rules.
+change to the circle belongs in both rules — and now in a third place, since the
+[share cards](#share-cards) draw the same circle at the same 60px, from the same
+files, and a card that treated the two differently would undo the rule on the
+surface more people see. The card scales its own copy of the photo down through
+libvips rather than up: 120px is all there will ever be, and an avatar enlarged
+past what it has pixels for would sit next to crisp type and look worse than the
+monogram beside it.
 
 Re-running is cheap and safe. A Bluesky avatar URL ends in the blob's CID, so the
 URL *is* the content hash: an unchanged avatar is recognised from the manifest and
@@ -171,8 +177,9 @@ the warm pass skips anything already present.
 A link to this site pasted into Slack, LinkedIn, iMessage or Discord unfurls
 into a card rather than a bare URL. `src/_includes/base.njk` carries the `og:*`
 and `twitter:card` block that asks for that, and every one of the 155 sessions
-has a 1200×630 picture of its own to put in it — its title, day, time and room
-set over the app's own gradient, under JavaZone's wordmark.
+has a 1200×630 picture of its own to put in it — its title, its speakers, and
+the day, time and room, set over the app's own gradient under JavaZone's
+wordmark.
 
 ```sh
 npm run og       # the site-wide card, src/icons/og.png
@@ -207,8 +214,35 @@ fallback — the day grids unfurl with it, and so does any session whose own car
 has not been drawn, which is the normal state of a checkout that has never run
 the generator and no more an error than a speaker without a photo.
 
+**The speakers are on the card, with their faces.** The name is the third thing
+a reader looks at, after the title and before the time, and it is the fact the
+card used to leave to `og:description` — which iMessage, the client this site is
+most often shared into, does not render at all. So a talk shared there came back
+with a title and nothing else, and the person giving it was invisible on the one
+surface most people ever see. Each speaker is now drawn as a circle with their
+name beside it: their photo where there is one, their initials where there is
+not, in the same circle at the same size in the same place, which is the rule
+[the detail page](#speaker-photos) already follows and for the same reason. Two
+long Norwegian names will not fit across a card beside two circles, so the row
+steps its type down once and then, if that is still not enough, drops the
+circles and keeps the names — four sessions take the smaller step and four set
+their names alone. Nothing is ever shrunk to a size it cannot be read at.
+
+That line had to come out of the title's own space: the band the fitter works in
+is 282px where it was 306, and the ladder it walks now ends at 46px rather than
+52. Only one title in the 2026 programme is long enough to notice — 151
+characters, five lines at 52px — and it is set at 46 in four lines rather than
+cut off with an ellipsis. Every other card is set at exactly the size it was.
+
+One consequence worth stating: because the photos are embedded in the SVG the
+hash is taken over, **a speaker changing their Bluesky avatar now redraws every
+card they are on**, in the same hourly bot commit that refetches the photo. That
+is the intended behaviour — the card carries their face, so a card that ignored
+a new one would be showing the old one — but it means avatar churn is a source
+of card diffs where it used to be a source of photo diffs only.
+
 **The cards are deliberately absent from the service worker's precache.** There
-are 155 files and 4.7 MB of them, and the only things that ever fetch one are the
+are 155 files and 5.2 MB of them, and the only things that ever fetch one are the
 crawlers behind Slack, LinkedIn and iMessage — no visitor sees one, on a page or
 anywhere else. Precaching them would spend a conference hall's wifi on pictures
 nobody in the hall will look at. Ordinary `ETag` caching is the whole story for

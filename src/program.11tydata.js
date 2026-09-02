@@ -27,10 +27,20 @@ export default {
     // checkout that has never run the generator and no more an error than a
     // speaker without a photo.
     shareImage: (data) => data.session.shareCard?.url,
+    // The card, in the order a viewer reads it: the mark, the title, the
+    // speakers with their photo or their monogram, and the facts along the
+    // bottom. The speakers are in here because they are on the card now - a
+    // description that stopped at the title would be describing the card this
+    // site drew last month. `speakerList` does the Norwegian join (site.js), a
+    // session without one says nothing rather than leaving an empty clause.
     shareImageAlt: (data) =>
       data.session.shareCard &&
-      `Mørkeblå plakat med JavaZone-logoen og teksten «${data.session.title}», ` +
-        `${data.session.shareFacts.day} ${data.session.shareFacts.time}, ` +
+      `Mørkeblå plakat med JavaZone-logoen, teksten «${data.session.title}»` +
+        (data.session.speakerList
+          ? `, ${data.session.speakers.length > 1 ? "foredragsholderne" : "foredragsholderen"} ` +
+            `${data.session.speakerList}`
+          : "") +
+        `, ${data.session.shareFacts.day} ${data.session.shareFacts.time}, ` +
         `${data.session.shareFacts.room}.`,
     back: (data) => `${data.session.day.url}#session-${data.session.id}`,
   },
