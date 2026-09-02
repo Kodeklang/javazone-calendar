@@ -12,6 +12,12 @@ export default {
     // site.js's `metaDescription`, which is where the 160-character budget
     // and the entity decoding live so this file stays wiring only.
     description: (data) => data.session.metaDescription,
+    // The title minus its own " · JavaZone 2026" suffix: og:site_name
+    // already carries the site's name on the card, so og:title need not.
+    shareTitle: (data) => data.session.title,
+    // Day, time, room and speaker ahead of the abstract - see site.js's
+    // `shareDescription` for why a share card wants the facts first.
+    shareDescription: (data) => data.session.shareDescription,
     back: (data) => `${data.session.day.url}#session-${data.session.id}`,
   },
 };

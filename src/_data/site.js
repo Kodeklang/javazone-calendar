@@ -203,6 +203,38 @@ function truncate(text, max) {
   return `${(lastSpace > 0 ? cut.slice(0, lastSpace) : cut).join("").trimEnd()}…`;
 }
 
+/**
+ * The facts a share card needs before any prose: day, start time and room,
+ * plus a speaker if there is one, in the grid card's own shorthand for a
+ * name. The room is spelled out here - unlike the grid card, the share card
+ * has no column to place it in - and a speakerless session must not leave a
+ * dangling " · " where the name would otherwise go.
+ */
+function shareFacts(s, day, speakers) {
+  const time = clock.format(new Date(s.startUtc));
+  const speaker = speakers.length
+    ? ` · ${speakers.length > 1 ? `${speakers[0].name} +${speakers.length - 1}` : speakers[0].name}`
+    : "";
+  return `${day.longLabel.no} ${time} · ${s.roomName}${speaker}`;
+}
+
+/**
+ * og:description for a session: the facts above, then as much of the
+ * abstract as the same 160-character budget `metaDescription` uses leaves
+ * over. A crawler unfurling a link gets more from confirming day, time, room
+ * and speaker than from half a sentence of abstract, so once the facts alone
+ * leave too little room for a meaningful clause the abstract is dropped
+ * rather than shortened to nothing.
+ */
+function shareDescription(s, day, speakers) {
+  const facts = shareFacts(s, day, speakers);
+  const joiner = " — ";
+  const budget = META_DESCRIPTION_MAX - facts.length - joiner.length;
+  if (budget < 20) return facts;
+  const body = s.description.length ? plainText(s.description[0]) : s.title;
+  return `${facts}${joiner}${truncate(body, budget)}`;
+}
+
 const days = program.days.map((day, index) => {
   const sessions = program.sessions.filter((s) => s.dayId === day.id);
 
@@ -291,6 +323,10 @@ const sessions = program.sessions.map((s) => {
     .sort((a, b) =>
       a.startUtc.localeCompare(b.startUtc) ||
       a.roomName.localeCompare(b.roomName, "en", { numeric: true }));
+  const speakers = s.speakerIds
+    .map((id) => speakersById.get(id))
+    .filter(Boolean)
+    .map((p) => ({ ...p, initials: initials(p.name), photo: photo(p.id) }));
 
   return {
     ...s,
@@ -313,16 +349,16 @@ const sessions = program.sessions.map((s) => {
     metaDescription: s.description.length
       ? truncate(plainText(s.description[0]), META_DESCRIPTION_MAX)
       : s.title,
+    // For og:description, which unlike <meta name="description"> above leads
+    // with the facts a share card is actually for - see `shareDescription`.
+    shareDescription: shareDescription(s, day, speakers),
     formatName: formatById.get(s.format)?.name ?? { no: s.format, en: s.format },
     languageName: s.language ? languageById.get(s.language)?.name ?? null : null,
     day: {
       number: day.number, url: day.url,
       weekday: day.weekday, dateLabel: day.dateLabel, longLabel: day.longLabel,
     },
-    speakers: s.speakerIds
-      .map((id) => speakersById.get(id))
-      .filter(Boolean)
-      .map((p) => ({ ...p, initials: initials(p.name), photo: photo(p.id) })),
+    speakers,
     parallel: overlapping.map((o) => ({
       id: o.id, title: o.title, roomName: o.roomName, startUtc: o.startUtc,
       url: `/program/${o.slug}/`, colour: colourOf(o.format),
