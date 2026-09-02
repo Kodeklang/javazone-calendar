@@ -14,13 +14,19 @@
     iMessage or Discord unfurls into a card instead of a bare URL. One
     twitter:* tag is enough - Twitter itself falls back to og:* for title,
     description and image, and every other reader here only looks at og:*
-    in the first place. og:title is the page's own share title rather than
-    <title>: og:site_name already names the site once, so the title need
-    not say it again. og:locale is nb_NO unconditionally - the EN toggle in
+    in the first place. og:locale is nb_NO unconditionally - the EN toggle in
     app.js is client-side only, so a crawler only ever sees the Norwegian
-    page. #}
+    page.
+
+    og:site_name names the conference and nothing else. Slack and Discord
+    render it above og:title, so the two are read together as one line and no
+    page's og:title may repeat it - the front page's used to be byte-identical
+    to it, which Slack rendered as the same string printed twice. og:title
+    is therefore the page's own share title rather than <title>, and it says
+    what that particular page is: the day grids their day, a session the
+    opening of its abstract. #}
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="JavaZone 2026 — program">
+<meta property="og:site_name" content="JavaZone 2026">
 <meta property="og:locale" content="nb_NO">
 <meta property="og:url" content="{{ page.url | absUrl }}">
 <meta property="og:title" content="{{ shareTitle }}">
