@@ -33,13 +33,102 @@ if (langButton) {
 }
 applyLang(currentLang());
 
+/* ---------------------------------------------------------------- picks */
+
+// The sessions someone has marked as one they want to see. Their own list, so
+// it gets a key of its own rather than a corner of jz-filters: "Alt" wipes a
+// filter selection, and it must never take the list with it.
+//
+// localStorage rather than a cache or IndexedDB, on three counts. It is
+// origin-scoped, so the installed app and a browser tab are reading the same
+// list. It outlives every service worker activation - the worker owns only the
+// jz-<build> cache, which a deploy retires wholesale, and storage is not in it.
+// And it is synchronous, so the list is in hand before the first paint and a
+// marked card is never drawn unmarked and then corrected.
+//
+// None of it is baked into the HTML, for the reason at the top of this file:
+// the pages are precached and identical for everyone, so the marks are put on
+// here, at runtime, on top of a build that knows nothing about them.
+
+const PICKS_KEY = "jz-picks";
+const onPicksChange = [];
+
+function storedPicks() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(PICKS_KEY) ?? "[]");
+    if (!Array.isArray(parsed)) return new Set();
+    return new Set(parsed.filter((v) => typeof v === "string"));
+  } catch {
+    // Hand-edited or truncated storage: nothing marked beats throwing on load.
+    return new Set();
+  }
+}
+
+function storePicks(picks) {
+  if (picks.size) localStorage.setItem(PICKS_KEY, JSON.stringify([...picks]));
+  else localStorage.removeItem(PICKS_KEY);
+}
+
+let picks = storedPicks();
+
+const picksChanged = () => {
+  for (const fn of onPicksChange) fn();
+};
+
+// Returning from a session page is history.back() (see #back below), which can
+// restore the grid from the bfcache exactly as it was left - including its
+// marks, made before the visitor went and changed one. Nothing ran in between
+// to notice, so re-read rather than trust what is on screen.
+window.addEventListener("pageshow", (event) => {
+  if (!event.persisted) return;
+  picks = storedPicks();
+  picksChanged();
+});
+
+// Two tabs on a desktop - the grid in one, a session in the other - are the
+// same list seen twice, and `storage` fires in every tab but the one that
+// wrote. Without this the grid would sit on a stale list until it reloaded.
+window.addEventListener("storage", (event) => {
+  if (event.key !== null && event.key !== PICKS_KEY) return;
+  picks = storedPicks();
+  picksChanged();
+});
+
+/* ----------------------------------------------------------- pick button */
+
+const pickButton = document.getElementById("pick");
+
+if (pickButton) {
+  // The markup ships it hidden, because without script there is nowhere to
+  // keep the answer.
+  pickButton.hidden = false;
+
+  const id = pickButton.dataset.session;
+  const render = () => pickButton.setAttribute("aria-pressed", String(picks.has(id)));
+
+  pickButton.addEventListener("click", () => {
+    // Read storage again rather than trusting the in-memory copy: another tab
+    // may have marked something since this page loaded, and writing the whole
+    // list back from a stale Set would silently drop it.
+    picks = storedPicks();
+    if (picks.has(id)) picks.delete(id);
+    else picks.add(id);
+    storePicks(picks);
+    render();
+  });
+
+  onPicksChange.push(render);
+  render();
+}
+
 /* -------------------------------------------------------- facet filter */
 
-// Two independent facets, because Sleeping Pill publishes no track: format
-// (presentation, lightning talk, workshop) and language. Chips within one
-// facet are alternatives; the two facets narrow each other. Picking "Lyntale"
-// and "Norsk" means the Norwegian lightning talks, which is the question
-// someone standing in a corridor actually has.
+// Three independent facets. Two come from the programme, because Sleeping Pill
+// publishes no track: format (presentation, lightning talk, workshop) and
+// language. The third, "mine", comes from the visitor's own marks instead.
+// Chips within one facet are alternatives; the facets narrow each other.
+// Picking "Lyntale" and "Norsk" means the Norwegian lightning talks, which is
+// the question someone standing in a corridor actually has.
 //
 // Filtering de-emphasises rather than removes. A session outside the selection
 // is greyed out but stays exactly where it is, so the grid keeps its shape,
@@ -55,7 +144,7 @@ applyLang(currentLang());
 // quietly drop them.
 
 const FILTER_KEY = "jz-filters";
-const FACETS = ["format", "language"];
+const FACETS = ["format", "language", "mine"];
 const chips = document.querySelectorAll(".chip[data-facet]");
 const resetChip = document.getElementById("filter-reset");
 const allSessions = document.querySelectorAll(".session[data-format]");
@@ -120,6 +209,9 @@ if (chips.length) {
     for (const session of allSessions) {
       const on = FACETS.every((facet) => {
         if (!picked[facet].size) return true;
+        // "mine" is the one facet the build knows nothing about, so it asks
+        // the list rather than an attribute written onto the card.
+        if (facet === "mine") return picks.has(session.dataset.session);
         return picked[facet].has(session.dataset[facet] || "");
       });
       // No selection at all means no dimming: an unfiltered grid is not a grid
@@ -174,6 +266,12 @@ if (chips.length) {
   // clears it. This is also what carries the choice across days.
   onLangChange.push((lang) => applyFilters(forToday(), { lang }));
 
+  // With "Dine sesjoner" on, the list *is* the filter, so a mark made since
+  // this page was drawn - on a session page just navigated back from, or in
+  // another tab - changes which cards belong. Silent, because the visitor is
+  // not looking at this page at the moment it happens.
+  onPicksChange.push(() => applyFilters(forToday()));
+
   const initial = forToday();
   applyFilters(initial);
   const firstPicked = [...chips].find(
@@ -184,6 +282,32 @@ if (chips.length) {
     // horizontally scrolling row - show why the grid is filtered.
     firstPicked.scrollIntoView({ inline: "center", block: "nearest" });
   }
+}
+
+/* ------------------------------------------------------- marks on the grid */
+
+// A marked session carries its check on the grid too, so the list is visible
+// while browsing the whole day rather than only once it is filtered for.
+//
+// The 10-minute tier has no meta row to put it in - the card is 20px tall and
+// holds its title and nothing else - so those show no tick. The spoken mark
+// below is on every card regardless.
+
+if (allSessions.length) {
+  const markPicked = (lang = currentLang()) => {
+    for (const session of allSessions) {
+      const on = picks.has(session.dataset.session);
+      session.classList.toggle("is-picked", on);
+      // The tick lives inside the aria-hidden meta row, so on its own it says
+      // nothing at all. This is the same fact, put where it will be read.
+      const note = session.querySelector(".session__mark");
+      if (note) note.textContent = on ? (lang === "en" ? ", marked" : ", merket") : "";
+    }
+  };
+
+  onPicksChange.push(() => markPicked());
+  onLangChange.push(markPicked);
+  markPicked();
 }
 
 /* ------------------------------------------------------------- now line */

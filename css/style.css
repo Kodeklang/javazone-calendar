@@ -60,6 +60,17 @@
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
+/* The `hidden` attribute is only a UA `display: none`, so any display rule in
+   this file beats it - and controls here ship hidden and are revealed by
+   app.js precisely because they cannot work without script. Without this they
+   sit on screen and inert for the one visitor the attribute is there for. */
+[hidden] { display: none !important; }
+
+/* The shared check mark (_includes/check.njk). Block, so it sits on no
+   baseline and leaves no descender gap under it; every context sets its own
+   size, and the stroke follows whatever colour the parent is in. */
+.check { display: block; }
+
 html, body { margin: 0; padding: 0; height: 100%; background: var(--ground); }
 
 /* How many title lines fit in a card is worked out at build time from a known
@@ -185,6 +196,23 @@ html[lang="en"] .lang__off { background: var(--ink); color: var(--ground); }
 .chip--lang { --track: rgba(255, 255, 255, 0.42); color: var(--ink); }
 .chip--lang[aria-pressed="true"] { background: var(--ink); color: var(--ground); border-color: var(--ink); }
 
+/* The visitor's own list. It takes the accent, which in this app is the "this
+   one, out of all of them" colour - the current day, the pick button, the mark
+   on a card - rather than a colour that stands for a kind of session. That the
+   presentation format happens to share the accent is a coincidence of the
+   palette; the check mark and the label are what tell the two chips apart, and
+   no other chip in the row carries an icon. */
+.chip--mine {
+  --track: var(--accent);
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--accent);
+}
+.chip__check { width: 13px; height: 13px; flex: none; }
+.chip--mine[aria-pressed="true"] {
+  background: var(--accent); color: var(--ground); border-color: var(--accent);
+}
+.chip--mine[aria-pressed="true"]:hover { background: var(--accent); }
+
 /* The reset chip belongs to no facet, so it borrows the neutral chrome and
    reads as pressed whenever nothing is filtered - the default state. */
 .chip--reset {
@@ -232,6 +260,9 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 .session.is-dimmed .session__time,
 .session.is-dimmed .session__lang,
 .session.is-dimmed .session__speaker { color: rgba(230, 240, 255, 0.68); }
+/* A dimmed card's mark dims with it. Left at full accent it would pull the eye
+   to precisely the cards the filter is pushing back. */
+.session.is-dimmed .session__tick { color: rgba(230, 240, 255, 0.68); }
 
 .session { transition: background-color 0.15s ease, border-color 0.15s ease; }
 
@@ -370,6 +401,15 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
   font-size: 9px; font-weight: 700; letter-spacing: 0.08em; color: var(--ink-soft);
 }
 
+/* The mark on a card, pushed to the end of the meta row so it lands in the top
+   right corner on the same line as the time. That row's height is part of the
+   build-time card geometry in _data/site.js, so nothing here may add to it. */
+.session__tick {
+  margin-left: auto; flex: none; width: 12px; height: 12px; color: var(--accent);
+}
+.session:not(.is-picked) .session__tick { display: none; }
+.session--compact .session__tick { width: 11px; height: 11px; }
+
 /* --lines is how many lines actually fit in this card, worked out from its
    duration at build time (see cardLayout() in _data/site.js). Clamping to the
    real height rather than to a duration bucket keeps long titles legible
@@ -424,10 +464,6 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 
 /* ------------------------------------------------------------- now line */
 
-/* Without this the `hidden` attribute loses to `display: flex` below and the
-   line shows on days that are not today. */
-.now[hidden] { display: none; }
-
 .now {
   position: absolute; left: 0; right: 0; z-index: 25;
   top: calc(var(--head-h) + var(--now-min) * var(--slot-h) / 5);
@@ -472,9 +508,37 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 }
 .countdown:empty { display: none; }
 
+/* The title and the mark share a row, so a long title wraps under itself
+   rather than around the button. flex-start keeps the circle level with the
+   first line however many lines there turn out to be. */
+.detail__title { display: flex; align-items: flex-start; gap: 16px; }
+.detail__title h1 { flex: 1; min-width: 0; }
+
 .detail h1 {
   margin: 0; font-size: 40px; font-weight: 800; line-height: 1.12;
   letter-spacing: -0.015em; color: var(--ink-strong); text-wrap: pretty;
+}
+
+/* Drawn the way the day picker draws the current day - outlined while off,
+   filled with the accent while on - because it is the same kind of statement:
+   this one, out of all of them. 44px satisfies WCAG 2.5.8 on its own. */
+.pick {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; margin-top: 3px; padding: 0;
+  border: 1px solid var(--panel-bd); border-radius: 999px;
+  background: var(--deep-solid); color: var(--ink-mute);
+  cursor: pointer; transition: background-color 0.12s ease, color 0.12s ease;
+}
+.pick:hover { color: var(--ink-strong); border-color: rgba(255, 255, 255, 0.42); }
+.pick[aria-pressed="true"] {
+  background: var(--accent); border-color: var(--accent); color: var(--ground);
+}
+.pick[aria-pressed="true"]:hover { color: var(--ground); }
+.pick:active { filter: brightness(0.9); transition: none; }
+.pick__check { width: 23px; height: 23px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pick { transition: none; }
 }
 
 .pills, .tags { margin: 0; display: flex; gap: 10px; flex-wrap: wrap; }
@@ -624,6 +688,9 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 
   .detail { padding: 20px 16px 44px; gap: 22px; }
   .detail h1 { font-size: 26px; line-height: 1.15; }
+  .detail__title { gap: 12px; }
+  .pick { width: 40px; height: 40px; margin-top: 0; }
+  .pick__check { width: 21px; height: 21px; }
   .detail__body { font-size: 14.5px; line-height: 1.65; }
   .pill { padding: 7px 13px; font-size: 12px; }
   .linkrow { gap: 16px; }
