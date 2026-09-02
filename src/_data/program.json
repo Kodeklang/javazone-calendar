@@ -2524,7 +2524,7 @@
         "In this session, we will tackle the hard questions:<br>- Are we stuck in a loop of reinventing the wheel?<br>- Are there deep analogies between code and natural languages?<br>- Why do some languages thrive for decades while others end up in the graveyard of history?<br>- Why do we get so attached to specific tools while despising alternatives?<br>- Do we prefer writing yet another CRUD in the latest Java, or sending humans to space using &quot;obsolete&quot; tech?<br>- Will English become the ultimate programming language in the AI era?"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223278888",
       "speakerIds": [
         "piotr-laskawiec"
       ]
