@@ -202,6 +202,62 @@ The selection persists in `localStorage` under `jz-filters` and spans days. A da
 applies only the values it actually runs but keeps the rest stored, so stepping
 to a day without them and back does not quietly drop them.
 
+A third facet, **mine**, joins these two — see below. It is not a field upstream
+publishes, but it narrows the other two exactly as they narrow each other.
+
+## Your sessions
+
+A check mark beside the title on a session page marks it as one to see. On the
+grid those sessions carry a tick, and a **"Dine sesjoner"** chip filters down to
+them — greying the rest out, like every other chip.
+
+The marks live in `localStorage` under **`jz-picks`**, a key of their own rather
+than a corner of `jz-filters`. The two are different kinds of thing: a filter is
+a throwaway view state that "Alt" is meant to wipe, and the list is something
+someone would be annoyed to lose. Sharing a key would have let the one clear the
+other.
+
+`localStorage` rather than a cache or IndexedDB, on three counts:
+
+- it is **origin-scoped**, so the installed PWA and a browser tab are reading and
+  writing the same list rather than two that drift apart;
+- it **outlives every service worker activation** — the worker owns only the
+  `jz-<build>` cache, which a deploy retires wholesale, and storage is not in it,
+  so an update never costs anyone their marks;
+- it is **synchronous**, so the list is in hand before the first paint and a
+  marked card is never drawn unmarked and corrected a frame later.
+
+**None of it is baked into the HTML.** Every page is precached and byte-identical
+for everyone who loads it, so the marks go on at runtime in `app.js`, the way the
+language already does. That is also why the "mine" facet's match test asks the
+list rather than a `data-` attribute: no build can know who marked what.
+
+The check is drawn in the **accent**, which in this app is the "this one, out of
+all of them" colour — the current day, the pick button, the tick on a card. That
+the presentation format shares that cyan is a coincidence of the palette, not a
+link; the check mark and the label are what tell the two chips apart, and no
+other chip in the row carries an icon. The wordmark's pink was the obvious way
+to sidestep the coincidence, and it fails AA where the chip row sits: 3.6:1
+against the gradient's top stop, against the 4.5:1 the rest of this app holds
+to. The accent clears it at 7.3:1.
+
+**Pressing the chip with nothing marked dims the whole day.** That is the honest
+answer to an empty list rather than a special case pretending otherwise, and
+"Alt" is one tap from it.
+
+Two things keep a page from showing a stale list. Going back from a session page
+is `history.back()`, which can restore the grid from the bfcache exactly as it
+was left — before the mark that was just made — so `pageshow` re-reads storage
+when `persisted` is set. And two tabs open on the same programme are one list
+seen twice, so the `storage` event re-reads it in the tab that did not write.
+
+On the grid the tick rides at the end of the card's meta row, whose height is
+already part of the build-time card geometry in `_data/site.js`, so it costs no
+line and no card grows. The 10-minute tier has no meta row at all — those cards
+are 20px tall and hold their title and nothing else — so they show no tick. That
+row is `aria-hidden`, so the tick alone would say nothing; `.session__mark`
+inside the card's hidden text carries the same fact in the current language.
+
 ## Contrast
 
 **The design's surface gradient was changed, deliberately.** The source specifies
