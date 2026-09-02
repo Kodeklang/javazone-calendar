@@ -69,7 +69,7 @@ links. Of the three the payload carries, exactly one is reachable:
 
 | Link | Speakers | |
 | --- | --- | --- |
-| LinkedIn | 141 | The photo is in `og:image` on the public profile, but roughly half of all requests answer HTTP 999, some of the rest carry the grey default silhouette, and `/in/` is disallowed in their `robots.txt`. Unusable — and it is the one most speakers have. |
+| LinkedIn | 141 | The photo is in the profile's `og:image`, the link-preview tag this site fills with its own [share cards](#share-cards), but roughly half of all requests answer HTTP 999, some of the rest carry the grey default silhouette, and `/in/` is disallowed in their `robots.txt`. Unusable — and it is the one most speakers have. |
 | Bluesky | 60 | A documented, unauthenticated XRPC API. **This is the source.** |
 | Twitter | 54 | No public API since 2023. Only reachable through a third-party avatar proxy, which rate-limits and answers with a generic face rather than a 404 when it finds nothing. |
 
@@ -102,13 +102,22 @@ deleting their avatars at once.
 `.github/workflows/update-and-deploy.yml` runs hourly, on every push to `main`,
 and on demand:
 
-1. fetch → `src/_data/program.json`, committed to `main` only if it changed
-2. build with Eleventy
-3. publish `_site` to the `gh-pages` branch, committed only if it changed
+1. fetch the programme → `src/_data/program.json`
+2. fetch the speaker photos → `src/photos/`
+3. render the per-session share cards → `src/cards/`
+4. commit all three to `main`, in one commit, only if something changed
+5. build with Eleventy
+6. publish `_site` to the `gh-pages` branch, committed only if it changed
+
+Steps 2 and 3 run every time rather than only behind a programme change, because
+an avatar can move under a programme that has not and a card's design can move
+under both. Neither is expensive to ask: each is keyed on a hash of what it
+draws from, so an unchanged input is recognised and left alone, and an hourly
+run over a quiet programme writes nothing at all.
 
 The site is published at <https://javazone.kodeklang.dev>. Its `CNAME` file lives
 in `src/root/` rather than being left where GitHub's custom domain setting writes
-it, because step 3 replaces the `gh-pages` tree wholesale — a file only GitHub
+it, because step 6 replaces the `gh-pages` tree wholesale — a file only GitHub
 put there would be gone on the next hourly run.
 
 Upstream sends no `ETag`, no `Last-Modified` and no `Cache-Control`, so a
@@ -136,9 +145,10 @@ changes entirely: adding speaker photos to the detail pages rewrote every page
 without touching it, so the pages went stale with nothing to notice.
 
 Offline means the whole programme, not just the pages that were visited. The
-worker takes all 181 entries — every day grid, all 155 talks, the subset fonts —
-because a conference hall is exactly where signal runs out, and a programme that
-only holds the pages someone thought to open first is not much of a programme.
+worker takes all 234 entries — every day grid, all 155 talks, the subset fonts,
+the speaker photos — because a conference hall is exactly where signal runs out,
+and a programme that only holds the pages someone thought to open first is not
+much of a programme. The share cards below are the one deliberate exclusion.
 The app shell is precached atomically; the rest is warmed a few files at a time
 and tolerates individual failures, so one bad response cannot cost the visitor
 everything else.
@@ -155,6 +165,101 @@ background revalidation behind a served page. GitHub Pages stamps everything
 from the browser's HTTP cache with pre-deploy bytes — and storing those under a
 cache name that asserts they are the new build poisons the entry for good, since
 the warm pass skips anything already present.
+
+## Share cards
+
+A link to this site pasted into Slack, LinkedIn, iMessage or Discord unfurls
+into a card rather than a bare URL. `src/_includes/base.njk` carries the `og:*`
+and `twitter:card` block that asks for that, and every one of the 155 sessions
+has a 1200×630 picture of its own to put in it — its title, day, time and room
+set over the app's own gradient, under JavaZone's wordmark.
+
+```sh
+npm run og       # the site-wide card, src/icons/og.png and og.webp
+npm run cards    # one per session, into src/cards/
+```
+
+**Those pictures are committed art, and the Eleventy build must never draw
+them.** Setting type through librsvg resolves fonts against the host's
+fontconfig, so the same SVG rasterises differently on a laptop and on a runner.
+By the argument above, a build that drew its own images would therefore produce
+a diff on every hourly run and retire every `ETag` on `gh-pages` for a picture
+nobody changed. So the generators run outside the build, git carries what they
+write, and Eleventy copies it through untouched.
+
+That only holds if a run over an unchanged programme rewrites nothing, which is
+what `src/_data/cards.json` is for. It records a hash of each card's finished
+SVG together with the raster settings it was encoded under, and a card whose
+hash has not moved is left exactly as it was. Hashing the finished SVG rather
+than the fields it was drawn from covers strictly more — the font size and the
+line breaks the fitter chose for one particular title are in it too — so a
+change to the design regenerates the whole set on its own, with nothing to
+remember to bump. It is the same reason every encoder setting lives in one
+`RASTER` object that the hash covers whole rather than at the call sites: a
+knob outside the hash could quietly change all 310 files while the manifest
+went on calling them current.
+
+Because a quiet run costs nothing, the workflow can afford to render the
+session cards on every hourly pass and let the git diff decide. `npm run og`
+stays a hand-run job: the site-wide card says only what the conference is
+called and when it runs, so nothing in the programme moves it. It is also the
+fallback — the day grids unfurl with it, and so does any session whose own card
+has not been drawn, which is the normal state of a checkout that has never run
+the generator and no more an error than a speaker without a photo.
+
+**The cards are deliberately absent from the service worker's precache.** There
+are 310 files and 9 MB of them, and the only things that ever fetch one are the
+crawlers behind Slack, LinkedIn and iMessage — no visitor sees one, on a page or
+anywhere else. Precaching them would spend a conference hall's wifi on pictures
+nobody in the hall will look at. Ordinary `ETag` caching is the whole story for
+a crawler, which is why the filenames carry no hash and no query string: there
+is no cache here that has to be busted through the URL.
+
+**`og:title` on a session page carries the abstract, not the session title.**
+The picture beside it already shows the title, the day, the time and the room,
+and most unfurlers render only the title line — so a title in that slot would be
+the picture said twice, in the one place left to say something new.
+`og:description` then picks the same sentence up from exactly where the title's
+cut fell rather than starting over, so the two never overlap: `splitAbstract` in
+`src/_data/site.js` makes both out of one string and one word boundary. The
+description opens with the day, the time, the room and the speaker before that
+continuation, because a reader whose client renders no picture, or has not
+fetched it yet, would otherwise have to open the link to learn when the talk
+is.
+
+Open Graph is also the one part of this site that needs **absolute** URLs:
+`og:url` and `og:image` are read by a crawler that has no page of ours to
+resolve a relative path against. So `src/_data/site.js` carries the origin as
+`SITE_URL`, and an `absUrl` filter composes it with Eleventy's own `url` filter
+rather than instead of it, so a `PATH_PREFIX` build cannot lose its prefix on
+the way out. That origin is what gives every page its `<link rel="canonical">`
+too — the github.io mirror builds the same pages, and without one a crawler
+sees two URLs for identical content and has to guess which to rank.
+
+**Each card is offered twice, PNG first and WebP second.** There is no content
+negotiation to lean on — GitHub Pages serves static files and does not vary on
+`Accept` — and `<picture>` has nothing to attach to, because no element on any
+page ever renders a card. A repeated `og:image` is the one mechanism Open Graph
+itself provides, and most consumers take the first image they see, so the first
+one has to be the format that decodes everywhere.
+
+The WebP is lossless, which on this material is not the compromise it sounds
+like. Measured on four cards, lossless lands at 75–81% of the PNG and is
+bit-identical to it, where lossy at quality 100 costs 175–258% *and* rings along
+the edges of type, which is nearly all a card is. The PNG is palette-quantised,
+which normally ruins a large gradient — but this ground steps through only 54
+levels from top to bottom, so 256 entries hold it exactly: every pixel of open
+ground comes back bit-identical, and the 1–2% that move are antialiasing along
+glyph edges, by at most 29 of 255. The set halves and nothing visible pays for
+it.
+
+**Duke is the app icon; the wordmark is what goes on the share cards.** Both are
+JavaZone's own, used with the organisers' permission, and they are two halves of
+one logo doing jobs the other cannot. A mascot is still recognisable as 16
+pixels in a tab strip, where a wordmark is a grey smear; a wordmark names whose
+conference this is on a card 1200 pixels wide, where the mascot alone would not.
+They live as two files — `src/icons/javazone-duke.png` and
+`src/icons/javazone-wordmark.png` — and are not interchangeable.
 
 ## Filtering
 
@@ -344,12 +449,17 @@ rather than blocking the document — see `src/rum.njk`.
 
 ## One-off tooling
 
-Neither of these runs in CI; their output is committed.
+None of these runs in CI; their output is committed.
 
 ```sh
 node scripts/fetch-fonts.mjs   # re-vendor Montserrat
 npm run icons                  # redraw the app icon and the favicon
+npm run og                     # redraw the site-wide share card
 ```
+
+The generator missing from that list is `npm run cards`, and it is missing
+because it is the only one the programme moves under: run it by hand like these,
+and CI runs it hourly beside the photo fetch. See [Share cards](#share-cards).
 
 The icon is JavaZone's own Duke, used with the organisers' permission, over the
 blue the app has always used. He is vendored as `src/icons/javazone-duke.png`
