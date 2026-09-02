@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-// Draws the site-wide Open Graph share card and writes it to src/icons/og.png
-// and src/icons/og.webp.
+// Draws the site-wide Open Graph share card and writes it to src/icons/og.png.
 //
 //   npm run og
 //
@@ -10,7 +9,7 @@
 // in Actions - and the hourly workflow deploys whenever the bytes of _site
 // change, so a card that re-rendered on every build would invalidate every
 // ETag on gh-pages for nothing. Run this by hand when the design or the
-// edition changes, and commit the two files it writes.
+// edition changes, and commit the file it writes.
 //
 // This is the fallback card: the day grids use it, and so does any session
 // whose own card scripts/build-session-cards.mjs has not drawn. Everything the
@@ -42,7 +41,6 @@ import site from "../src/_data/site.js";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const OUT_PNG = path.join(ROOT, "src/icons/og.png");
-const OUT_WEBP = path.join(ROOT, "src/icons/og.webp");
 
 // FORMAT_COLOUR.presentation in site.js, and the accent this card has always
 // set its second line in.
@@ -101,12 +99,10 @@ const words = {
 
 const chars = [...new Set(Object.values(words).join(""))].join("");
 await withCardRenderer(chars, async ({ render, wordmark }) => {
-  const { png, webp } = await render(card(words, await wordmark()));
+  const png = await render(card(words, await wordmark()));
   writeFileSync(OUT_PNG, png);
-  writeFileSync(OUT_WEBP, webp);
-  const size = (b) => `${Math.round(b.length / 1024)} kB`;
   console.log(
-    `${path.relative(ROOT, OUT_PNG)} — ${WIDTH}x${HEIGHT}, ${size(png)}\n` +
-      `${path.relative(ROOT, OUT_WEBP)} — ${WIDTH}x${HEIGHT}, ${size(webp)}`,
+    `${path.relative(ROOT, OUT_PNG)} — ${WIDTH}x${HEIGHT}, ` +
+      `${Math.round(png.length / 1024)} kB`,
   );
 });

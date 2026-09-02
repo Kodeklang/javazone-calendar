@@ -175,7 +175,7 @@ has a 1200×630 picture of its own to put in it — its title, day, time and roo
 set over the app's own gradient, under JavaZone's wordmark.
 
 ```sh
-npm run og       # the site-wide card, src/icons/og.png and og.webp
+npm run og       # the site-wide card, src/icons/og.png
 npm run cards    # one per session, into src/cards/
 ```
 
@@ -196,7 +196,7 @@ line breaks the fitter chose for one particular title are in it too — so a
 change to the design regenerates the whole set on its own, with nothing to
 remember to bump. It is the same reason every encoder setting lives in one
 `RASTER` object that the hash covers whole rather than at the call sites: a
-knob outside the hash could quietly change all 310 files while the manifest
+knob outside the hash could quietly change all 155 files while the manifest
 went on calling them current.
 
 Because a quiet run costs nothing, the workflow can afford to render the
@@ -208,7 +208,7 @@ has not been drawn, which is the normal state of a checkout that has never run
 the generator and no more an error than a speaker without a photo.
 
 **The cards are deliberately absent from the service worker's precache.** There
-are 310 files and 9 MB of them, and the only things that ever fetch one are the
+are 155 files and 4.7 MB of them, and the only things that ever fetch one are the
 crawlers behind Slack, LinkedIn and iMessage — no visitor sees one, on a page or
 anywhere else. Precaching them would spend a conference hall's wifi on pictures
 nobody in the hall will look at. Ordinary `ETag` caching is the whole story for
@@ -236,22 +236,30 @@ the way out. That origin is what gives every page its `<link rel="canonical">`
 too — the github.io mirror builds the same pages, and without one a crawler
 sees two URLs for identical content and has to guess which to rank.
 
-**Each card is offered twice, PNG first and WebP second.** There is no content
-negotiation to lean on — GitHub Pages serves static files and does not vary on
-`Accept` — and `<picture>` has nothing to attach to, because no element on any
-page ever renders a card. A repeated `og:image` is the one mechanism Open Graph
-itself provides, and most consumers take the first image they see, so the first
-one has to be the format that decodes everywhere.
+**A repeated `og:image` is not a format negotiation, and each card is now
+offered exactly once.** Every card used to be published twice, as a PNG and as
+a lossless WebP, listed in that order on the reading that a consumer picks the
+format it prefers out of the list and that most take the first one they see. It
+was the only mechanism Open Graph offers, there was no content negotiation to
+lean on — GitHub Pages serves static files and does not vary on `Accept` — and
+`<picture>` had nothing to attach to, because no element on any page ever
+renders a card. So the list looked like the answer.
 
-The WebP is lossless, which on this material is not the compromise it sounds
-like. Measured on four cards, lossless lands at 75–81% of the PNG and is
-bit-identical to it, where lossy at quality 100 costs 175–258% *and* rings along
-the edges of type, which is nearly all a card is. The PNG is palette-quantised,
-which normally ruins a large gradient — but this ground steps through only 54
-levels from top to bottom, so 256 entries hold it exactly: every pixel of open
-ground comes back bit-identical, and the 1–2% that move are antialiasing along
-glyph edges, by at most 29 of 255. The set halves and nothing visible pays for
-it.
+It is not. A session link pasted into iMessage unfurled with **the same card
+rendered twice**, one above the other, before the description and the domain:
+iMessage walks the list and draws every entry in it. So `base.njk` emits one
+`og:image`, the PNG, which decodes everywhere — and the WebP encoder went with
+it, because once no tag could reference those 155 files they were 3.6 MB of
+`gh-pages` nothing would ever fetch, which is the same defect as publishing a
+vendored logo nothing links to. Anyone who has this idea again should read this
+paragraph first: the list is a list, not a menu.
+
+The PNG is palette-quantised, which normally ruins a large gradient — but this
+ground steps through only 54 levels from top to bottom, so 256 entries hold it
+exactly: every pixel of open ground comes back bit-identical, and the 1–2% that
+move are antialiasing along glyph edges, by at most 29 of 255. That halves the
+set and nothing visible pays for it, and it is independent of everything above —
+dropping the WebP left all 155 PNGs byte-for-byte identical.
 
 **Duke is the app icon; the wordmark is what goes on the share cards.** Both are
 JavaZone's own, used with the organisers' permission, and they are two halves of

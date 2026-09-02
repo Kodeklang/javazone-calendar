@@ -1,11 +1,10 @@
 #!/usr/bin/env node
-// Draws one Open Graph share card per session into src/cards - as a PNG and,
-// from the same pixels, a WebP - plus a manifest at src/_data/cards.json that
-// program.11tydata.js reads.
+// Draws one Open Graph share card per session into src/cards, as a 1200x630
+// PNG, plus a manifest at src/_data/cards.json that program.11tydata.js reads.
 //
-// Both formats are published because base.njk offers a crawler the two as
-// alternates. Neither is a thumbnail of the other: they are the same 1200x630
-// image, and which one a reader takes is its own business.
+// One format, because base.njk emits one og:image - a repeated og:image is not
+// a format negotiation, whatever it looks like. See lib/card-renderer.mjs's
+// RASTER and the share-cards section of the README.
 //
 //   npm run cards        (after scripts/fetch-program.mjs)
 //
@@ -21,7 +20,7 @@
 // through untouched. That only works if a run over an unchanged programme
 // rewrites nothing at all, which is what the manifest is for: it records a
 // hash of the drawing instructions for each card, and a card whose hash has
-// not moved, and both of whose files are still on disk, is left alone.
+// not moved, and whose file is still on disk, is left alone.
 //
 // The hash is taken over the finished SVG and lib/card-renderer.mjs's RASTER,
 // rather than over the fields the SVG was built from. That covers strictly
@@ -29,9 +28,9 @@
 // colours, the font size and line breaks the fitter chose for this particular
 // title, and every setting either file is encoded with - so a change to the
 // design regenerates the whole set on its own, with nothing to remember to
-// bump. It is also why RASTER holds every encoder setting either file is made
-// with, down to the kernel the wordmark is scaled by, rather than the calls
-// reaching for them themselves: a knob outside the hash could change 310 files
+// bump. It is also why RASTER holds every encoder setting a card is made with,
+// down to the kernel the wordmark is scaled by, rather than the calls reaching
+// for them themselves: a knob outside the hash could change all 155 files
 // while the manifest went on calling them current. Nothing here can pass one
 // either, since neither `render` nor `wordmark` takes an override.
 //
@@ -259,6 +258,11 @@ const previous = await readFile(MANIFEST_FILE, "utf8")
   .catch(() => ({}));
 
 await mkdir(CARD_DIR, { recursive: true });
+// .webp is still matched although nothing writes one any more. This set is
+// both what "is the card still there" is answered from and what the prune at
+// the end sweeps: a WebP left behind by a checkout that predates the move to a
+// single og:image is not a foreign file to step around, it is a card Eleventy
+// would go on publishing with nothing left to reference it.
 const onDisk = new Set(
   (await readdir(CARD_DIR).catch(() => [])).filter((f) => /\.(png|webp)$/.test(f)),
 );
@@ -271,7 +275,7 @@ const entries = await withCardRenderer(chars, async ({ render, measure, wordmark
   const mark = await wordmark();
 
   return pool(site.sessions, async (session) => {
-    const files = { file: `${session.slug}.png`, webp: `${session.slug}.webp` };
+    const file = `${session.slug}.png`;
     try {
       const svg = card(
         {
@@ -289,33 +293,24 @@ const entries = await withCardRenderer(chars, async ({ render, measure, wordmark
         .digest("hex")
         .slice(0, 16);
 
-      // Both files have to be there, not just the manifest's word for it: a
-      // checkout that has the PNG and not the WebP - the first run after this
-      // was added, or a half-finished merge - must redraw rather than publish
-      // an og:image that 404s.
+      // The file has to be there, not just the manifest's word for it: a
+      // checkout whose card was never committed, or lost to a half-applied
+      // merge, must redraw rather than publish an og:image that 404s.
       const before = previous[session.id];
-      const current =
-        before?.hash === hash &&
-        before.file === files.file &&
-        before.webp === files.webp &&
-        onDisk.has(files.file) &&
-        onDisk.has(files.webp);
+      const current = before?.hash === hash && before.file === file && onDisk.has(file);
       if (current) return [session.id, before];
 
-      const { png, webp } = await render(svg);
-      await writeFile(path.join(CARD_DIR, files.file), png);
-      await writeFile(path.join(CARD_DIR, files.webp), webp);
+      const png = await render(svg);
+      await writeFile(path.join(CARD_DIR, file), png);
       drawn++;
-      bytes += png.length + webp.length;
-      return [session.id, { ...files, hash }];
+      bytes += png.length;
+      return [session.id, { file, hash }];
     } catch (err) {
       errors.push(`${session.title}: ${err.message}`);
       // Keep whatever the last good run drew rather than letting the prune
       // below take a card away over a transient failure.
       const kept = previous[session.id];
-      return kept && onDisk.has(kept.file) && onDisk.has(kept.webp)
-        ? [session.id, kept]
-        : null;
+      return kept && onDisk.has(kept.file) ? [session.id, kept] : null;
     }
   });
 });
@@ -335,9 +330,10 @@ const cards = Object.fromEntries(entries.filter(Boolean).sort(([a], [b]) => a.lo
 // nothing ever read.
 await writeFile(MANIFEST_FILE, JSON.stringify({ cards }, null, 2) + "\n");
 
-// Anything the manifest no longer claims: a session off the programme, or one
-// whose title was edited enough to change its slug and so its filename.
-const keep = new Set(Object.values(cards).flatMap((c) => [c.file, c.webp]));
+// Anything the manifest no longer claims: a session off the programme, one
+// whose title was edited enough to change its slug and so its filename, or a
+// WebP from before the move to a single og:image.
+const keep = new Set(Object.values(cards).map((c) => c.file));
 const stale = [...onDisk].filter((f) => !keep.has(f)).sort();
 for (const file of stale) await unlink(path.join(CARD_DIR, file));
 

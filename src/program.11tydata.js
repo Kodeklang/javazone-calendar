@@ -22,13 +22,11 @@ export default {
     // `shareDescription` for why a share card wants the facts first.
     shareDescription: (data) => data.session.shareDescription,
     // The session's own card from scripts/build-session-cards.mjs, so a talk
-    // pasted into a channel unfurls under its own title. Two formats of the
-    // one image, which base.njk offers a crawler as alternates. A session
-    // without a card falls back to the site-wide one in both formats, which is
-    // the normal state on a checkout that has never run the generator and no
-    // more an error than a speaker without a photo.
+    // pasted into a channel unfurls under its own title. A session without a
+    // card falls back to the site-wide one, which is the normal state on a
+    // checkout that has never run the generator and no more an error than a
+    // speaker without a photo.
     shareImage: (data) => data.session.shareCard?.url,
-    shareImageWebp: (data) => data.session.shareCard?.webp,
     shareImageAlt: (data) =>
       data.session.shareCard &&
       `Mørkeblå plakat med JavaZone-logoen og teksten «${data.session.title}», ` +
