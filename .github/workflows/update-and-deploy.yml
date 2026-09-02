@@ -18,7 +18,14 @@ concurrency:
 
 jobs:
   update-and-deploy:
-    runs-on: ubuntu-latest
+    # Pinned rather than ubuntu-latest, because this job draws the share cards.
+    # sharp carries its own rsvg, pango and fontconfig, so the runner's fonts
+    # cannot reach the render - but the image it ships changes with the runner
+    # image, and a libvips that rasterises one pixel differently would be
+    # invisible: an hourly run only redraws the cards whose input moved, so the
+    # set would drift into two renderings with nothing to notice. Bump this
+    # deliberately, and regenerate the whole set in the same commit.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
         with:
