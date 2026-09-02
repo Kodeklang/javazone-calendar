@@ -18,6 +18,17 @@ export default {
     // Day, time, room and speaker ahead of the abstract - see site.js's
     // `shareDescription` for why a share card wants the facts first.
     shareDescription: (data) => data.session.shareDescription,
+    // The session's own card from scripts/build-session-cards.mjs, so a talk
+    // pasted into a channel unfurls under its own title. A session without
+    // one falls back to base.njk's site-wide card, which is the normal state
+    // on a checkout that has never run the generator and no more an error
+    // than a speaker without a photo.
+    shareImage: (data) => data.session.shareCard?.url,
+    shareImageAlt: (data) =>
+      data.session.shareCard &&
+      `Mørkeblå plakat med JavaZone-logoen og teksten «${data.session.title}», ` +
+        `${data.session.shareFacts.day} ${data.session.shareFacts.time}, ` +
+        `${data.session.shareFacts.room}.`,
     back: (data) => `${data.session.day.url}#session-${data.session.id}`,
   },
 };

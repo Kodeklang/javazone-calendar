@@ -25,6 +25,13 @@ const BASE = "{{ '/' | url }}";
 //
 // Day one's url *is* BASE, so the loop already covers the front page. Listing
 // it twice would make cache.addAll reject the whole install on duplicates.
+//
+// The per-session Open Graph share cards are missing from this list and from
+// REST on purpose, and that is not an oversight for somebody to tidy up later.
+// There is one for every talk, they are megabytes in total, and the only
+// things that ever fetch one are the crawlers behind Slack, LinkedIn and
+// iMessage. Precaching them would spend a visitor's conference wifi on images
+// they will never see.
 const SHELL = [
   {%- for d in site.days %}
   "{{ d.url | url }}",

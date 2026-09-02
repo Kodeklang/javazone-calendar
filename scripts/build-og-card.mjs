@@ -11,37 +11,24 @@
 // ETag on gh-pages for nothing. Run this by hand when the design or the
 // edition changes, and commit the PNG it writes.
 //
-// The font is the interesting part. Montserrat is vendored only as subsetted
-// woff2 for the browser (src/css/fonts), and nothing installs it on the
-// machines that build this site, so librsvg on its own would fall back to
-// whatever sans-serif fontconfig happens to offer and say nothing about it.
-// Instead the same subset-font that lib/fonts.mjs uses converts the two
-// weights this card needs to TrueType, writes them to a throwaway directory,
-// and points fontconfig at that directory *alone* - the generated fonts.conf
-// includes none of the system configuration, so a host that has some other
-// Montserrat installed, or no fonts at all, still produces this image. The
-// directory is removed when the run ends, whether or not it succeeded.
+// This is the fallback card: the day grids use it, and so does any session
+// whose own card scripts/build-session-cards.mjs has not drawn. The font
+// handling and the raster settings both live in lib/card-renderer.mjs, which
+// that script shares - see the note at the top of it for why librsvg has to be
+// told where Montserrat is before it is loaded at all.
 //
 // The words come from src/_data/site.js rather than being typed in, so the
 // card and the pages cannot disagree about what the conference is called or
 // when it runs: an edition bump in program.json reaches both.
 
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import os from "node:os";
+import { writeFileSync } from "node:fs";
 import path from "node:path";
 
-import subsetFont from "subset-font";
-
+import { HEIGHT, WIDTH, esc, withCardRenderer } from "../lib/card-renderer.mjs";
 import site from "../src/_data/site.js";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
-const FONT_SRC = path.join(ROOT, "src/css/fonts");
 const OUT_FILE = path.join(ROOT, "src/icons/og.png");
-
-// The 1.91:1 every unfurler asks for, at the resolution they all accept, so
-// nothing is scaled up on a retina screen and nothing is cropped away.
-const WIDTH = 1200;
-const HEIGHT = 630;
 
 // The site's own colours: the dark blues are manifest.njk's theme-color and
 // background_color, the gradient and the bar geometry are lifted from
@@ -51,39 +38,6 @@ const CYAN = "#02dfff";
 const MUTED = "#aecfff";
 const GROUND_TOP = "#153862";
 const GROUND_BOTTOM = "#0a2747";
-
-// The Latin faces are enough: the card sets a Norwegian month name and an en
-// dash, all of which live in Google's "latin" subset. Weight 800 is the
-// wordmark weight the design uses for headings, 600 its small labels.
-const WEIGHTS = { 800: "montserrat-800-latin.woff2", 600: "montserrat-600-latin.woff2" };
-
-const esc = (s) =>
-  String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-/**
- * Fill `dir` with the card's faces as TrueType and a fonts.conf that makes it
- * the only place fontconfig will look.
- *
- * The characters are taken from the text about to be drawn rather than from a
- * fixed list, so a longer date or a renamed edition cannot quietly lose a
- * glyph and leave a hole in the image.
- */
-async function installFonts(dir, chars) {
-  for (const [weight, file] of Object.entries(WEIGHTS)) {
-    const source = readFileSync(path.join(FONT_SRC, file));
-    const ttf = await subsetFont(source, chars, { targetFormat: "sfnt" });
-    writeFileSync(path.join(dir, `Montserrat-${weight}.ttf`), ttf);
-  }
-
-  // fontconfig wants somewhere to write its cache; giving it one inside the
-  // throwaway directory keeps it out of the user's home as well as the repo.
-  mkdirSync(path.join(dir, "cache"), { recursive: true });
-  writeFileSync(
-    path.join(dir, "fonts.conf"),
-    `<?xml version="1.0"?>\n<!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">\n` +
-      `<fontconfig>\n  <dir>${dir}</dir>\n  <cachedir>${dir}/cache</cachedir>\n</fontconfig>\n`,
-  );
-}
 
 /**
  * The card itself.
@@ -143,41 +97,12 @@ const words = {
   label: "Program",
   dates: site.event.dateRange.no,
 };
-const svg = card(words);
 
-// Created before the try so that a failure while subsetting still takes the
-// directory with it on the way out.
-const fontDir = mkdtempSync(path.join(os.tmpdir(), "javazone-og-"));
-try {
-  await installFonts(fontDir, [...new Set(Object.values(words).join(""))].join(""));
-
-  // fontconfig reads its configuration once, when librsvg first asks it a
-  // question, so the environment has to be set before sharp is loaded at all -
-  // hence the dynamic import rather than one at the top of the file.
-  process.env.FONTCONFIG_FILE = path.join(fontDir, "fonts.conf");
-  const { default: sharp } = await import("sharp");
-
-  // No withMetadata(): the file is committed, and a date or a machine name in
-  // a PNG chunk would make every regeneration a diff even when the pixels are
-  // identical.
-  //
-  // palette: false is spelled out rather than left to libvips. Quantising this
-  // to 256 colours costs no visible quality and saves 8 kB, but it puts a
-  // quantiser between the hex values above and the pixels, and on a card whose
-  // whole job is to look like the site that is not a trade worth 8 kB.
-  //
-  // removeAlpha because the ground covers the whole frame: librsvg hands back
-  // RGBA regardless, and carrying a channel that is 255 everywhere costs a
-  // third of the file for nothing.
-  const png = await sharp(Buffer.from(svg))
-    .removeAlpha()
-    .png({ palette: false, compressionLevel: 9 })
-    .toBuffer();
-
+const chars = [...new Set(Object.values(words).join(""))].join("");
+await withCardRenderer(chars, async ({ render }) => {
+  const png = await render(card(words));
   writeFileSync(OUT_FILE, png);
   console.log(
     `${path.relative(ROOT, OUT_FILE)} — ${WIDTH}x${HEIGHT}, ${Math.round(png.length / 1024)} kB`,
   );
-} finally {
-  rmSync(fontDir, { recursive: true, force: true });
-}
+});

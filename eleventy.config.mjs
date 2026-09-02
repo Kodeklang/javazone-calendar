@@ -7,6 +7,7 @@ import site from "./src/_data/site.js";
 // scripts/fetch-photos.mjs has ever run.
 mkdirSync(FONT_DIR, { recursive: true });
 mkdirSync("src/photos", { recursive: true });
+mkdirSync("src/cards", { recursive: true });
 
 export default function (eleventyConfig) {
   // Subset the webfonts before anything else runs. Passthrough copy happens
@@ -22,6 +23,9 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/js": "js" });
   eleventyConfig.addPassthroughCopy({ "src/icons": "icons" });
   eleventyConfig.addPassthroughCopy({ "src/photos": "photos" });
+  // The per-session Open Graph cards. Published so a crawler can fetch one,
+  // and deliberately nowhere near the service worker - see SHELL in src/sw.njk.
+  eleventyConfig.addPassthroughCopy({ "src/cards": "cards" });
   eleventyConfig.addPassthroughCopy({ "src/root": "." });
 
   // The RUM SDK ships a prebuilt bundle, so it needs no bundler of our own.

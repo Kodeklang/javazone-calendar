@@ -23,6 +23,18 @@ const photosRaw = (() => {
 })();
 const photos = JSON.parse(photosRaw);
 
+// Written by scripts/build-session-cards.mjs, and absent for the same reason
+// and to the same effect: a session with no card of its own unfurls with the
+// site-wide src/icons/og.png instead, which is what the day grids use anyway.
+const cardsRaw = (() => {
+  try {
+    return readFileSync(new URL("./cards.json", import.meta.url), "utf8");
+  } catch {
+    return '{"cards":{}}';
+  }
+})();
+const cards = JSON.parse(cardsRaw);
+
 const SLOT_MIN = 5; // one grid row
 const MS = 60_000;
 
@@ -139,6 +151,20 @@ function photo(id) {
     : null;
 }
 
+/**
+ * The session's own share card, or null if it has none yet.
+ *
+ * Root-relative, like `photo` above, and left for the templates to put
+ * through Eleventy's `url` filter and then `absUrl` - og:image is ignored by
+ * every unfurler unless it is absolute.
+ */
+function shareCard(id) {
+  const found = cards.cards[id];
+  return found
+    ? { url: `/cards/${found.file}`, width: cards.width, height: cards.height }
+    : null;
+}
+
 /** Up to two initials, for the monogram that stands in for a speaker photo. */
 function initials(name) {
   const parts = name.split(/\s+/).filter(Boolean);
@@ -204,18 +230,36 @@ function truncate(text, max) {
 }
 
 /**
- * The facts a share card needs before any prose: day, start time and room,
- * plus a speaker if there is one, in the grid card's own shorthand for a
- * name. The room is spelled out here - unlike the grid card, the share card
- * has no column to place it in - and a speakerless session must not leave a
- * dangling " · " where the name would otherwise go.
+ * The three facts a share card needs before any prose: day, start time and
+ * room. The room is spelled out because, unlike the grid card, a share card
+ * has no column to place it in, and the time comes from the same Oslo clock
+ * the grid is drawn against so a card cannot disagree with the page it links
+ * to about when a talk starts.
+ *
+ * Kept apart rather than pre-joined because the two things that want them
+ * space them differently: og:description runs them into one line, and
+ * scripts/build-session-cards.mjs sets the time in the session's own format
+ * colour, which needs it as a piece of its own.
  */
-function shareFacts(s, day, speakers) {
-  const time = clock.format(new Date(s.startUtc));
+function shareFacts(s, day) {
+  return {
+    day: day.longLabel.no,
+    time: clock.format(new Date(s.startUtc)),
+    room: s.roomName,
+  };
+}
+
+/**
+ * The same three, as og:description leads with them, plus a speaker if there
+ * is one in the grid card's own shorthand for a name. A speakerless session
+ * must not leave a dangling " · " where the name would otherwise go.
+ */
+function factsLine(s, day, speakers) {
+  const { day: dayLabel, time, room } = shareFacts(s, day);
   const speaker = speakers.length
     ? ` · ${speakers.length > 1 ? `${speakers[0].name} +${speakers.length - 1}` : speakers[0].name}`
     : "";
-  return `${day.longLabel.no} ${time} · ${s.roomName}${speaker}`;
+  return `${dayLabel} ${time} · ${room}${speaker}`;
 }
 
 /**
@@ -227,7 +271,7 @@ function shareFacts(s, day, speakers) {
  * rather than shortened to nothing.
  */
 function shareDescription(s, day, speakers) {
-  const facts = shareFacts(s, day, speakers);
+  const facts = factsLine(s, day, speakers);
   const joiner = " — ";
   const budget = META_DESCRIPTION_MAX - facts.length - joiner.length;
   if (budget < 20) return facts;
@@ -352,6 +396,11 @@ const sessions = program.sessions.map((s) => {
     // For og:description, which unlike <meta name="description"> above leads
     // with the facts a share card is actually for - see `shareDescription`.
     shareDescription: shareDescription(s, day, speakers),
+    // The same facts unjoined, for the two places that set them as type
+    // rather than as prose: the session's own share card, and the alt text
+    // describing it.
+    shareFacts: shareFacts(s, day),
+    shareCard: shareCard(s.id),
     formatName: formatById.get(s.format)?.name ?? { no: s.format, en: s.format },
     languageName: s.language ? languageById.get(s.language)?.name ?? null : null,
     day: {
@@ -388,6 +437,14 @@ function templates(dir) {
   return found;
 }
 
+// cards.json is deliberately not in here, unlike photos.json. Redrawing the
+// share cards changes no page a visitor can see - the og:image URL is built
+// from the session's slug, so only the pixels behind it move, and those are
+// fetched by crawlers and never by the worker. Folding them in would retire
+// every client's cache and re-download the whole programme over a change
+// nobody in the hall can observe. A card appearing or disappearing does change
+// a page, but that only happens when a session joins or leaves the programme,
+// which `raw` already covers.
 const assetHash = createHash("sha256").update(raw).update(photosRaw);
 for (const f of [
   new URL("../css/style.css", import.meta.url),
