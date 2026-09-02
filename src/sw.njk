@@ -74,11 +74,22 @@ const REST = [...new Set([
   {%- endif %}
   {%- endfor %}
   {%- endfor %}
-  // Only ever fetched by an install prompt or the home screen, so they would
-  // otherwise be the assets least likely to be cached when they are needed.
+  // The apple-touch-icon, which is only ever fetched by an install prompt or
+  // the home screen and would otherwise be among the assets least likely to be
+  // cached at the moment they are wanted.
+  //
+  // The two 512s that manifest.webmanifest names are deliberately not here
+  // beside it, and that absence is not a list somebody forgot to finish. A
+  // manifest icon is fetched by the browser or the OS at install time, on its
+  // own account and outside the page: the request is never dispatched to this
+  // worker's fetch handler, so the copy stored here is not the copy the
+  // launcher ends up reading. Precaching them would spend 190 kB of a
+  // visitor's conference wifi on two files that get downloaded again anyway.
+  // That was cheap to overlook while the icon was five rectangles of SVG and is
+  // not now that it is a photographic mascot - with these two left out, the
+  // icons this worker carries cost 51 kB, which is what they cost before Duke
+  // arrived.
   "{{ '/icons/icon-180.png' | url }}",
-  "{{ '/icons/icon-512.png' | url }}",
-  "{{ '/icons/icon-maskable-512.png' | url }}",
   "{{ '/js/datadog/datadog-rum-slim.js' | url }}",
 ])];
 
