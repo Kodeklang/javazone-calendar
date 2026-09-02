@@ -217,6 +217,26 @@ function plainText(html) {
   return decodeEntities(html.replace(/<[^>]*>/g, ""));
 }
 
+/**
+ * The abstract as one run of prose, every paragraph joined rather than just
+ * `description[0]`: Sleeping Pill sometimes opens an abstract with a
+ * subtitle fragment in a paragraph of its own - an em dash and a few words -
+ * with the sentence that actually says something starting in the next one.
+ * Reading only the first paragraph can hand og:title a fragment that trails
+ * off and never lands. A `<br>` is a soft break inside one paragraph rather
+ * than a paragraph boundary, so it is turned into a space rather than
+ * dropped - `plainText` alone would delete it and glue the words either side
+ * of it together, which matters once several paragraphs are run together
+ * into one string. The leading dash such a fragment opens with is stripped
+ * last, since it reads as a broken sentence at the head of a headline, not
+ * as a title's own opening.
+ */
+function abstractText(s) {
+  if (!s.description.length) return "";
+  const joined = s.description.join(" ").replace(/<br\s*\/?>/gi, " ");
+  return plainText(joined).replace(/^[-–—]\s*/, "");
+}
+
 // The budget counts code points, not UTF-16 code units, and the ellipsis
 // itself counts toward it, added only when something was actually cut - a
 // description that already fits must not gain one it doesn't need.
@@ -283,14 +303,23 @@ function factsLine(s, day, speakers) {
  * and speaker than from half a sentence of abstract, so once the facts alone
  * leave too little room for a meaningful clause the abstract is dropped
  * rather than shortened to nothing.
+ *
+ * The rule this keeps to: og:title and og:description must never carry the
+ * same sentence twice, because Slack and Discord render both at once. When
+ * `abstract` is short enough that og:title already shows it in full (or a
+ * session has none, and og:title falls back to the session's own title),
+ * the description drops the abstract and states the facts alone rather than
+ * repeat what the title just said. When the abstract runs past og:title's
+ * budget, the two are fine to overlap on their opening words - one is a cut
+ * headline, the other a fuller clause, not the same sentence twice.
  */
-function shareDescription(s, day, speakers) {
+function shareDescription(s, day, speakers, abstract) {
   const facts = factsLine(s, day, speakers);
+  if (!abstract || [...abstract].length <= SHARE_TITLE_MAX) return facts;
   const joiner = " — ";
   const budget = META_DESCRIPTION_MAX - facts.length - joiner.length;
   if (budget < 20) return facts;
-  const body = s.description.length ? plainText(s.description[0]) : s.title;
-  return `${facts}${joiner}${truncate(body, budget)}`;
+  return `${facts}${joiner}${truncate(abstract, budget)}`;
 }
 
 const days = program.days.map((day, index) => {
@@ -385,6 +414,10 @@ const sessions = program.sessions.map((s) => {
     .map((id) => speakersById.get(id))
     .filter(Boolean)
     .map((p) => ({ ...p, initials: initials(p.name), photo: photo(p.id) }));
+  // Computed once and shared by shareTitle and shareDescription below. They
+  // need to agree on what og:title actually shows before shareDescription
+  // can decide whether repeating it would duplicate a sentence.
+  const abstract = abstractText(s);
 
   return {
     ...s,
@@ -410,14 +443,15 @@ const sessions = program.sessions.map((s) => {
     // For og:title: the session's card already shows its title, day, time
     // and room, and an unfurler that renders only the title line (iMessage,
     // LinkedIn, X) would otherwise just repeat the picture, so the share
-    // title carries the abstract's opening instead. A session with no
-    // abstract falls back to its own title, same as `metaDescription` does.
-    shareTitle: s.description.length
-      ? truncate(plainText(s.description[0]), SHARE_TITLE_MAX)
-      : s.title,
+    // title carries the abstract's opening instead - all of it run together
+    // (see `abstractText`), not just the first paragraph, since Sleeping
+    // Pill sometimes opens with a subtitle fragment that says nothing on its
+    // own. A session with no abstract falls back to its own title, same as
+    // `metaDescription` does.
+    shareTitle: abstract ? truncate(abstract, SHARE_TITLE_MAX) : s.title,
     // For og:description, which unlike <meta name="description"> above leads
     // with the facts a share card is actually for - see `shareDescription`.
-    shareDescription: shareDescription(s, day, speakers),
+    shareDescription: shareDescription(s, day, speakers, abstract),
     // The same facts unjoined, for the two places that set them as type
     // rather than as prose: the session's own share card, and the alt text
     // describing it.
