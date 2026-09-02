@@ -654,14 +654,6 @@
       }
     },
     {
-      "id": "erik-hagen",
-      "name": "Erik Hagen",
-      "bio": [
-        "Erik Hagen er seniorrådgiver i Digdir og jobber med arkitektur og forretningsutvikling innen datadeling og sammenhengende tjenester. Erik er spesielt opptatt av tverrsektorielt  og internasjonalt samarbeid, og er for tiden involvert i flere samarbeidsinitiativ både i Norge og i EU."
-      ],
-      "links": {}
-    },
-    {
       "id": "erlend-ekern",
       "name": "Erlend Ekern",
       "bio": [
@@ -3188,7 +3180,7 @@
         "The presentation will partly be based on live demo. Therefore, with LLMs in the mix, I am as curious on the outcome as you are!<br>Bring a pinch of salt."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223363059",
       "speakerIds": [
         "martin-skarsaune"
       ]
@@ -4981,8 +4973,7 @@
       "prerequisites": null,
       "video": null,
       "speakerIds": [
-        "audun-vindenes-egge",
-        "erik-hagen"
+        "audun-vindenes-egge"
       ]
     },
     {
