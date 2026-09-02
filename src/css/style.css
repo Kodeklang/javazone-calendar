@@ -502,6 +502,35 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
    filter the programme cannot actually support. */
 .tag--keyword { background: transparent; color: var(--ink-mute); font-weight: 500; }
 
+/* The design puts this under the tags as quiet underlined text rather than a
+   button: it is secondary to reading the session itself.
+   Measured at 6.1:1 against the lightest surface stop, so unlike the gradient
+   the design's own .72 stands - see README, "Contrast". */
+.linkrow { margin: 0; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+
+.linkrow__item {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin: 0; padding: 0 0 1px;
+  border-bottom: 1px solid rgba(230, 240, 255, 0.3);
+  font-size: 13px; font-weight: 600;
+  color: rgba(230, 240, 255, 0.72);
+  position: relative;
+}
+/* Overrides the global a:hover, which would otherwise take it to white
+   without moving the underline with it. */
+.linkrow__item:hover { color: var(--ink-strong); border-bottom-color: var(--ink-strong); }
+
+/* 13px text on a 1px underline is a 17px tap target, and this is a standalone
+   control rather than a link inside a sentence, so the inline exemption to
+   WCAG 2.5.8 does not cover it. This grows the hit area to 24px without
+   moving the underline off the text; at an 18px gap they never overlap. */
+.linkrow__item::after {
+  content: ""; position: absolute; left: 0; right: 0;
+  top: 50%; height: 24px; transform: translateY(-50%);
+}
+
+.linkrow__ext { font-size: 13px; line-height: 1; }
+
 .detail__section { display: flex; flex-direction: column; gap: 12px; }
 
 .section__label {
@@ -595,6 +624,8 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
   .detail h1 { font-size: 26px; line-height: 1.15; }
   .detail__body { font-size: 14.5px; line-height: 1.65; }
   .pill { padding: 7px 13px; font-size: 12px; }
+  .linkrow { gap: 16px; }
+  .linkrow__item, .linkrow__ext { font-size: 12.5px; }
   .speaker { padding: 16px; border-radius: 14px; }
   .speaker__mono,
   .speaker__photo { width: 46px; height: 46px; }

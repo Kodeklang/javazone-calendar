@@ -41,6 +41,22 @@ eleventyComputed:
         <span class="tag tag--keyword">{{ k }}</span>
         {%- endfor %}
       </p>
+
+      {#- A quiet link under the tags, as the design has it. The data-en span
+          is nested rather than sitting on the anchor itself because
+          applyLang() assigns textContent, which on the anchor would take the
+          arrow with it.
+
+          Like the speaker links below, the new tab is signalled visually and
+          not announced - the arrow is decorative and there is no spoken
+          warning, which is the call this template already made. #}
+      <p class="linkrow">
+        <a class="linkrow__item" href="{{ session.officialUrl }}"
+           rel="noopener noreferrer" target="_blank">
+          <span data-en="View on javazone.no" data-no="Se på javazone.no">Se på javazone.no</span>
+          <span class="linkrow__ext" aria-hidden="true">↗</span>
+        </a>
+      </p>
     </header>
 
     {%- if session.speakers.length %}

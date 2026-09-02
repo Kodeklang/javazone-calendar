@@ -243,6 +243,15 @@ const sessions = program.sessions.map((s) => {
     ...s,
     colour: colourOf(s.format),
     url: `/program/${s.slug}/`,
+    // The same session on JavaZone's own site. Their programme is a SPA whose
+    // router declares `/program/:id`, and it builds its own links as
+    // `/program/${sessionId}` -- so the key is the Sleeping Pill id this
+    // payload already carries, not a slug of the title. The trailing slash is
+    // what they redirect to; without it every visit costs a 301 first.
+    //
+    // Built from the pinned event.site rather than a literal, so bumping the
+    // edition stays the one-line change in fetch-program.mjs that SLUG is.
+    officialUrl: `${program.event.site.replace(/\/$/, "")}/program/${s.id}/`,
     formatName: formatById.get(s.format)?.name ?? { no: s.format, en: s.format },
     languageName: s.language ? languageById.get(s.language)?.name ?? null : null,
     day: {
