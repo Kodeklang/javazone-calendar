@@ -2729,7 +2729,7 @@
         "Jeg tar dere med inn bak avisoverskriftene og gir dere et innblikk i hvordan vi jobbet systematisk for å identifisere og håndtere feil, og hvordan vi har endret oss gjennom bedre testing, økt observerbarhet og en mer risikobasert tilnærming til kvalitet."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223303685",
       "speakerIds": [
         "stephan-haugsrud"
       ]
@@ -2754,7 +2754,7 @@
         "Git version 3 is slated for release late this year. In this lightning talk, we will take a look at its new features, notably the new SHA-256 commit ids and the &quot;reftable&quot; storage format. We will also take a brief look at the git worktree feature, which is relied upon by AI agents."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223303395",
       "speakerIds": [
         "asmund-eldhuset"
       ]
@@ -2784,7 +2784,7 @@
         "Let me give you some examples, and I hope you leave inspired to try more minimalist approaches in all software you write, both at work and for fun. <br>Negative space is beautiful."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223305711",
       "speakerIds": [
         "christin-gorman"
       ]
@@ -2811,7 +2811,7 @@
         "You'll see the most common mistakes in action, who they affect, and how to fix them. So come experience the world through someone else's senses, and learn how to be a more accessible developer."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223309018",
       "speakerIds": [
         "elise-kristiansen"
       ]
@@ -2841,7 +2841,7 @@
         "Vibbekoding, Clawdbot, Agentisk utvikling; vi er allerede i fremtiden der agenter interagerer med applikasjonene våre, sammen med oss eller autonomt. <br>Presentasjonen tar for seg hvordan du kan:<br>* tenke som en agent<br>* tilrette for automatisk discovery på agentens premisser <br>* gå fra agentisk utvikling til å bygge inn LLM til å være en naturlig driver i applikasjonen<br>* bruke styrkene din som utvikler som differensiator <br>* bygge rammeverket som bygger integrasjonsapplikasjonen ved hjelp av KCP (Knowledge Context Protocol) og sanker informasjon om udokumenterte API med KCP Triage"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223287917",
       "speakerIds": [
         "stig-lau"
       ]
@@ -2868,7 +2868,7 @@
         "Hvordan kan vi leve med avhengigheter uten at de lager vidåpne sikkerhetshull inn i kildekoden vår eller enda verre, organisasjonen vår? Tredjepartskode er ofte en uunngåelig del av moderne utvikling men hvordan kan vi sikre, vedlikeholde og verifisere disse avhengighetene våre?. Vi skal fokusere på håndfaste tips til hvordan øke sikkerheten i avhengighetene dine, fra enkle ting som å bruke eksakte versjoner til SBOM og full oversikt over alle dependencies i hele organisasjonen. Praktiske råd basert på det mitt team i NRK TV og det den kollektive intelligensen til Internett lærte under de hektiske dagene da Shai-hulud og axios-ormen herjet."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223316840",
       "speakerIds": [
         "knut-haugen"
       ]
@@ -2897,7 +2897,7 @@
         "På JavaZone i fjor presenterte vi hvordan vi lagde en arkitektur for sanntidsinformasjon i Husbanken. I året som har gått har vi tatt i bruk &quot;grunnmuren&quot; for sanntidsinformasjon og bygd &quot;huset&quot; oppå dette. Vi demonstrerer hva vi har laget, og deler våre erfaringer om hva brukerne våre elsker og hva som ble mest for moro skyld. Vi snakker også om hvordan vi har implementert dette uten å svi av et halvt statsbudsjett."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223320660",
       "speakerIds": [
         "jorgen-solvernes-sandnes",
         "dragana-stojkovic"
@@ -2930,7 +2930,7 @@
         "This talk is an eye-opener for organisations that adopt Microsoft products uncritically, even inadequate ones, simply because it is easier contractually or organisationally. Microsoft monoculture means innovating at Microsoft's pace and on Microsoft's terms — whether you chose that or not."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223303046",
       "speakerIds": [
         "nordine-ben-bachir"
       ]
@@ -2962,7 +2962,7 @@
         "Join us to learn how to combine the power of Kubernetes and Argo Rollouts with the autonomous capabilities of LangChain4j agentic, achieving a release experience that is not only seamless but also resilient."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223322662",
       "speakerIds": [
         "kevin-dubois"
       ]
@@ -2991,7 +2991,7 @@
         "Whether you're tired of polluting your base system with project dependencies, managing a fleet of developer workstations, or just want an OS that treats reproducibility as a first-class citizen, this talk will change how you think about your desktop."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223324063",
       "speakerIds": [
         "simon-bruce-cassidy"
       ]
@@ -3020,7 +3020,7 @@
         "Let's get systematic, and walk through the pros and cons of each variant, so that we're all better equipped to tackle this choice the next time it comes up!"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223333889",
       "speakerIds": [
         "oystein-hagen-blixhavn"
       ]
