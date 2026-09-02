@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{{ title }}</title>
 <meta name="description" content="{{ description }}">
+{#- Keeps a github.io mirror (PATH_PREFIX=/javazone-calendar/) from competing
+    with the custom domain in search: both build the same page, so without
+    this a crawler sees two URLs for identical content and has to guess which
+    one to rank. #}
+<link rel="canonical" href="{{ page.url | absUrl }}">
 <meta name="theme-color" content="#153863">
 <meta name="app-version" content="{{ site.version }}">
 {#- The programme hash above changes only when the programme does. This one

@@ -1,5 +1,6 @@
 import { mkdirSync } from "node:fs";
 import { FONT_DIR, buildFonts } from "./lib/fonts.mjs";
+import site from "./src/_data/site.js";
 
 // Created up front so the passthrough copies below have something to point at
 // on a clean checkout: before any face has been subset, and before
@@ -44,6 +45,14 @@ export default function (eleventyConfig) {
     min >= 60 ? `${Math.floor(min / 60)} t${min % 60 ? ` ${min % 60} min` : ""}` : `${min} min`);
   eleventyConfig.addFilter("durationEn", (min) =>
     min >= 60 ? `${Math.floor(min / 60)}h${min % 60 ? ` ${min % 60} min` : ""}` : `${min} min`);
+
+  // Absolute URL for og:url and og:image, which unfurlers ignore if relative.
+  // Composes through Eleventy's own `url` filter first so a
+  // PATH_PREFIX=/javazone-calendar/ build gets the prefix folded in exactly
+  // once, then joins that onto site.url - already stripped of any trailing
+  // slash - so the result never carries a `//` regardless of how the path
+  // was spelled.
+  eleventyConfig.addFilter("absUrl", (path) => site.url + eleventyConfig.getFilter("url")(path));
 
   return {
     // The site is served from the root of its own domain. Override with

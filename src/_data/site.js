@@ -368,6 +368,14 @@ for (const f of [
 }
 assetHash.update(JSON.stringify(rum));
 
+// The origin og:url and og:image compose against. Overridable so a preview
+// deploy can carry its own origin, but the deploy workflow itself sets
+// nothing, so CI always builds against the production domain in CNAME - the
+// build stays deterministic either way. Stripped of any trailing slash so
+// the `absUrl` filter, which appends a leading-slash path, never produces
+// `//` at the join.
+const SITE_URL = (process.env.SITE_URL ?? "https://javazone.kodeklang.dev").replace(/\/+$/, "");
+
 const first = days[0];
 const last = days.at(-1);
 const dateRange = {
@@ -380,6 +388,7 @@ const dateRange = {
 export default {
   buildId: assetHash.digest("hex").slice(0, 12),
   version: createHash("sha256").update(raw).digest("hex").slice(0, 12),
+  url: SITE_URL,
   event: { ...program.event, dateRange },
   days,
   sessions,
