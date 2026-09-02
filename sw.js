@@ -11,7 +11,7 @@
 // The cache name carries a hash of the programme *and* every shipped asset, so
 // any real change retires the old cache wholesale.
 
-const CACHE = "jz-76579a8c3946";
+const CACHE = "jz-cab8a163f814";
 
 const BASE = "/";
 
@@ -32,14 +32,19 @@ const SHELL = [
   "/",
   "/dag/2/",
   "/dag/3/",
-  "/css/style.css?v=76579a8c3946",
-  "/css/fonts.css?v=76579a8c3946",
-  "/js/app.js?v=76579a8c3946",
-  "/js/rum.js?v=76579a8c3946",
+  "/css/style.css?v=cab8a163f814",
+  "/css/fonts.css?v=cab8a163f814",
+  "/js/app.js?v=cab8a163f814",
+  "/js/rum.js?v=cab8a163f814",
   "/manifest.webmanifest",
-  "/icons/icon.svg",
   "/icons/icon-192.png",
 ];
+
+// The favicon that icon.svg used to be is deliberately not back in that list.
+// It is two files now, one per size, and neither is something an install can
+// fail over: they are under 3 kB together, nothing but the tab strip asks for
+// them, and cacheFirst below stores any same-origin asset the first time it is
+// fetched - so they are in the cache after the first page view either way.
 
 // Everything else the site publishes.
 const REST = [...new Set([
@@ -219,67 +224,78 @@ const REST = [...new Set([
   // so an uncached photo is a broken image in the hall rather than initials.
   // The ?v matches the src in program.njk exactly; a precache entry that does
   // not match the request it is meant to answer is dead weight.
-  "/photos/morten-nygaard-asnes.webp?v=76579a8c3946",
-  "/photos/kristian-berg.webp?v=76579a8c3946",
-  "/photos/hans-kristian-flaatten.webp?v=76579a8c3946",
-  "/photos/radek-kargul.webp?v=76579a8c3946",
-  "/photos/willem-jan-glerum.webp?v=76579a8c3946",
-  "/photos/a-n-m-bazlur-rahman.webp?v=76579a8c3946",
-  "/photos/piotr-laskawiec.webp?v=76579a8c3946",
-  "/photos/ken-sipe.webp?v=76579a8c3946",
-  "/photos/sam-bellen.webp?v=76579a8c3946",
-  "/photos/christin-gorman.webp?v=76579a8c3946",
-  "/photos/elise-kristiansen.webp?v=76579a8c3946",
-  "/photos/knut-haugen.webp?v=76579a8c3946",
-  "/photos/kevin-dubois.webp?v=76579a8c3946",
-  "/photos/oystein-hagen-blixhavn.webp?v=76579a8c3946",
-  "/photos/josh-long.webp?v=76579a8c3946",
-  "/photos/johannes-bechberger.webp?v=76579a8c3946",
-  "/photos/martin-skarsaune.webp?v=76579a8c3946",
-  "/photos/aurora-scharff.webp?v=76579a8c3946",
-  "/photos/nadia-tokerud.webp?v=76579a8c3946",
-  "/photos/cay-horstmann.webp?v=76579a8c3946",
-  "/photos/veronika-heimsbakk.webp?v=76579a8c3946",
-  "/photos/akihiro-nishikawa.webp?v=76579a8c3946",
-  "/photos/bruce-bujon.webp?v=76579a8c3946",
-  "/photos/nikolai-norman-andersen.webp?v=76579a8c3946",
-  "/photos/johannes-brodwall.webp?v=76579a8c3946",
-  "/photos/mick-semb-wever.webp?v=76579a8c3946",
-  "/photos/gaute-meek-olsen.webp?v=76579a8c3946",
-  "/photos/jago-de-vreede.webp?v=76579a8c3946",
-  "/photos/daniel-oh.webp?v=76579a8c3946",
-  "/photos/adele-carpenter.webp?v=76579a8c3946",
-  "/photos/anders-noras.webp?v=76579a8c3946",
-  "/photos/piotr-przybyl.webp?v=76579a8c3946",
-  "/photos/anders-sveen.webp?v=76579a8c3946",
-  "/photos/alexander-chatzizacharias.webp?v=76579a8c3946",
-  "/photos/gunnar-morling.webp?v=76579a8c3946",
-  "/photos/pasha-finkelshteyn.webp?v=76579a8c3946",
-  "/photos/georges-saab.webp?v=76579a8c3946",
-  "/photos/marit-van-dijk.webp?v=76579a8c3946",
-  "/photos/andres-almiray.webp?v=76579a8c3946",
-  "/photos/totto-thor-henning-hetland.webp?v=76579a8c3946",
-  "/photos/fredrik-lillemoen-eiding.webp?v=76579a8c3946",
-  "/photos/baruch-sadogursky.webp?v=76579a8c3946",
-  "/photos/ixchel-ruiz.webp?v=76579a8c3946",
-  "/photos/morten-andersen-gott.webp?v=76579a8c3946",
-  "/photos/tim-berglund.webp?v=76579a8c3946",
-  "/photos/rafael-winterhalter.webp?v=76579a8c3946",
-  "/photos/rustam-mehmandarov.webp?v=76579a8c3946",
-  "/photos/einar-waaler-host.webp?v=76579a8c3946",
-  "/photos/adam-warski.webp?v=76579a8c3946",
-  "/photos/oleg-selajev.webp?v=76579a8c3946",
-  "/photos/brian-vermeer.webp?v=76579a8c3946",
-  "/photos/gerrit-grunwald.webp?v=76579a8c3946",
-  "/photos/bram-janssens.webp?v=76579a8c3946",
-  "/photos/leonard-sheng-sheng-lee.webp?v=76579a8c3946",
-  "/photos/marten-range.webp?v=76579a8c3946",
-  "/photos/patrick-baumgartner.webp?v=76579a8c3946",
-  // Only ever fetched by an install prompt or the home screen, so they would
-  // otherwise be the assets least likely to be cached when they are needed.
+  "/photos/morten-nygaard-asnes.webp?v=cab8a163f814",
+  "/photos/kristian-berg.webp?v=cab8a163f814",
+  "/photos/hans-kristian-flaatten.webp?v=cab8a163f814",
+  "/photos/radek-kargul.webp?v=cab8a163f814",
+  "/photos/willem-jan-glerum.webp?v=cab8a163f814",
+  "/photos/a-n-m-bazlur-rahman.webp?v=cab8a163f814",
+  "/photos/piotr-laskawiec.webp?v=cab8a163f814",
+  "/photos/ken-sipe.webp?v=cab8a163f814",
+  "/photos/sam-bellen.webp?v=cab8a163f814",
+  "/photos/christin-gorman.webp?v=cab8a163f814",
+  "/photos/elise-kristiansen.webp?v=cab8a163f814",
+  "/photos/knut-haugen.webp?v=cab8a163f814",
+  "/photos/kevin-dubois.webp?v=cab8a163f814",
+  "/photos/oystein-hagen-blixhavn.webp?v=cab8a163f814",
+  "/photos/josh-long.webp?v=cab8a163f814",
+  "/photos/johannes-bechberger.webp?v=cab8a163f814",
+  "/photos/martin-skarsaune.webp?v=cab8a163f814",
+  "/photos/aurora-scharff.webp?v=cab8a163f814",
+  "/photos/nadia-tokerud.webp?v=cab8a163f814",
+  "/photos/cay-horstmann.webp?v=cab8a163f814",
+  "/photos/veronika-heimsbakk.webp?v=cab8a163f814",
+  "/photos/akihiro-nishikawa.webp?v=cab8a163f814",
+  "/photos/bruce-bujon.webp?v=cab8a163f814",
+  "/photos/nikolai-norman-andersen.webp?v=cab8a163f814",
+  "/photos/johannes-brodwall.webp?v=cab8a163f814",
+  "/photos/mick-semb-wever.webp?v=cab8a163f814",
+  "/photos/gaute-meek-olsen.webp?v=cab8a163f814",
+  "/photos/jago-de-vreede.webp?v=cab8a163f814",
+  "/photos/daniel-oh.webp?v=cab8a163f814",
+  "/photos/adele-carpenter.webp?v=cab8a163f814",
+  "/photos/anders-noras.webp?v=cab8a163f814",
+  "/photos/piotr-przybyl.webp?v=cab8a163f814",
+  "/photos/anders-sveen.webp?v=cab8a163f814",
+  "/photos/alexander-chatzizacharias.webp?v=cab8a163f814",
+  "/photos/gunnar-morling.webp?v=cab8a163f814",
+  "/photos/pasha-finkelshteyn.webp?v=cab8a163f814",
+  "/photos/georges-saab.webp?v=cab8a163f814",
+  "/photos/marit-van-dijk.webp?v=cab8a163f814",
+  "/photos/andres-almiray.webp?v=cab8a163f814",
+  "/photos/totto-thor-henning-hetland.webp?v=cab8a163f814",
+  "/photos/fredrik-lillemoen-eiding.webp?v=cab8a163f814",
+  "/photos/baruch-sadogursky.webp?v=cab8a163f814",
+  "/photos/ixchel-ruiz.webp?v=cab8a163f814",
+  "/photos/morten-andersen-gott.webp?v=cab8a163f814",
+  "/photos/tim-berglund.webp?v=cab8a163f814",
+  "/photos/rafael-winterhalter.webp?v=cab8a163f814",
+  "/photos/rustam-mehmandarov.webp?v=cab8a163f814",
+  "/photos/einar-waaler-host.webp?v=cab8a163f814",
+  "/photos/adam-warski.webp?v=cab8a163f814",
+  "/photos/oleg-selajev.webp?v=cab8a163f814",
+  "/photos/brian-vermeer.webp?v=cab8a163f814",
+  "/photos/gerrit-grunwald.webp?v=cab8a163f814",
+  "/photos/bram-janssens.webp?v=cab8a163f814",
+  "/photos/leonard-sheng-sheng-lee.webp?v=cab8a163f814",
+  "/photos/marten-range.webp?v=cab8a163f814",
+  "/photos/patrick-baumgartner.webp?v=cab8a163f814",
+  // The apple-touch-icon, which is only ever fetched by an install prompt or
+  // the home screen and would otherwise be among the assets least likely to be
+  // cached at the moment they are wanted.
+  //
+  // The two 512s that manifest.webmanifest names are deliberately not here
+  // beside it, and that absence is not a list somebody forgot to finish. A
+  // manifest icon is fetched by the browser or the OS at install time, on its
+  // own account and outside the page: the request is never dispatched to this
+  // worker's fetch handler, so the copy stored here is not the copy the
+  // launcher ends up reading. Precaching them would spend 190 kB of a
+  // visitor's conference wifi on two files that get downloaded again anyway.
+  // That was cheap to overlook while the icon was five rectangles of SVG and is
+  // not now that it is a photographic mascot - with these two left out, the
+  // icons this worker carries cost 51 kB, which is what they cost before Duke
+  // arrived.
   "/icons/icon-180.png",
-  "/icons/icon-512.png",
-  "/icons/icon-maskable-512.png",
   "/js/datadog/datadog-rum-slim.js",
 ])];
 
