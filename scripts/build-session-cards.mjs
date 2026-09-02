@@ -1,6 +1,11 @@
 #!/usr/bin/env node
-// Draws one Open Graph share card per session into src/cards, plus a manifest
-// at src/_data/cards.json that program.11tydata.js reads.
+// Draws one Open Graph share card per session into src/cards - as a PNG and,
+// from the same pixels, a WebP - plus a manifest at src/_data/cards.json that
+// program.11tydata.js reads.
+//
+// Both formats are published because base.njk offers a crawler the two as
+// alternates. Neither is a thumbnail of the other: they are the same 1200x630
+// image, and which one a reader takes is its own business.
 //
 //   npm run cards        (after scripts/fetch-program.mjs)
 //
@@ -12,18 +17,21 @@
 // the git diff is the change detector. Nothing about the build may depend on
 // the machine it runs on - librsvg resolves fonts against the host's
 // fontconfig, and the hourly workflow deploys whenever the bytes of _site
-// change - so the PNGs are rendered here, committed to main, and copied
+// change - so the cards are rendered here, committed to main, and copied
 // through untouched. That only works if a run over an unchanged programme
 // rewrites nothing at all, which is what the manifest is for: it records a
 // hash of the drawing instructions for each card, and a card whose hash has
-// not moved is left alone.
+// not moved, and both of whose files are still on disk, is left alone.
 //
-// The hash is taken over the finished SVG and the raster settings, rather than
-// over the fields the SVG was built from. That covers strictly more - the
-// title, format, day, time and room, but also the wordmark, the colours, the
-// font size and line breaks the fitter chose for this particular title, and
-// how the result is turned into pixels - so a change to the design regenerates
-// the whole set on its own, with nothing to remember to bump.
+// The hash is taken over the finished SVG and lib/card-renderer.mjs's RASTER,
+// rather than over the fields the SVG was built from. That covers strictly
+// more - the title, format, day, time and room, but also the wordmark, the
+// colours, the font size and line breaks the fitter chose for this particular
+// title, and every setting either file is encoded with - so a change to the
+// design regenerates the whole set on its own, with nothing to remember to
+// bump. It is also why RASTER holds the WebP's settings rather than the
+// encoder call reaching for them itself: a knob outside the hash could change
+// 310 files while the manifest went on calling them current.
 //
 // Nothing here belongs in the service worker's precache; see the note at
 // SHELL in src/sw.njk.
@@ -40,6 +48,7 @@ import {
   LEFT,
   MARK_Y,
   MUTED,
+  RASTER,
   RIGHT,
   WIDTH,
   esc,
@@ -72,16 +81,6 @@ const META_BASELINE = 556;
 // rather than in completion order, so an unchanged programme keeps producing
 // an identically ordered manifest.
 const CONCURRENCY = 4;
-
-// How the cards are rasterised, as opposed to how they are drawn. Palette,
-// because on this design it halves the file for pixels nobody can tell apart -
-// the argument, and the measurements behind it, are at `render` in
-// lib/card-renderer.mjs.
-//
-// Named rather than passed inline because it goes into the hash below as well
-// as into the render: the raster settings decide the pixels just as much as the
-// SVG does, so changing them has to redraw the set.
-const RASTER = { palette: true };
 
 // A card that fails to rasterise is not a reason to prune every other card off
 // the disk. Past this share of failures the run writes nothing and exits
@@ -258,7 +257,9 @@ const previous = await readFile(MANIFEST_FILE, "utf8")
   .catch(() => ({}));
 
 await mkdir(CARD_DIR, { recursive: true });
-const onDisk = new Set((await readdir(CARD_DIR).catch(() => [])).filter((f) => f.endsWith(".png")));
+const onDisk = new Set(
+  (await readdir(CARD_DIR).catch(() => [])).filter((f) => /\.(png|webp)$/.test(f)),
+);
 
 let drawn = 0;
 let bytes = 0;
@@ -268,7 +269,7 @@ const entries = await withCardRenderer(chars, async ({ render, measure, wordmark
   const mark = await wordmark();
 
   return pool(site.sessions, async (session) => {
-    const file = `${session.slug}.png`;
+    const files = { file: `${session.slug}.png`, webp: `${session.slug}.webp` };
     try {
       const svg = card(
         {
@@ -286,20 +287,32 @@ const entries = await withCardRenderer(chars, async ({ render, measure, wordmark
         .digest("hex")
         .slice(0, 16);
 
+      // Both files have to be there, not just the manifest's word for it: a
+      // checkout that has the PNG and not the WebP - the first run after this
+      // was added, or a half-finished merge - must redraw rather than publish
+      // an og:image that 404s.
       const before = previous[session.id];
-      if (before?.hash === hash && before.file === file && onDisk.has(file)) return [session.id, before];
+      const current =
+        before?.hash === hash &&
+        before.file === files.file &&
+        before.webp === files.webp &&
+        onDisk.has(files.file) &&
+        onDisk.has(files.webp);
+      if (current) return [session.id, before];
 
-      const png = await render(svg, RASTER);
-      await writeFile(path.join(CARD_DIR, file), png);
+      const { png, webp } = await render(svg);
+      await writeFile(path.join(CARD_DIR, files.file), png);
+      await writeFile(path.join(CARD_DIR, files.webp), webp);
       drawn++;
-      bytes += png.length;
-      return [session.id, { file, hash }];
+      bytes += png.length + webp.length;
+      return [session.id, { ...files, hash }];
     } catch (err) {
       errors.push(`${session.title}: ${err.message}`);
       // Keep whatever the last good run drew rather than letting the prune
       // below take a card away over a transient failure.
-      return previous[session.id] && onDisk.has(previous[session.id].file)
-        ? [session.id, previous[session.id]]
+      const kept = previous[session.id];
+      return kept && onDisk.has(kept.file) && onDisk.has(kept.webp)
+        ? [session.id, kept]
         : null;
     }
   });
@@ -321,7 +334,7 @@ await writeFile(
 
 // Anything the manifest no longer claims: a session off the programme, or one
 // whose title was edited enough to change its slug and so its filename.
-const keep = new Set(Object.values(cards).map((c) => c.file));
+const keep = new Set(Object.values(cards).flatMap((c) => [c.file, c.webp]));
 const stale = [...onDisk].filter((f) => !keep.has(f)).sort();
 for (const file of stale) await unlink(path.join(CARD_DIR, file));
 

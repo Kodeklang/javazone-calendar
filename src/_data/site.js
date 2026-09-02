@@ -160,8 +160,17 @@ function photo(id) {
  */
 function shareCard(id) {
   const found = cards.cards[id];
-  return found
-    ? { url: `/cards/${found.file}`, width: cards.width, height: cards.height }
+  // Both formats or neither. base.njk offers a crawler the PNG and the WebP as
+  // alternates of one image, so a manifest entry naming only one of them - an
+  // older cards.json, a half-applied merge - has to fall back to the site-wide
+  // card in both formats rather than advertise a `/cards/undefined.webp`.
+  return found?.file && found?.webp
+    ? {
+        url: `/cards/${found.file}`,
+        webp: `/cards/${found.webp}`,
+        width: cards.width,
+        height: cards.height,
+      }
     : null;
 }
 

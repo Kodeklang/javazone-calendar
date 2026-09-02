@@ -25,15 +25,39 @@
 <meta property="og:url" content="{{ page.url | absUrl }}">
 <meta property="og:title" content="{{ shareTitle }}">
 <meta property="og:description" content="{{ shareDescription }}">
-{#- A session sets shareImage to its own card (program.11tydata.js); everything
-    else, the day grids included, unfurls with the site-wide one. Both are
-    1200x630, so the dimensions below hold either way - they are here so an
-    unfurler can reserve the space before the image arrives.
+{#- The same card in two formats, offered as repeated og:image tags. There is
+    no content negotiation to lean on here: GitHub Pages serves static files
+    and does not vary on Accept, and <picture> cannot help because no page
+    element ever renders a card - the only thing that ever reads one is a
+    crawler reading these tags. A repeated og:image is the one choice Open
+    Graph itself provides.
 
-    The site-wide card's own description is built from the words
-    scripts/build-og-card.mjs draws on it, so the two cannot drift apart. #}
+    PNG first and WebP second, and that order is the whole decision. A consumer
+    that reads the list picks the format it prefers; most take the first image
+    they see, and those - LinkedIn, Slack, iMessage - have to land on the
+    format that decodes everywhere.
+
+    Each og:image is immediately followed by its own :type, :width, :height and
+    :alt, because a structured property attaches to the most recent og:image
+    above it. Interleaving the two groups would silently describe each image
+    with the other's properties, so the two blocks below stay whole.
+
+    A session sets shareImage and shareImageWebp to its own card
+    (program.11tydata.js); everything else, the day grids included, unfurls
+    with the site-wide one. Every card is 1200x630 in both formats, so the
+    dimensions hold either way - they are here so an unfurler can reserve the
+    space before the image arrives. The alt text is bound once and set twice
+    because it describes the picture, and it is the same picture. The site-wide
+    card's own description is built from the words scripts/build-og-card.mjs
+    draws on it, so the two cannot drift apart. #}
 {%- set shareAlt = shareImageAlt or ("Mørkeblå plakat med JavaZone-logoen og teksten " + site.event.name + ", Program, " + site.event.dateRange.no + ".") %}
 <meta property="og:image" content="{{ (shareImage or '/icons/og.png') | absUrl }}">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{ shareAlt }}">
+<meta property="og:image" content="{{ (shareImageWebp or '/icons/og.webp') | absUrl }}">
+<meta property="og:image:type" content="image/webp">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="{{ shareAlt }}">
