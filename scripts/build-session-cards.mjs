@@ -207,6 +207,24 @@ function wrap(text, size, width, measure) {
 }
 
 /**
+ * `text` cut down to `width` at `size`, with an ellipsis where the cut fell.
+ *
+ * Word boundaries first, because a headline or a name cut mid-word reads as a
+ * bug rather than as a truncation - and then, only if one word is itself wider
+ * than the whole width, character boundaries, so that what comes back always
+ * fits. Everything drawn on this card is measured before it is set, and a
+ * function that can hand back something too wide is a hole in that.
+ */
+function ellipsise(text, size, weight, width, measure) {
+  const fits = (s) => measure(`${s}…`, size, weight) <= width;
+  const words = text.split(" ");
+  while (words.length > 1 && !fits(words.join(" "))) words.pop();
+  const chars = [...words.join(" ")];
+  while (chars.length > 1 && !fits(chars.join(""))) chars.pop();
+  return `${chars.join("")}…`;
+}
+
+/**
  * The largest step from SIZES at which `title` fits the title band with every
  * word whole, and the lines it breaks into there. `bottom` is where the band
  * ends: the top of the speaker row on a card that has one, and the row's own
@@ -244,9 +262,7 @@ function fit(title, width, measure, bottom) {
 
   const size = SIZES.at(-1);
   const lines = wrap(title, size, width, measure).lines.slice(0, rows(size));
-  let last = lines.at(-1).split(" ");
-  while (last.length > 1 && measure(`${last.join(" ")}…`, size, 800) > width) last.pop();
-  lines[lines.length - 1] = `${last.join(" ")}…`;
+  lines[lines.length - 1] = ellipsise(lines.at(-1), size, 800, width, measure);
   return { size, lines };
 }
 
@@ -266,10 +282,13 @@ function fit(title, width, measure, bottom) {
  * Four sessions keep their circles by stepping down, and four set names alone.
  *
  * The last resort is the shorthand the day grid uses for the same problem,
- * `${first} +${n - 1}`. No session in the 2026 programme reaches it - the
- * widest row of any kind is 991px of 1024 - and it is here so that a cast that
- * outgrows the card loses a name to a rule rather than to the edge of the
- * frame, silently, the way librsvg would draw it.
+ * `${first} +${n - 1}`, and then the same ellipsis a title too long for its
+ * band gets - because a shorthand still names somebody, and one name can be
+ * too wide on its own, which no shorthand shortens. No session in the 2026
+ * programme reaches either (the widest row of any kind is 991px of 1024); they
+ * are here so that a cast that outgrows the card loses its tail to a rule
+ * rather than to the edge of the frame, silently, the way librsvg would draw
+ * it.
  */
 function speakerRow(speakers, width, measure) {
   const names = speakers.map((p) => p.name);
@@ -283,10 +302,15 @@ function speakerRow(speakers, width, measure) {
   for (const size of NAME_SIZES) {
     if (measure(joined, size, NAME_WEIGHT) <= width) return { size, circles: false, text: joined };
   }
+  const size = NAME_SIZES.at(-1);
+  const short = names.length > 1 ? `${names[0]} +${names.length - 1}` : names[0];
   return {
-    size: NAME_SIZES.at(-1),
+    size,
     circles: false,
-    text: names.length > 1 ? `${names[0]} +${names.length - 1}` : names[0],
+    text:
+      measure(short, size, NAME_WEIGHT) <= width
+        ? short
+        : ellipsise(short, size, NAME_WEIGHT, width, measure),
   };
 }
 

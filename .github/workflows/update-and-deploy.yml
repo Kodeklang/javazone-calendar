@@ -19,12 +19,28 @@ concurrency:
 jobs:
   update-and-deploy:
     # Pinned rather than ubuntu-latest, because this job draws the share cards.
-    # sharp carries its own rsvg, pango and fontconfig, so the runner's fonts
-    # cannot reach the render - but the image it ships changes with the runner
-    # image, and a libvips that rasterises one pixel differently would be
-    # invisible: an hourly run only redraws the cards whose input moved, so the
-    # set would drift into two renderings with nothing to notice. Bump this
-    # deliberately, and regenerate the whole set in the same commit.
+    #
+    # What actually holds the rendering steady is the lockfile, not this label:
+    # sharp ships its own libvips, rsvg, pango and fontconfig as a prebuilt
+    # binary, package-lock.json pins @img/sharp-libvips-linux-x64 to an exact
+    # version with an integrity hash, and `npm ci` below installs exactly that.
+    # So the rasteriser a runner uses does not move when the runner image does,
+    # and lib/card-renderer.mjs points fontconfig at a directory of its own
+    # making, so the runner's own fonts cannot reach the render either.
+    #
+    # The pin is worth having on top of that for everything outside those two:
+    # the Node build, the shell, the CA bundle, the git that writes the commit.
+    # It costs nothing and removes a whole class of surprise from a job that
+    # runs hourly and pushes what it produces.
+    #
+    # The path nothing guards is a sharp or libvips bump. src/_data/cards.json
+    # hashes each card's finished SVG and the RASTER settings it was encoded
+    # under - not the version of the library that turns the one into the other
+    # - so a new libvips that rasterises a pixel differently would leave every
+    # hash where it is, and an hourly run redraws only the cards whose input
+    # moved. The set would quietly become two renderings with nothing to notice
+    # it. So bump sharp deliberately, and regenerate the whole set - `npm run
+    # cards && npm run og` with src/cards emptied first - in the same commit.
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7

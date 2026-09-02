@@ -630,7 +630,16 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
    one. So the monogram is not a placeholder waiting to be filled: it is what
    most cards will always show, and the two are given identical geometry so a
    list mixing them reads as one deliberate treatment rather than a half-done
-   import. Any change to the circle below belongs in both rules. */
+   import. Any change to the circle below belongs in both rules.
+
+   And in a third place: scripts/build-session-cards.mjs draws the same circle
+   on every session's share card, at this same 60px, from these same files. The
+   geometry there is this geometry deliberately. The one thing it does not copy
+   is .speaker__mono's fill - a tint downward from a light panel disappears on
+   the card's dark ground, so the card steps the same distance the other way -
+   and that is argued at speakerCircle() in the script. A change to the fill
+   below is therefore not automatically a change there; a change to the size,
+   the ring or the crop is. */
 .speaker__mono,
 .speaker__photo {
   width: 60px; height: 60px; flex: none; border-radius: 999px;
