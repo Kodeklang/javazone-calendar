@@ -9,6 +9,7 @@
     "photos": "node scripts/fetch-photos.mjs",
     "og": "node scripts/build-og-card.mjs",
     "cards": "node scripts/build-session-cards.mjs",
+    "icons": "node scripts/build-icons.mjs",
     "build": "eleventy",
     "start": "eleventy --serve"
   },

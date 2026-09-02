@@ -31,8 +31,9 @@ const ROOT = path.resolve(import.meta.dirname, "..");
 const OUT_FILE = path.join(ROOT, "src/icons/og.png");
 
 // The site's own colours: the dark blues are manifest.njk's theme-color and
-// background_color, the gradient and the bar geometry are lifted from
-// src/icons/icon.svg, and the cyan is FORMAT_COLOUR.presentation in site.js.
+// background_color, the gradient and the bar geometry come from the app icon
+// this card was drawn against, and the cyan is FORMAT_COLOUR.presentation in
+// site.js.
 const INK = "#ffffff";
 const CYAN = "#02dfff";
 const MUTED = "#aecfff";
@@ -67,9 +68,13 @@ function card({ name, label, dates }) {
 
   <rect width="${WIDTH}" height="${HEIGHT}" fill="url(#ground)"/>
 
-  <!-- The app icon at the size it is actually recognised at, drawn from the
-       same geometry as src/icons/icon.svg so the card, the tab and the
-       installed app all show one mark. -->
+  <!-- The bar-chart mark the app icon used to be, at the size it is actually
+       recognised at. The icon itself is JavaZone's Duke now
+       (scripts/build-icons.mjs) and this card has not followed it, deliberately:
+       src/icons/og.png is committed art, redrawing it moves bytes in _site and
+       therefore triggers a deploy, and the alt text in base.njk describes a bar
+       chart. Bringing the two back together is a change to make on purpose, not
+       a side effect of changing the icon. -->
   <svg x="88" y="72" width="128" height="128" viewBox="0 0 512 512">
     <rect width="512" height="512" rx="113" fill="url(#tile)"/>
     <rect x="110.1" y="130.6" width="64" height="151" rx="14" fill="#ffffff"/>

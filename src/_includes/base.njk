@@ -43,7 +43,13 @@
 <meta name="app-build" content="{{ site.buildId }}">
 <meta name="base-path" content="{{ "/" | url }}">
 <link rel="manifest" href="{{ "/manifest.webmanifest" | url }}">
-<link rel="icon" href="{{ "/icons/icon.svg" | url }}" type="image/svg+xml">
+{#- Two favicons rather than the one scalable file that used to be here, because
+    the mark is now a raster mascot. A browser given a single icon downscales
+    it, and Duke taken from 512 down to 16 is a smudge with a red dot in it -
+    so each of these is drawn at the size it is actually shown at, from a crop
+    chosen for that size. See scripts/build-icons.mjs. #}
+<link rel="icon" href="{{ "/icons/icon-32.png" | url }}" sizes="32x32" type="image/png">
+<link rel="icon" href="{{ "/icons/icon-16.png" | url }}" sizes="16x16" type="image/png">
 <link rel="apple-touch-icon" href="{{ "/icons/icon-180.png" | url }}">
 {#- The build id on the stylesheet and script URLs is what lets a fresh page
     carry fresh assets. The worker serves these cache-first under their URL,

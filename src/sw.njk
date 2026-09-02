@@ -41,9 +41,14 @@ const SHELL = [
   "{{ '/js/app.js' | url }}?v={{ site.buildId }}",
   "{{ '/js/rum.js' | url }}?v={{ site.buildId }}",
   "{{ '/manifest.webmanifest' | url }}",
-  "{{ '/icons/icon.svg' | url }}",
   "{{ '/icons/icon-192.png' | url }}",
 ];
+
+// The favicon that icon.svg used to be is deliberately not back in that list.
+// It is two files now, one per size, and neither is something an install can
+// fail over: they are under 3 kB together, nothing but the tab strip asks for
+// them, and cacheFirst below stores any same-origin asset the first time it is
+// fetched - so they are in the cache after the first page view either way.
 
 // Everything else the site publishes.
 const REST = [...new Set([

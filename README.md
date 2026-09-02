@@ -348,8 +348,15 @@ Neither of these runs in CI; their output is committed.
 
 ```sh
 node scripts/fetch-fonts.mjs   # re-vendor Montserrat
-python3 scripts/make-icons.py  # redraw the app icon
+npm run icons                  # redraw the app icon and the favicon
 ```
+
+The icon is JavaZone's own Duke, used with the organisers' permission, over the
+blue the app has always used. He is vendored as `src/icons/javazone-duke.png`
+rather than fetched, because upstream serves him under a content-hashed filename
+that changes on every deploy of theirs. The favicon is drawn from a much tighter
+crop than the launcher icon — at 16px the whole mascot is a smudge, and only the
+hat and the red nose survive.
 
 Only Montserrat is vendored. The design sets everything clock-like in the system
 monospace, which costs nothing to download. The six faces are subset at build

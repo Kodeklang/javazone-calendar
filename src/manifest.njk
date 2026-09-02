@@ -13,8 +13,14 @@ eleventyExcludeFromCollections: true
   "orientation": "portrait-primary",
   "background_color": "#0a2747",
   "theme_color": "#153863",
+  {#- No "sizes": "any" entry any more. It was there so an installer wanting a
+      size nobody listed could render one at whatever resolution it liked, and
+      the mark is a raster mascot now, so there is nothing left to render from.
+      512 takes over that role: it is the largest size anything here is asked
+      for - the install prompt's own artwork and the splash screen - and every
+      launcher size below it is a downscale of it, which is what an installer
+      would have done with the vector anyway. #}
   "icons": [
-    { "src": "{{ '/icons/icon.svg' | url }}", "sizes": "any", "type": "image/svg+xml" },
     { "src": "{{ '/icons/icon-192.png' | url }}", "sizes": "192x192", "type": "image/png" },
     { "src": "{{ '/icons/icon-512.png' | url }}", "sizes": "512x512", "type": "image/png" },
     { "src": "{{ '/icons/icon-maskable-512.png' | url }}", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
