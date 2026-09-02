@@ -23,7 +23,25 @@ eleventyComputed:
               data-start="{{ session.startUtc }}" data-end="{{ session.endUtc }}"></span>
       </p>
 
-      <h1>{{ session.title }}</h1>
+      {#- The mark sits with the title rather than in the masthead: it belongs
+          to this session, not to the app around it. Hidden until app.js
+          reveals it, the same contract #copy-link uses below - with no script
+          there is nowhere to remember the mark, and a check that forgets is
+          worse than none.
+
+          aria-pressed carries the state, so the label stays put instead of
+          flipping between "mark" and "unmark"; the name is a nested span
+          because that is the only part applyLang() can rewrite. #}
+      <div class="detail__title">
+        <h1>{{ session.title }}</h1>
+        <button type="button" class="pick" id="pick" data-session="{{ session.id }}"
+                aria-pressed="false" hidden>
+          {%- set checkClass = "pick__check" %}
+          {% include "check.njk" %}
+          <span class="visually-hidden" data-en="Mark as one to see"
+                data-no="Merk som en du vil se">Merk som en du vil se</span>
+        </button>
+      </div>
 
       <p class="pills">
         <span class="pill pill--time">

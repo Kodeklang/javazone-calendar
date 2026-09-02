@@ -33,6 +33,94 @@ if (langButton) {
 }
 applyLang(currentLang());
 
+/* ---------------------------------------------------------------- picks */
+
+// The sessions someone has marked as one they want to see. Their own list, so
+// it gets a key of its own rather than a corner of jz-filters: "Alt" wipes a
+// filter selection, and it must never take the list with it.
+//
+// localStorage rather than a cache or IndexedDB, on three counts. It is
+// origin-scoped, so the installed app and a browser tab are reading the same
+// list. It outlives every service worker activation - the worker owns only the
+// jz-<build> cache, which a deploy retires wholesale, and storage is not in it.
+// And it is synchronous, so the list is in hand before the first paint and a
+// marked card is never drawn unmarked and then corrected.
+//
+// None of it is baked into the HTML, for the reason at the top of this file:
+// the pages are precached and identical for everyone, so the marks are put on
+// here, at runtime, on top of a build that knows nothing about them.
+
+const PICKS_KEY = "jz-picks";
+const onPicksChange = [];
+
+function storedPicks() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(PICKS_KEY) ?? "[]");
+    if (!Array.isArray(parsed)) return new Set();
+    return new Set(parsed.filter((v) => typeof v === "string"));
+  } catch {
+    // Hand-edited or truncated storage: nothing marked beats throwing on load.
+    return new Set();
+  }
+}
+
+function storePicks(picks) {
+  if (picks.size) localStorage.setItem(PICKS_KEY, JSON.stringify([...picks]));
+  else localStorage.removeItem(PICKS_KEY);
+}
+
+let picks = storedPicks();
+
+const picksChanged = () => {
+  for (const fn of onPicksChange) fn();
+};
+
+// Returning from a session page is history.back() (see #back below), which can
+// restore the grid from the bfcache exactly as it was left - including its
+// marks, made before the visitor went and changed one. Nothing ran in between
+// to notice, so re-read rather than trust what is on screen.
+window.addEventListener("pageshow", (event) => {
+  if (!event.persisted) return;
+  picks = storedPicks();
+  picksChanged();
+});
+
+// Two tabs on a desktop - the grid in one, a session in the other - are the
+// same list seen twice, and `storage` fires in every tab but the one that
+// wrote. Without this the grid would sit on a stale list until it reloaded.
+window.addEventListener("storage", (event) => {
+  if (event.key !== null && event.key !== PICKS_KEY) return;
+  picks = storedPicks();
+  picksChanged();
+});
+
+/* ----------------------------------------------------------- pick button */
+
+const pickButton = document.getElementById("pick");
+
+if (pickButton) {
+  // The markup ships it hidden, because without script there is nowhere to
+  // keep the answer.
+  pickButton.hidden = false;
+
+  const id = pickButton.dataset.session;
+  const render = () => pickButton.setAttribute("aria-pressed", String(picks.has(id)));
+
+  pickButton.addEventListener("click", () => {
+    // Read storage again rather than trusting the in-memory copy: another tab
+    // may have marked something since this page loaded, and writing the whole
+    // list back from a stale Set would silently drop it.
+    picks = storedPicks();
+    if (picks.has(id)) picks.delete(id);
+    else picks.add(id);
+    storePicks(picks);
+    render();
+  });
+
+  onPicksChange.push(render);
+  render();
+}
+
 /* -------------------------------------------------------- facet filter */
 
 // Two independent facets, because Sleeping Pill publishes no track: format

@@ -66,6 +66,11 @@
    sit on screen and inert for the one visitor the attribute is there for. */
 [hidden] { display: none !important; }
 
+/* The shared check mark (_includes/check.njk). Block, so it sits on no
+   baseline and leaves no descender gap under it; every context sets its own
+   size, and the stroke follows whatever colour the parent is in. */
+.check { display: block; }
+
 html, body { margin: 0; padding: 0; height: 100%; background: var(--ground); }
 
 /* How many title lines fit in a card is worked out at build time from a known
@@ -474,9 +479,37 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 }
 .countdown:empty { display: none; }
 
+/* The title and the mark share a row, so a long title wraps under itself
+   rather than around the button. flex-start keeps the circle level with the
+   first line however many lines there turn out to be. */
+.detail__title { display: flex; align-items: flex-start; gap: 16px; }
+.detail__title h1 { flex: 1; min-width: 0; }
+
 .detail h1 {
   margin: 0; font-size: 40px; font-weight: 800; line-height: 1.12;
   letter-spacing: -0.015em; color: var(--ink-strong); text-wrap: pretty;
+}
+
+/* Drawn the way the day picker draws the current day - outlined while off,
+   filled with the accent while on - because it is the same kind of statement:
+   this one, out of all of them. 44px satisfies WCAG 2.5.8 on its own. */
+.pick {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; margin-top: 3px; padding: 0;
+  border: 1px solid var(--panel-bd); border-radius: 999px;
+  background: var(--deep-solid); color: var(--ink-mute);
+  cursor: pointer; transition: background-color 0.12s ease, color 0.12s ease;
+}
+.pick:hover { color: var(--ink-strong); border-color: rgba(255, 255, 255, 0.42); }
+.pick[aria-pressed="true"] {
+  background: var(--accent); border-color: var(--accent); color: var(--ground);
+}
+.pick[aria-pressed="true"]:hover { color: var(--ground); }
+.pick:active { filter: brightness(0.9); transition: none; }
+.pick__check { width: 23px; height: 23px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pick { transition: none; }
 }
 
 .pills, .tags { margin: 0; display: flex; gap: 10px; flex-wrap: wrap; }
@@ -626,6 +659,9 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 
   .detail { padding: 20px 16px 44px; gap: 22px; }
   .detail h1 { font-size: 26px; line-height: 1.15; }
+  .detail__title { gap: 12px; }
+  .pick { width: 40px; height: 40px; margin-top: 0; }
+  .pick__check { width: 21px; height: 21px; }
   .detail__body { font-size: 14.5px; line-height: 1.65; }
   .pill { padding: 7px 13px; font-size: 12px; }
   .linkrow { gap: 16px; }

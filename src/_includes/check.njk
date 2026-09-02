@@ -1,0 +1,11 @@
+{#- One check mark for the whole feature. The toggle on a session page, the
+    chip on the grid and the mark on a card all draw this same path, so that
+    marking a session, filtering for the marked ones and spotting one in the
+    grid read as one thing rather than three that happen to agree.
+
+    No width/height attributes: every context wants a different size and sets
+    it in CSS. The stroke follows currentColor for the same reason - pressed,
+    dimmed and resting states are all just a colour on the parent.
+
+    Set `checkClass` before including to hang a context class on it. #}
+<svg class="check{% if checkClass %} {{ checkClass }}{% endif %}" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.25 8.4 6.6 11.75 12.75 5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
