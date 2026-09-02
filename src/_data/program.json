@@ -2555,7 +2555,7 @@
         "Alt vises live med en ekte React-applikasjon som refaktoreres steg for steg, fra “alt i én komponent” til en ren, modulær arkitektur med tester som dokumentasjon."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223300523",
       "speakerIds": [
         "andrea-magnussen"
       ]
@@ -2642,7 +2642,7 @@
         "Bli med på en reise i min tidsmaskin! Reisen begynner i 1994, får katastrofale konsekvenser i 2011 og kan gi verdifull lærdom inn i utviklingsarbeidet vi gjør i politiet i 2026. Ta med disketter og pute og spenn deg fast, for dette blir en fartsfylt og humpete tur!"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223263905",
       "speakerIds": [
         "tine-norregaard"
       ]
@@ -2696,7 +2696,7 @@
         "OAuth 2.1 isn't a revolution; it's a consolidation. PKCE moves from optional to mandatory. DPoP adds cryptographic proof of possession to bearer tokens and guards against replay attacks. CIBA decouples authorization from your browser session. Client ID Metadata Documents, and Authorization Server Metadata turn configuration from copy-paste into discovery. Token Exchange lets services act on behalf of users without copying credentials, so secrets never have to leave the authorization server. Cross-App Access extends this further with identity assertion grants. Each piece solves a real problem; together they form modern OAuth."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223269811",
       "speakerIds": [
         "sam-bellen"
       ]
