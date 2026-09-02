@@ -329,10 +329,11 @@ if (site.sessions.length && errors.length > site.sessions.length * MAX_ERROR_RAT
 // Sorted, so an unchanged programme keeps producing identical bytes.
 const cards = Object.fromEntries(entries.filter(Boolean).sort(([a], [b]) => a.localeCompare(b)));
 
-await writeFile(
-  MANIFEST_FILE,
-  JSON.stringify({ width: WIDTH, height: HEIGHT, cards }, null, 2) + "\n",
-);
+// Paths and hashes only. The 1200x630 every card is drawn at is decided in
+// lib/card-renderer.mjs and stated again in base.njk's og:image:width and
+// :height, and recording it here as well only offered a third answer that
+// nothing ever read.
+await writeFile(MANIFEST_FILE, JSON.stringify({ cards }, null, 2) + "\n");
 
 // Anything the manifest no longer claims: a session off the programme, or one
 // whose title was edited enough to change its slug and so its filename.

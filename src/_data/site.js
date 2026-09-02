@@ -157,6 +157,13 @@ function photo(id) {
  * Root-relative, like `photo` above, and left for the templates to put
  * through Eleventy's `url` filter and then `absUrl` - og:image is ignored by
  * every unfurler unless it is absolute.
+ *
+ * Only the path. `photo` above carries a size because speaker photos have
+ * been more than one over the life of this site and the img has to reserve
+ * the right box, but every share card there will ever be is the 1200x630 the
+ * unfurlers ask for - it is fixed in lib/card-renderer.mjs and base.njk
+ * states it as a literal. Passing it through here as well would make the
+ * manifest a second place the answer is written down, and one nothing reads.
  */
 function shareCard(id) {
   const found = cards.cards[id];
@@ -165,12 +172,7 @@ function shareCard(id) {
   // older cards.json, a half-applied merge - has to fall back to the site-wide
   // card in both formats rather than advertise a `/cards/undefined.webp`.
   return found?.file && found?.webp
-    ? {
-        url: `/cards/${found.file}`,
-        webp: `/cards/${found.webp}`,
-        width: cards.width,
-        height: cards.height,
-      }
+    ? { url: `/cards/${found.file}`, webp: `/cards/${found.webp}` }
     : null;
 }
 
