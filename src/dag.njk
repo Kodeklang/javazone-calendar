@@ -76,6 +76,7 @@ eleventyComputed:
 
       {%- for s in day.sessions %}
       <article class="session session--{{ s.layout.tier }}" id="session-{{ s.id }}"
+               data-session="{{ s.id }}"
                data-format="{{ s.format }}" data-language="{{ s.language }}" data-col="{{ s.col }}"
                style="--col: {{ s.col }}; --row-start: {{ s.rowStart }}; --row-end: {{ s.rowEnd }}; --track: {{ s.colour }}; --lines: {{ s.layout.d }}; --lines-narrow: {{ s.layout.m }}">
         <a class="session__link" href="{{ s.url | url }}">
@@ -86,6 +87,11 @@ eleventyComputed:
           <span class="session__meta" aria-hidden="true">
             <span class="session__time">{{ s.startUtc | time }}</span>
             {%- if s.language %}<span class="session__lang">{{ s.language | upper }}</span>{% endif %}
+            {#- Shown only on a marked card. It rides in the meta row rather
+                than anywhere of its own because that row's height is already
+                part of the build-time card geometry, so it costs no line. #}
+            {%- set checkClass = "session__tick" %}
+            {% include "check.njk" %}
           </span>
           {%- endif %}
           <span class="session__title">{{ s.title }}</span>
@@ -95,6 +101,10 @@ eleventyComputed:
           <span class="visually-hidden">
             <time datetime="{{ s.startUtc }}">{{ s.startUtc | time }}</time>–<time datetime="{{ s.endUtc }}">{{ s.endUtc | time }}</time>,
             {{ s.roomName }}{% if s.speakerLabel %}, {{ s.speakerLabel }}{% endif %}
+            {#- The tick above sits inside an aria-hidden row, so the mark is
+                said here instead. Filled in by app.js, in the current
+                language, because no build knows who marked what. #}
+            <span class="session__mark"></span>
           </span>
         </a>
       </article>

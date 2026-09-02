@@ -243,6 +243,9 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 .session.is-dimmed .session__time,
 .session.is-dimmed .session__lang,
 .session.is-dimmed .session__speaker { color: rgba(230, 240, 255, 0.68); }
+/* A dimmed card's mark dims with it. Left at full accent it would pull the eye
+   to precisely the cards the filter is pushing back. */
+.session.is-dimmed .session__tick { color: rgba(230, 240, 255, 0.68); }
 
 .session { transition: background-color 0.15s ease, border-color 0.15s ease; }
 
@@ -380,6 +383,15 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 .session__lang {
   font-size: 9px; font-weight: 700; letter-spacing: 0.08em; color: var(--ink-soft);
 }
+
+/* The mark on a card, pushed to the end of the meta row so it lands in the top
+   right corner on the same line as the time. That row's height is part of the
+   build-time card geometry in _data/site.js, so nothing here may add to it. */
+.session__tick {
+  margin-left: auto; flex: none; width: 12px; height: 12px; color: var(--accent);
+}
+.session:not(.is-picked) .session__tick { display: none; }
+.session--compact .session__tick { width: 11px; height: 11px; }
 
 /* --lines is how many lines actually fit in this card, worked out from its
    duration at build time (see cardLayout() in _data/site.js). Clamping to the

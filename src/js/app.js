@@ -274,6 +274,32 @@ if (chips.length) {
   }
 }
 
+/* ------------------------------------------------------- marks on the grid */
+
+// A marked session carries its check on the grid too, so the list is visible
+// while browsing the whole day rather than only once it is filtered for.
+//
+// The 10-minute tier has no meta row to put it in - the card is 20px tall and
+// holds its title and nothing else - so those show no tick. The spoken mark
+// below is on every card regardless.
+
+if (allSessions.length) {
+  const markPicked = (lang = currentLang()) => {
+    for (const session of allSessions) {
+      const on = picks.has(session.dataset.session);
+      session.classList.toggle("is-picked", on);
+      // The tick lives inside the aria-hidden meta row, so on its own it says
+      // nothing at all. This is the same fact, put where it will be read.
+      const note = session.querySelector(".session__mark");
+      if (note) note.textContent = on ? (lang === "en" ? ", marked" : ", merket") : "";
+    }
+  };
+
+  onPicksChange.push(() => markPicked());
+  onLangChange.push(markPicked);
+  markPicked();
+}
+
 /* ------------------------------------------------------------- now line */
 
 const grid = document.querySelector(".grid");
