@@ -92,10 +92,10 @@ files, and a card that treated the two differently would undo the rule on the
 surface more people see. The one thing the card does not copy is the monogram's
 fill: the stylesheet tints that disc *down* from a light panel, which is
 invisible against the card's own dark ground, so the card steps the same
-distance the other way. Geometry, ring and crop are the stylesheet's. The card scales its own copy of the photo down through
-libvips rather than up: 120px is all there will ever be, and an avatar enlarged
-past what it has pixels for would sit next to crisp type and look worse than the
-monogram beside it.
+distance the other way. Geometry, ring and crop are the stylesheet's. The card
+scales its own copy of the photo down through libvips rather than up: 120px is
+all there will ever be, and an avatar enlarged past what it has pixels for would
+sit next to crisp type and look worse than the monogram beside it.
 
 Re-running is cheap and safe. A Bluesky avatar URL ends in the blob's CID, so the
 URL *is* the content hash: an unchanged avatar is recognised from the manifest and
