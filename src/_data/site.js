@@ -493,9 +493,16 @@ const sessions = program.sessions.map((s) => {
     // never trips a viewer's 160-character line in search results or a share
     // card. Falls back to the title for the handful of sessions Sleeping Pill
     // publishes with no abstract at all.
-    metaDescription: s.description.length
-      ? truncate(plainText(s.description[0]), META_DESCRIPTION_MAX)
-      : s.title,
+    //
+    // The same `abstractText` og:title is built from, rather than a second
+    // reading of `description[0]`. There is one way to turn an abstract into
+    // prose and this is it: seven of the 155 sessions open with a subtitle
+    // fragment in a paragraph of its own, and reading only the first paragraph
+    // handed one of them a Google snippet reading in full `– slutt på "noen
+    // burde…"` while its own og:title carried the joined abstract. Two
+    // derivations meant one of them kept the bug the other documents at
+    // length.
+    metaDescription: abstract ? truncate(abstract, META_DESCRIPTION_MAX) : s.title,
     // For og:title: the session's card already shows its title, day, time
     // and room, and an unfurler that renders only the title line (iMessage,
     // LinkedIn, X) would otherwise just repeat the picture, so the share
