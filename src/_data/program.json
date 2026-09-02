@@ -3043,7 +3043,7 @@
         "Kotlin extension functions er flotte. De gjør koden elegeant og lettlest. Men hva skjer hvis noe går galt? Du kan få stack traces som peker til linjer som ikke finnes eller tilsynelatende enkle kall som dreper ytelsen. I denne lyntalen tar jeg deg gjennom eksempler på dette, slik at du vet hva du bør passe deg for."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223334643",
       "speakerIds": [
         "anders-karlsen"
       ]
@@ -3073,7 +3073,7 @@
         "If you’ve ever wondered whether going from Kotlin to Java is doable—or if you should run the other way—this session gives you a pretty good idea of which way to run."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223340167",
       "speakerIds": [
         "aurora-christine-hofman"
       ]
@@ -3100,7 +3100,7 @@
         "Spring Boot 4.x and Java 25+ have arrived, making it an exciting time to be a Java developer! Join me, Josh Long (@starbuxman), as we dive into the future of Spring Boot with Java 25. We'll learn how to scale your applications and codebases effortlessly, explore the robust Spring Boot ecosystem featuring AI, modularity, seamless data access, security, and cutting-edge production optimizations like Project Loom's virtual threads, GraalVM, AppCDS, and more. Let's explore the latest-and-greatest in Spring Boot to build faster, more scalable, more efficient, more modular, more secure, and more intelligent systems and services."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223346611",
       "speakerIds": [
         "josh-long"
       ]
@@ -3128,7 +3128,7 @@
         "In this talk, we'll peek behind the curtain, write a tiny LLM library together live on stage, and use it to build a tiny chatbot with tool support."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223358361",
       "speakerIds": [
         "johannes-bechberger"
       ]
@@ -3158,7 +3158,7 @@
         "Along the way: where agents are brilliant, where they stumble, and what a 1986 computer music textbook predicts about their limits."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223359618",
       "speakerIds": [
         "oyvind-lokling"
       ]
