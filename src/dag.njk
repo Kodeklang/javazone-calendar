@@ -39,6 +39,24 @@ eleventyComputed:
       <button type="button" class="chip chip--reset" id="filter-reset"
               aria-pressed="true" data-en="Everything">Alt</button>
     </li>
+    {#- The third facet, and the only one that is not a property of the
+        programme: it asks the visitor's own list rather than anything upstream
+        published. It narrows the other two like they narrow each other, so
+        "Dine sesjoner + Lyntale" is the marked lightning talks.
+
+        Next to "Alt" because the two are the row's two whole-programme
+        answers, and because it is the filter someone opens the app to use.
+
+        Pressing it with nothing marked dims the whole day. That is the honest
+        answer - the list is empty - and "Alt" is one tap away. #}
+    <li>
+      <button type="button" class="chip chip--mine" data-facet="mine" data-value="yes"
+              aria-pressed="false">
+        {%- set checkClass = "chip__check" %}
+        {% include "check.njk" %}
+        <span data-en="Your sessions">Dine sesjoner</span>
+      </button>
+    </li>
     {%- for f in day.formats %}
     <li>
       <button type="button" class="chip chip--format" data-facet="format" data-value="{{ f.id }}"

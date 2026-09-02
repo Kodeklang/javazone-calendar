@@ -196,6 +196,23 @@ html[lang="en"] .lang__off { background: var(--ink); color: var(--ground); }
 .chip--lang { --track: rgba(255, 255, 255, 0.42); color: var(--ink); }
 .chip--lang[aria-pressed="true"] { background: var(--ink); color: var(--ground); border-color: var(--ink); }
 
+/* The visitor's own list. It takes the accent, which in this app is the "this
+   one, out of all of them" colour - the current day, the pick button, the mark
+   on a card - rather than a colour that stands for a kind of session. That the
+   presentation format happens to share the accent is a coincidence of the
+   palette; the check mark and the label are what tell the two chips apart, and
+   no other chip in the row carries an icon. */
+.chip--mine {
+  --track: var(--accent);
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--accent);
+}
+.chip__check { width: 13px; height: 13px; flex: none; }
+.chip--mine[aria-pressed="true"] {
+  background: var(--accent); color: var(--ground); border-color: var(--accent);
+}
+.chip--mine[aria-pressed="true"]:hover { background: var(--accent); }
+
 /* The reset chip belongs to no facet, so it borrows the neutral chrome and
    reads as pressed whenever nothing is filtered - the default state. */
 .chip--reset {

@@ -123,11 +123,12 @@ if (pickButton) {
 
 /* -------------------------------------------------------- facet filter */
 
-// Two independent facets, because Sleeping Pill publishes no track: format
-// (presentation, lightning talk, workshop) and language. Chips within one
-// facet are alternatives; the two facets narrow each other. Picking "Lyntale"
-// and "Norsk" means the Norwegian lightning talks, which is the question
-// someone standing in a corridor actually has.
+// Three independent facets. Two come from the programme, because Sleeping Pill
+// publishes no track: format (presentation, lightning talk, workshop) and
+// language. The third, "mine", comes from the visitor's own marks instead.
+// Chips within one facet are alternatives; the facets narrow each other.
+// Picking "Lyntale" and "Norsk" means the Norwegian lightning talks, which is
+// the question someone standing in a corridor actually has.
 //
 // Filtering de-emphasises rather than removes. A session outside the selection
 // is greyed out but stays exactly where it is, so the grid keeps its shape,
@@ -143,7 +144,7 @@ if (pickButton) {
 // quietly drop them.
 
 const FILTER_KEY = "jz-filters";
-const FACETS = ["format", "language"];
+const FACETS = ["format", "language", "mine"];
 const chips = document.querySelectorAll(".chip[data-facet]");
 const resetChip = document.getElementById("filter-reset");
 const allSessions = document.querySelectorAll(".session[data-format]");
@@ -208,6 +209,9 @@ if (chips.length) {
     for (const session of allSessions) {
       const on = FACETS.every((facet) => {
         if (!picked[facet].size) return true;
+        // "mine" is the one facet the build knows nothing about, so it asks
+        // the list rather than an attribute written onto the card.
+        if (facet === "mine") return picks.has(session.dataset.session);
         return picked[facet].has(session.dataset[facet] || "");
       });
       // No selection at all means no dimming: an unfiltered grid is not a grid
@@ -261,6 +265,12 @@ if (chips.length) {
   // Switching language strands the announcement in the old one; re-applying
   // clears it. This is also what carries the choice across days.
   onLangChange.push((lang) => applyFilters(forToday(), { lang }));
+
+  // With "Dine sesjoner" on, the list *is* the filter, so a mark made since
+  // this page was drawn - on a session page just navigated back from, or in
+  // another tab - changes which cards belong. Silent, because the visitor is
+  // not looking at this page at the moment it happens.
+  onPicksChange.push(() => applyFilters(forToday()));
 
   const initial = forToday();
   applyFilters(initial);
