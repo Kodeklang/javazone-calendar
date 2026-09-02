@@ -222,6 +222,11 @@ function plainText(html) {
 // description that already fits must not gain one it doesn't need.
 const META_DESCRIPTION_MAX = 160;
 
+// og:title's budget: iMessage and LinkedIn give the headline about two
+// lines, and a longer string is cut by the platform itself, in a place this
+// build does not control.
+const SHARE_TITLE_MAX = 110;
+
 /**
  * Cut plain text at a word boundary so a truncated description never ends
  * mid-word. Spreading into an array first splits on code points rather than
@@ -401,6 +406,14 @@ const sessions = program.sessions.map((s) => {
     // publishes with no abstract at all.
     metaDescription: s.description.length
       ? truncate(plainText(s.description[0]), META_DESCRIPTION_MAX)
+      : s.title,
+    // For og:title: the session's card already shows its title, day, time
+    // and room, and an unfurler that renders only the title line (iMessage,
+    // LinkedIn, X) would otherwise just repeat the picture, so the share
+    // title carries the abstract's opening instead. A session with no
+    // abstract falls back to its own title, same as `metaDescription` does.
+    shareTitle: s.description.length
+      ? truncate(plainText(s.description[0]), SHARE_TITLE_MAX)
       : s.title,
     // For og:description, which unlike <meta name="description"> above leads
     // with the facts a share card is actually for - see `shareDescription`.
