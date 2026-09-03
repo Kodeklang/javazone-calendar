@@ -56,11 +56,12 @@ layout: base.njk
         {%- endfor %}
       </p>
 
-      {#- Two quiet controls under the tags, as the design has them. The
-          data-en spans are nested rather than sitting on the anchor itself
-          because applyLang() assigns textContent, which on the anchor would
-          take the arrow with it. data-no is spelled out so that same first
-          touch cannot latch onto a transient "Kopiert".
+      {#- Two quiet controls under the tags, as the design has them, plus a
+          third when there is a recording. The data-en spans are nested
+          rather than sitting on the anchor itself because applyLang()
+          assigns textContent, which on the anchor would take the arrow with
+          it. data-no is spelled out so that same first touch cannot latch
+          onto a transient "Kopiert".
 
           Like the speaker links below, the new tab is signalled visually and
           not announced - the arrow is decorative and there is no spoken
@@ -71,6 +72,16 @@ layout: base.njk
           <span data-en="View on javazone.no" data-no="Se på javazone.no">Se på javazone.no</span>
           <span class="linkrow__ext" aria-hidden="true">↗</span>
         </a>
+        {#- Moved up from the "Opptak" section below, which now holds the
+            player itself; the wording stays exactly what it was there so a
+            reader who has seen it before still recognises it. #}
+        {%- if session.video %}
+        <a class="linkrow__item" href="https://vimeo.com/{{ session.video }}"
+           rel="noopener noreferrer" target="_blank">
+          <span data-en="Watch on Vimeo" data-no="Se opptaket på Vimeo">Se opptaket på Vimeo</span>
+          <span class="linkrow__ext" aria-hidden="true">↗</span>
+        </a>
+        {%- endif %}
         {#- Hidden until app.js reveals it: with no clipboard there is nothing
             for it to do, and a button that does nothing is worse than none. #}
         <button type="button" class="linkrow__item" id="copy-link" hidden>
