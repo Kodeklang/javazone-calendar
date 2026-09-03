@@ -5092,7 +5092,7 @@
         "Dette er domenedrevet design slik det er ment: domenet uttrykt klart og tydelig, mens infrastruktur-koden ligger ryddig adskilt ved siden av."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223616433",
       "speakerIds": [
         "simen-burud",
         "herman-thieme"
@@ -5123,7 +5123,7 @@
         "Come learn how both tools can be used together for better results in your daily work."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223642327",
       "speakerIds": [
         "marit-van-dijk",
         "andres-almiray"
@@ -5157,7 +5157,7 @@
         "What, if anything, can be done before the clock hits midnight (35 minutes ago)? This talk explores Post-Quantum Cryptography (PQC) through the lens of a world where the master plan was set in motion years ago. It’s time to stop worrying about the future and start fixing the past."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223642334",
       "speakerIds": [
         "andreas-ahlgren"
       ]
@@ -5185,7 +5185,7 @@
         "Basic feature flags gave teams on/off control over what users see, decoupling code deployments from feature releases.<br>More advanced targeted flags let us release the right features, to the right people, at the right time.<br>But in 2026, the challenge isn't toggling — it's managing the entire feature lifecycle from idea to impact.<br>Packed with lessons from production, live demos, and a healthy dose of engineering humor - you’ll learn:<br>* How to build runtime feature management into your architecture<br>* How to find bottlenecks in your feature lifecycle<br>* How to make releases consistently boring<br>* How to make releases that monitor themselves"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223642328",
       "speakerIds": [
         "mateusz-kwasniewski"
       ]
@@ -5214,7 +5214,7 @@
         "Vi forteller historien om hvordan Statens vegvesen snudde mediekritikk til tverrfaglig samarbeid og innovasjon. Å 'bygge bro' mellom fagmiljøer er ikke alltid like lett, men en brukollaps tente gnisten til tverrfaglige produktteam som fikk dronepiloter, bruinspektører og IT-teknologer til å innovere og samarbeide om nye digitale løsninger med data fra droner og maskinlæring."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223642329",
       "speakerIds": [
         "anita-sengebusch",
         "hege-auglaend-holst"
@@ -5245,7 +5245,7 @@
         "Format: workshop, small group, discussion-based. Bring your actual questions — the ones you haven't been able to ask out loud."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223642971",
       "speakerIds": [
         "totto-thor-henning-hetland"
       ]
@@ -5273,7 +5273,7 @@
         "I denne presentasjonen skal vi gå gjennom tips og triks vi har lært gjennom vårt arbeid hos Vy for hvordan man kan få universell utforming til å bli en integrert del av utviklingsprosessen. Vi kommer til å gå gjennom ulike lærdommer vi har lært, hvilke plugins vi ofte tar i bruk og hvilke rutiner kan være en god ide å implementere for at testing og forbedring av UU skal bli enklest mulig."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223644340",
       "speakerIds": [
         "aileen-hay",
         "jon-jakob-sando-lauser"
@@ -5304,7 +5304,7 @@
         "Dette er et foredrag for utviklere, tech leads og ledere som vil bruke AI til mer enn å produsere mer kode: de vil skape bedre flyt."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223643966",
       "speakerIds": [
         "christian-neverdal"
       ]
@@ -5335,7 +5335,7 @@
         "The talk ends with a complete multi-agent Spring AI architecture where agents share not just data, but the reasoning behind every decision that came before."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223644281",
       "speakerIds": [
         "james-ward",
         "ryan-knight"
