@@ -39,6 +39,34 @@ layout: base.njk
         </button>
       </div>
 
+      {#- A session with a recording has already happened, so the recording is
+          what the page is for: it sits directly under the title, above the
+          time, the room and the abstract, which are now a record of an event
+          rather than a plan to attend one.
+
+          Vimeo's copy-paste snippet also ships a padding-top wrapper to hold
+          the 16:9 box and a <script src=".../player.js"> line; neither is
+          here. The box is aspect-ratio in the stylesheet instead, keeping
+          layout out of the markup the way every other rule on this page
+          does; the script exists only to drive the Player API, which
+          nothing on this page calls, and the page already ships its own.
+          No loading="lazy": the player opens the page now, so deferring it
+          would only delay the one thing the reader came for - title names
+          the session so a screen reader hears what the frame holds rather
+          than "iframe". dnt=1 on the src is Vimeo's own parameter for
+          suppressing the vuid tracking cookie and its analytics beacons;
+          this page ships no cookie banner, and before this player existed
+          it made no request to Vimeo at all. #}
+      {%- if session.video %}
+      <section class="detail__section">
+        <h2 class="section__label" data-en="Recording">Opptak</h2>
+        <iframe class="detail__video" src="https://player.vimeo.com/video/{{ session.video }}?dnt=1"
+                title="Opptak av {{ session.title }}"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                allowfullscreen></iframe>
+      </section>
+      {%- endif %}
+
       <p class="pills">
         <span class="pill pill--time">
           <time datetime="{{ session.startUtc }}">{{ session.startUtc | time }}</time>–<time datetime="{{ session.endUtc }}">{{ session.endUtc | time }}</time>
@@ -72,9 +100,9 @@ layout: base.njk
           <span data-en="View on javazone.no" data-no="Se på javazone.no">Se på javazone.no</span>
           <span class="linkrow__ext" aria-hidden="true">↗</span>
         </a>
-        {#- Moved up from the "Opptak" section below, which now holds the
-            player itself; the wording stays exactly what it was there so a
-            reader who has seen it before still recognises it. #}
+        {#- Moved out of the "Opptak" section, which now holds the player
+            itself; the wording stays exactly what it was there so a reader
+            who has seen it before still recognises it. #}
         {%- if session.video %}
         <a class="linkrow__item" href="https://vimeo.com/{{ session.video }}"
            rel="noopener noreferrer" target="_blank">
@@ -161,29 +189,6 @@ layout: base.njk
       {#- Setup instructions: numbered steps, shell commands, sometimes fenced
           code. Reflowing them would destroy them, so the line breaks stand. #}
       <p class="detail__pre">{{ session.prerequisites | safe }}</p>
-    </section>
-    {%- endif %}
-
-    {%- if session.video %}
-    <section class="detail__section">
-      <h2 class="section__label" data-en="Recording">Opptak</h2>
-      {#- Vimeo's copy-paste snippet also ships a padding-top wrapper to hold
-          the 16:9 box and a <script src=".../player.js"> line; neither is
-          here. The box is aspect-ratio in the stylesheet instead, keeping
-          layout out of the markup the way every other rule on this page
-          does; the script exists only to drive the Player API, which
-          nothing on this page calls, and the page already ships its own.
-          loading="lazy" because the section sits below the fold and the
-          player is heavy - title names the session so a screen reader
-          hears what the frame holds rather than "iframe". dnt=1 on the
-          src is Vimeo's own parameter for suppressing the vuid tracking
-          cookie and its analytics beacons; this page ships no cookie
-          banner, and before this section existed it made no request to
-          Vimeo at all. #}
-      <iframe class="detail__video" src="https://player.vimeo.com/video/{{ session.video }}?dnt=1"
-              title="Opptak av {{ session.title }}"
-              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-              allowfullscreen loading="lazy"></iframe>
     </section>
     {%- endif %}
 
