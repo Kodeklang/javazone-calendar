@@ -447,11 +447,12 @@ the session page uses for the same thing.
 **The Vimeo link moved into the header; the "Opptak" section now holds the
 player.** It used to be the section's only content, a bare anchor under the
 heading; now it sits in the linkrow beside "Se på javazone.no" and "Kopier
-lenke", in the same nested-span-plus-arrow shape as the link beside it, so a
-reader with somewhere to go finds it with the other two rather than at the
-foot of the page. What fills the section now is Vimeo's own `<iframe>`, sized
-by `aspect-ratio: 16 / 9` on the frame itself instead of the padding-top
-wrapper Vimeo's own snippet asks for, and without the snippet's `player.js`
+lenke", in the same nested-span-plus-arrow shape as the javazone.no link
+beside it, so a reader with somewhere to go finds it with the other two
+rather than at the foot of the page. What fills the section now is Vimeo's
+own `<iframe>`, sized by `aspect-ratio: 16 / 9` on the frame itself instead
+of the padding-top wrapper Vimeo's own snippet asks for, and without the
+snippet's `player.js`
 — nothing on this page drives the Player API, so the script would be dead
 weight.
 
