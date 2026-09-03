@@ -706,6 +706,12 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
   white-space: pre-wrap; overflow-wrap: anywhere;
 }
 
+/* Vimeo's own snippet holds the 16:9 box with a padding-top hack on a
+   wrapper div; aspect-ratio does the same job on the iframe itself, no
+   wrapper needed. Radius matches .detail__pre, the other block that fills a
+   section on its own. */
+.detail__video { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 12px; }
+
 .speaker {
   display: flex; flex-direction: column; gap: 16px;
   padding: 22px; border: 1px solid var(--panel-bd); border-radius: 16px;

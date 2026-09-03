@@ -167,10 +167,19 @@ layout: base.njk
     {%- if session.video %}
     <section class="detail__section">
       <h2 class="section__label" data-en="Recording">Opptak</h2>
-      <p class="detail__body">
-        <a href="https://vimeo.com/{{ session.video }}" rel="noopener noreferrer" target="_blank"
-           data-en="Watch on Vimeo">Se opptaket på Vimeo</a>
-      </p>
+      {#- Vimeo's copy-paste snippet also ships a padding-top wrapper to hold
+          the 16:9 box and a <script src=".../player.js"> line; neither is
+          here. The box is aspect-ratio in the stylesheet instead, keeping
+          layout out of the markup the way every other rule on this page
+          does; the script exists only to drive the Player API, which
+          nothing on this page calls, and the page already ships its own.
+          loading="lazy" because the section sits below the fold and the
+          player is heavy - title names the session so a screen reader
+          hears what the frame holds rather than "iframe". #}
+      <iframe class="detail__video" src="https://player.vimeo.com/video/{{ session.video }}"
+              title="Opptak av {{ session.title }}"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              allowfullscreen loading="lazy"></iframe>
     </section>
     {%- endif %}
 
