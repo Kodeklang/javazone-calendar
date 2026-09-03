@@ -10,9 +10,10 @@ the other days sit at `/dag/2/` and `/dag/3/`, one tap away in the header.
 
 The published site is plain semantic HTML, CSS and vanilla JavaScript. Eleventy
 is a build-time tool only — no framework, and almost no third-party requests
-at runtime: the webfonts and the speaker photos are served from this origin,
-and the one exception is the Vimeo player embedded on a recorded session's
-page.
+at runtime: the webfonts and the speaker photos are served from this origin;
+the two exceptions are Datadog RUM, which reports on every page (see
+[Real User Monitoring](#real-user-monitoring)), and the Vimeo player
+embedded on the 22 of 155 session pages that have a recording.
 
 ## Running it
 
