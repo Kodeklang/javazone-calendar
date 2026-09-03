@@ -3865,7 +3865,7 @@
         "Bring your skepticism. The code is public, the trade-offs are real, and I'd rather be argued with than believed."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223418231",
       "speakerIds": [
         "mick-semb-wever"
       ]
@@ -3891,7 +3891,7 @@
         "Hvert år kommer ny funksjonalitet til språket JavaScript. La meg gå gjennom hva som er nytt i 2026."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223423400",
       "speakerIds": [
         "gaute-meek-olsen"
       ]
@@ -3920,7 +3920,7 @@
         "We build a lot of microservices where common functionality is extracted into shared, innersource libraries. We manage 30+ of these libraries used by dozens of downstream applications or other libraries. Sometimes we need to break the API or require new configuration.<br>In these cases, version bumps alone are rarely enough. Tools like Dependabot can update dependencies, but they cannot refactor code, migrate configuration, or make breaking changes explicit. Engineers are left to read changelogs, hunt through compile errors, and reapply the same fixes across repositories. And, worst of all, many teams will probably need to do the same thing.<br>That’s why we decided to stop just managing version bumps and instead automate the refactoring itself. We adopted OpenRewrite to define custom recipes that automatically apply changes. Breaking changes became executable migration guides instead of documentation no one reads.<br>In this talk you will learn how to set up OpenRewrite for internal libraries. Build and test your custom recipes."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223419239",
       "speakerIds": [
         "jago-de-vreede"
       ]
@@ -3943,7 +3943,7 @@
         "Are you curious about lock-free programming but only familiar with using locks in concurrent Java? This talk is for you! We'll make the concepts of lock-free programming approachable, starting with why it matters and the basics of progress guarantees. You’ll learn to differentiate between wait-freedom, lock-freedom, and obstruction-freedom, understanding why these guarantees are crucial.<br>We’ll explore essential lock-free programming idioms, like Compare-And-Swap (CAS) for atomic updates, markable references for efficient state management, and the sentinel node technique for simplifying concurrent data structures.<br>The infamous ABA problem will be demystified—what it is, why it’s problematic, and how to tackle it with techniques like versioning.<br>To see these concepts in action, we’ll implement three lock-free data structures in Java: a stack, a queue, and a linked list. These examples will highlight the practical application of lock-free techniques and the challenges they address.<br>Finally, we’ll discuss performance characteristics, comparing the benefits and limitations of lock-free programming versus traditional locking. You’ll learn when to use lock-free methods for better scalability and when sticking with locks might be more appropriate.<br>Join us to elevate your concurrent programming skills and confidently start experimenting with lock-free programming in your Java projects!"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223421039",
       "speakerIds": [
         "andrzej-grzesik"
       ]
@@ -3966,7 +3966,7 @@
         "Våren 2024 skulle Designsystemet komme i versjon 1. Dette skjedde ikkje.<br>Kvifor? Fordi me var misfornøgde med at det var kun React fokus – i noko som skulle hjelpe alle.<br>Fant me ein perfekt løysing? Nei.<br>Kunne me gjere noko som skifta fokuset litt bort frå React? Ja, sett CSS og DOM i fokus.<br>Arbeidet gjorde at me utsatte versjon 1 med eitt heilt år.<br>Kva inngjekk i arbeidet med å rydde opp i alt rusket som me fekk av React? Jo, det blei ryddigare DOM, meir fokus på HTML, og ein god del ryddigare CSS.<br>Denne talken vil raskt gå over korleis me jobba for å få til dette, og kva fordelar me fekk ved å fokusere på CSS og DOM."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223423399",
       "speakerIds": [
         "tobias-barsnes"
       ]
@@ -3996,7 +3996,7 @@
         "Målet er at du skal lære nok om JSONata til at du kan prøve det ut selv, slik at du finner ut om det kan være nyttig for deg."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223423398",
       "speakerIds": [
         "ove-gram-nipen"
       ]
@@ -4027,7 +4027,7 @@
         "This talk shows the full pipeline end-to-end: how the spec is generated, how to configure the generator, what the output looks like, and how to wire it into your build process so the client is always in sync. We'll also cover the honest part — where generators fall short and how a small post-processing script handles the gaps."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223423401",
       "speakerIds": [
         "rupinder-kaur"
       ]
@@ -4055,7 +4055,7 @@
         "Hans Christian Holte gikk av som NAV-direktør i 11. november 2025. Bakgrunnen var kritikk fra Riksrevisjonen, blant annet for manglende audit-logging. I denne presentasjonen går vi gjennom hvordan dette henger sammen sett fra teknisk perspektiv. Vi ser også på hvilke konsekvenser det har fått, friksjon rundt etterlevelse og tilnærmingen til innebygd etterlevelse og internkontroll i Nav."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223425579",
       "speakerIds": [
         "trond-arve-wasskog",
         "audun-fauchald-strand"
@@ -4086,7 +4086,7 @@
         "As AI rapidly evolves from model experimentation to production-grade applications, Java developers are increasingly faced with a new paradigm: designing intelligent systems that can reason, interact, and adapt. This talk explores the emerging Java AI application development journey through the lens of agent-based architecture, with a focus on how the Model Context Protocol (MCP) and Agent2Agent (A2A) communication patterns are transforming the way we build intelligent, context-aware services. We’ll walk through the foundational shifts in building AI-native Java applications—moving beyond single-shot prompt-response interactions to multiagent coordination, persistent memory, and tool-augmented reasoning. We’ll also address the critical architectural trade-offs: performance versus flexibility, open source versus vendor-managed inference, local versus remote model deployment, and how to maintain security and observability in agent-based systems."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223428250",
       "speakerIds": [
         "daniel-oh"
       ]
@@ -4116,7 +4116,7 @@
         "You’ll leave with new ideas and perspectives to steer your next platform effort. Without the bloat."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223432304",
       "speakerIds": [
         "erlend-ekern"
       ]
@@ -4142,7 +4142,7 @@
         "We’ll dig into how seemingly harmless libraries can sometimes do more harm than good, and how tooling can help you spot trouble before your users do. Whether you’re using Spring Data JPA, navigating tricky transaction boundaries, or just wondering why things suddenly got slow, this session offers practical insights—and maybe a few fun facts."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223434245",
       "speakerIds": [
         "jos-roseboom"
       ]
@@ -4169,7 +4169,7 @@
         "In this session we'll dig into RNGs, pseduo-RNGs and, for the truly concerned or paranoid, learn to create custom true RNGs that are impossible to hack.  Hope you can join us!"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223436187",
       "speakerIds": [
         "scott-sosna"
       ]
@@ -4194,7 +4194,7 @@
         "Regulære uttrykk (Regex’er) er et nyttig verktøy som brukes overalt til mye forskjellig. Men visste du at den enkle, korte Regex’en din er en potensiell tikkende CPU-bombe? I denne lyntalen deler jeg vår tabbe med en uskyldig Regex som førte til bom stopp i produksjon hos en stort norsk kringkastingselskap…"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223437215",
       "speakerIds": [
         "stian-gjedrem"
       ]
@@ -4226,7 +4226,7 @@
         "Java developers will leave this session with a better understanding of the consequences of language design decisions, along with a renewed love for the language that keeps a large chunk of the world running."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223438630",
       "speakerIds": [
         "adele-carpenter"
       ]
@@ -4251,7 +4251,7 @@
         "Although the story focuses on decisions made in the context of Quarkus, no actual knowledge of Quarkus itself is necessary to follow along with this talk."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223439417",
       "speakerIds": [
         "georgios-andrianakis"
       ]
@@ -4276,7 +4276,7 @@
         "Dette er en lyntale for team og organisasjoner som vil lykkes med testautomatisering uten å miste blikket for hvor kvalitet faktisk skapes."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223437214",
       "speakerIds": [
         "gerd-stalheim-wiggen"
       ]
@@ -4308,7 +4308,7 @@
         "We will follow one small feature through: written, reviewed, green, published. Then the rules change and we do it again. A coding agent drafts the tables; the decisions stay yours."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223437216",
       "speakerIds": [
         "nils-christian-haugen"
       ]
