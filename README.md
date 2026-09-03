@@ -456,6 +456,15 @@ snippet's `player.js`
 — nothing on this page drives the Player API, so the script would be dead
 weight.
 
+**That embed is the one hole in "works in a hall with no signal at all."**
+The service worker correctly leaves cross-origin requests alone, so nothing
+throws - but with no signal the iframe never loads, and a recorded session's
+"Opptak" heading now sits over a blank 288×162 box where readable link text
+used to be. Moving the link into the header softens that rather than closing
+it: offline, a reader still finds "Se opptaket på Vimeo" at the top of the
+page, just nothing below it explaining why the box under the heading is
+empty.
+
 **Drawn as an SVG (`src/_includes/tv.njk`), not the 📺 emoji.** The emoji is a
 colour raster glyph: it renders as a different picture on every platform, it
 ignores `currentColor`, so it could not step back with everything else on a
