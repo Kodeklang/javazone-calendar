@@ -263,6 +263,10 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 /* A dimmed card's mark dims with it. Left at full accent it would pull the eye
    to precisely the cards the filter is pushing back. */
 .session.is-dimmed .session__tick { color: rgba(230, 240, 255, 0.68); }
+/* Same reason: .session__tv sets its own colour rather than inheriting one,
+   so without this line it would stay full-strength on a dimmed card while
+   everything around it steps back. */
+.session.is-dimmed .session__tv { color: rgba(230, 240, 255, 0.68); }
 
 .session { transition: background-color 0.15s ease, border-color 0.15s ease; }
 
@@ -401,6 +405,20 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
   font-size: 9px; font-weight: 700; letter-spacing: 0.08em; color: var(--ink-soft);
 }
 
+/* Whether the session has a recording, ridden in the meta row exactly as the
+   tick is (flex: none, no margin that could add to that row's build-time
+   height) rather than given a row of its own. Unlike the tick this is known
+   at build time, not toggled by script, so there is no default display:none
+   to undo. A neutral ink rather than --accent or --track: a recording is a
+   fact about the programme, not the visitor's own list or the format, and
+   --accent is reserved for "this one, out of all of them" (see README,
+   "Your sessions"). display:block sidesteps the couple of stray pixels an
+   inline svg's baseline otherwise leaves below it. */
+.session__tv {
+  flex: none; display: block; width: 12px; height: 12px; color: var(--ink-soft);
+}
+.session--compact .session__tv { width: 11px; height: 11px; }
+
 /* The mark on a card, pushed to the end of the meta row so it lands in the top
    right corner on the same line as the time. That row's height is part of the
    build-time card geometry in _data/site.js, so nothing here may add to it. */
@@ -448,6 +466,18 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
    in the card's hidden text, and the hour gutter is a row away. */
 .session--tight .session__link { padding: 2px 7px 2px 6px; }
 .session--tight .session__title { --leading: 1.1; margin-top: 0; font-size: 10px; }
+
+/* This tier has no meta row for the recording glyph to ride in - the card is
+   too short to hold one at all - so it gets an absolutely positioned corner
+   overlay instead, clipped by .session's existing overflow:hidden the same
+   as everything else on the card. */
+.session--tight { position: relative; }
+.session__tv--corner {
+  position: absolute; top: 3px; right: 4px; width: 10px; height: 10px;
+}
+/* Clips the title before it reaches the glyph, instead of running underneath
+   it: the sibling combinator reaches only the cards that actually carry one. */
+.session__tv--corner + .session__title { padding-right: 10px; }
 
 /* Narrow screens keep the same slot height but set the title a little smaller,
    so one more line can fit in the same card. */
