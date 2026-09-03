@@ -4368,7 +4368,7 @@
         "Nelson once wrote that “most authority is malignant.” This is a talk about the man who wanted to dismantle it and the future we lost when the world ignored him."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223442107",
       "speakerIds": [
         "anders-noras"
       ]
@@ -4402,7 +4402,7 @@
         "I dette foredraget deler vi erfaringene våre fra å bygge MCP i praksis: design av tools og resources, forskjeller mellom klienter og kompromissene som oppstår når man går fra API-er til funksjonalitet laget for agenter. Vi ser blant annet på valget mellom mange spesialiserte verktøy og mer generiske, query-baserte tilnærminger, responsdesign, aggregeringer, skriveoperasjoner og utrulling på tvers av ulike klienter."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223444307",
       "speakerIds": [
         "bjorn-nordlund",
         "eirik-fagtun-kjaernli"
@@ -4433,7 +4433,7 @@
         "- Understand operator patterns: Discover why operators are essential for managing sophisticated applications and how they leverage Kubernetes' declarative model<br>- Design custom resources: Learn how to define Custom Resource Definitions (CRDs) that model your application's desired state<br>Implement robust controllers: Build controllers that reconcile the current state with the desired state, handling edge cases and failures gracefully<br>- Test and deploy: Explore best practices for testing operators and deploying them safely into production environments"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223448352",
       "speakerIds": [
         "frederik-pietzko"
       ]
@@ -4467,7 +4467,7 @@
         "You'll leave with a framework for making better architectural decisions when the stakes are high and the right answer isn't obvious."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223452745",
       "speakerIds": [
         "mihaela-gheorghe-roman"
       ]
@@ -4497,7 +4497,7 @@
         "Using an incubating API in production is unusual. In this case, the performance gains make it worth it. This talk explores how Elasticsearch integrates the Vector API, how it enables or disables SIMD at runtime, and what this means for high performance Java."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223454521",
       "speakerIds": [
         "piotr-przybyl"
       ]
@@ -4560,7 +4560,7 @@
         "This session explores what happens when you learn technologies by breaking them. Whether you are a Spring veteran or a newcomer, this talk offers a fresh perspective on the tools you use every day. You will leave with a better understanding of how Spring Boot works under the hood and the inspiration to build something completely unnecessary, just because you can. Come for the absurdity, stay for the laughs, and see what happens when you strip away conventions and best practices in the pursuit of a wild idea."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223458016",
       "speakerIds": [
         "alexander-chatzizacharias"
       ]
@@ -4590,7 +4590,7 @@
         "So bring out your graphic calculators, and let's get those techno beats going and learn how to paint and create worlds with maths!"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223461812",
       "speakerIds": [
         "espen-sande-larsen"
       ]
@@ -4618,7 +4618,7 @@
         "KI brukes eller forsøkes til absolutt alt nå. Derimot finnes det mange iboende problemer med KI som knapt snakkes om, trolig fordi konsekvensene tar årevis for å bli synlige. Selv uten dommedagsscenarioene som preger mediedekningen kan kostnadene kan bli enorme uansett. KI krever din respekt.<br>Vi er nå på toppen av hype-bølgen, og vil snart begynne å se hva KI faktisk kan brukes til. Dot-com, agile, big data, blockchain, low-code: bransjen vår har en lang historikk av hype-sykluser, og hvor man i etterkant fant ut hvor teknologien egentlig hørte hjemme.<br>KI skiller seg likevel ut fra tidligere teknologiske skift, både i potensialet for å forbedre livene våre og i omfanget av skaden den kan gjøre. Kom og få innsikt i de langsiktige kostnadene som sjeldent diskuteres utenfor akademia. Lær hvilke risikoer du bør ha i bakhodet når du vurderer å bruke, designe eller integrere KI i prosjektene dine. Se hvordan valgene vi tar de neste årene kan få økende konsekvenser over de neste titalls årene, for oss og for våre barn.<br>Ansvarlig bruk av KI forutsetter oversikt over alle kostnader og risikoer, inkludert de vi slipper å bære selv. Først da kan vi ta informerte beslutninger og virkelig høste verdi fra KI."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223462638",
       "speakerIds": [
         "magnus-elden"
       ]
@@ -4649,7 +4649,7 @@
         "If your team is asking &quot;What can we solve with AI?&quot; but cannot yet answer &quot;Which KPI can we trust today?&quot;, this session is for you. You will leave with a concrete checklist to assess your organization's data readiness and a clear mental model for prioritizing dashboards and data foundations before AI investments."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223462644",
       "speakerIds": [
         "vegard-sjavik"
       ]
@@ -4681,7 +4681,7 @@
         "Dette er et foredrag som gjør at du både vil trekke på smilebåndene og få en en unik innsikt i hvordan det var i &quot;gamle&quot; dager."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223464294",
       "speakerIds": [
         "eivind-vea"
       ]
@@ -4711,7 +4711,7 @@
         "Striving for conciseness led me to a deeper understanding of the code. I will show how constraints push us to think outside the box and lead to more creative solutions. Moreover, my approach can be applied to any problem. Sometimes the best way to understand code is by seeing how little of it you actually need!"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223467159",
       "speakerIds": [
         "guus-de-wit"
       ]
@@ -4737,7 +4737,7 @@
         "This presentation will give an introduction to the DORA metrics and what they measure. I will then tell about the experiences Stø, the company behind services like BankID and BankAxept, have had so far implementing the metrics in a lightweight way to improve the way we work. You will also hear about other measurements you might consider to get the full picture, and how to avoid metrics gaming. Don't run afoul of Goodheart's law: when a measure becomes a target, it ceases to be a good measure."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223587599",
       "speakerIds": [
         "markus-kruger"
       ]
@@ -4769,7 +4769,7 @@
         "Accessibility and security might seem like separate disciplines, but they share common goals: protecting users and ensuring inclusive, trustworthy digital experiences."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223466651",
       "speakerIds": [
         "radostina-ina-tsvetkova"
       ]
@@ -4799,7 +4799,7 @@
         "Throughout the talk, we will do a live training of a walking policy on stage, starting early on in the presentation and checking up on the progress from time to time. For the grande finale, our humanoid robot will close the session with a dancing performance, not missing out on a single step."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223465395",
       "speakerIds": [
         "thomas-endres",
         "dennis-schulz"
@@ -4831,7 +4831,7 @@
         "Whether you're interested in file formats, Java performance, or getting a realistic take on AI-assisted development, there should be something in here for you."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223604291",
       "speakerIds": [
         "gunnar-morling"
       ]
@@ -4861,7 +4861,7 @@
         "Me kjem til å utforska tema som: taus og eksplisitt kunnskap, kvifor folkepsykologi ofte tek feil, teori om kognitiv last, og effekten av kognitiv avlastning."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223609684",
       "speakerIds": [
         "sveinung-sande-dalatun"
       ]
@@ -4888,7 +4888,7 @@
         "Docker is the cornerstone of today's development! Let's overview quickly how we use it in JVM development, and then transition to practical examples. We will start with a simple Docker image containing a popular &quot;one fat JAR&quot; and look into its downsides (deployment speed, traffic volume). To address them, we will discuss the strategy of splitting the JAR into multiple layers and using multistage Dockerfiles, gradually improving our image. Join me to learn how to build the ultimate Docker image for Spring applications."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223655496",
       "speakerIds": [
         "pasha-finkelshteyn"
       ]
@@ -4922,7 +4922,7 @@
         "We look at how different optimization approaches perform on these real-world problems, what quantum computing can realistically contribute, and how these decisions can help reduce passenger waiting and travel times. This is a practical engineering talk about modelling real transport problems, validating optimization results, and building systems that operators can trust."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223616900",
       "speakerIds": [
         "maryam-lotfigolian",
         "aleksandar-davidov"
@@ -4946,7 +4946,7 @@
         "Java evolution continues to accelerate. Hear from the leader of the Java Platform Group At Oracle and Chair of the OpenJDK governing board where Java is headed, and what you can do using Java to stay ahead of the curve in the AI age."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223621051",
       "speakerIds": [
         "georges-saab"
       ]
@@ -4971,7 +4971,7 @@
         "I dette foredraget deler vi korleis vi nyttar opensource-verktøy, felles standardar og ein bevisst samarbeidskultur for å skape fart og gjenbruk. Du får konkrete erfaringar, praktiske grep og ein verktøykasse du kan ta med deg vidare – uavhengig av om du jobbar teknisk, strategisk eller operativt."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223594423",
       "speakerIds": [
         "audun-vindenes-egge"
       ]
@@ -5003,7 +5003,7 @@
         "This session delivers a blueprint for platform engineers and identity architects who need to deliver invisible, &quot;secure-by-default&quot; authorization for developer friendly APIs across on-prem and public clouds to serve people today and AI agents tomorrow"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223600554",
       "speakerIds": [
         "jon-skarpeteig"
       ]
@@ -5033,7 +5033,7 @@
         "If AI agents are going to act for us, we need architectures that can answer for them."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223620243",
       "speakerIds": [
         "einar-ingebrigtsen"
       ]
@@ -5060,7 +5060,7 @@
         "Hvordan kan frontend-utviklere, backend-utvikler og kanskje til og med en designer jobbe sammen og samtidig på et prosjekt? Mobbprogrammering er svaret. Blir man mer eller mindre produktiv, og hvordan blir resultatet? Hvis du vil vite mer om hva mobbprogrammering er og hvordan man kan teste det ut er dette presentasjonen for deg."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223603775",
       "speakerIds": [
         "helen-persson"
       ]
