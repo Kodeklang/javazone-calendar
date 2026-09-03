@@ -413,11 +413,29 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
    fact about the programme, not the visitor's own list or the format, and
    --accent is reserved for "this one, out of all of them" (see README,
    "Your sessions"). display:block sidesteps the couple of stray pixels an
-   inline svg's baseline otherwise leaves below it. */
+   inline svg's baseline otherwise leaves below it.
+
+   11px, not the tick's 12px, because the two glyphs do not fill their boxes
+   equally: the check mark's path covers a little over half its 16x16 viewBox,
+   while a screen with an antenna on top covers nearly three quarters of it.
+   Given the same box the TV therefore draws the largest mark in the row -
+   measured at 12px it was 11 pixels of ink tall against the time's 8 - which
+   is precisely the wrong emphasis for a fact about the programme sitting next
+   to the visitor's own mark. Sizing the box so the *ink* matches rather than
+   the box brings it to 8 pixels: the same height as the digits beside it. */
 .session__tv {
-  flex: none; display: block; width: 12px; height: 12px; color: var(--ink-soft);
+  flex: none; display: block; width: 11px; height: 11px; color: var(--ink-soft);
 }
-.session--compact .session__tv { width: 11px; height: 11px; }
+/* 10px, not the 11px the tick uses at this tier. A compact card's meta row is
+   10.8px tall - a 9px time at line-height 1.2 - and that is the `meta: 10.8`
+   every compact title's line count is divided out of in _data/site.js. An 11px
+   box is taller than the line it rides in, so it grows the row: measured in
+   the browser, a compact card carrying the glyph came out at 11px against the
+   10.797px of one without it. The tick has always overrun the row by the same
+   fifth of a pixel, but it only appears on cards the visitor has marked,
+   whereas this glyph is on every recorded session on the day, so it is the one
+   that has to fit. */
+.session--compact .session__tv { width: 10px; height: 10px; }
 
 /* The mark on a card, pushed to the end of the meta row so it lands in the top
    right corner on the same line as the time. That row's height is part of the
