@@ -175,8 +175,12 @@ layout: base.njk
           nothing on this page calls, and the page already ships its own.
           loading="lazy" because the section sits below the fold and the
           player is heavy - title names the session so a screen reader
-          hears what the frame holds rather than "iframe". #}
-      <iframe class="detail__video" src="https://player.vimeo.com/video/{{ session.video }}"
+          hears what the frame holds rather than "iframe". dnt=1 on the
+          src is Vimeo's own parameter for suppressing the vuid tracking
+          cookie and its analytics beacons; this page ships no cookie
+          banner, and before this section existed it made no request to
+          Vimeo at all. #}
+      <iframe class="detail__video" src="https://player.vimeo.com/video/{{ session.video }}?dnt=1"
               title="Opptak av {{ session.title }}"
               allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
               allowfullscreen loading="lazy"></iframe>
