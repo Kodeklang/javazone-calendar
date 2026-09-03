@@ -1,0 +1,13 @@
+{#- One TV glyph for the whole feature. The marker in a card's meta row and
+    the corner overlay on a 10-minute card both draw this same shape, so a
+    recording reads as one glyph wherever it turns up.
+
+    Drawn the way check.njk is: no width/height attributes, because every
+    context sizes it in CSS, and stroke follows currentColor so the resting
+    and dimmed states are just a colour on the parent. The stroke is thinner
+    than the check mark's 2.25 - a screen with an antenna is more geometry
+    than a single tick in the same 16x16 box, and 2.25 would close up the
+    screen's corners at the 11-12px this actually renders at.
+
+    Set `tvClass` before including to hang a context class on it. #}
+<svg class="tv{% if tvClass %} {{ tvClass }}{% endif %}" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.25" y="4.75" width="11.5" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><polyline points="5.5 2 8 4.75 10.5 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
