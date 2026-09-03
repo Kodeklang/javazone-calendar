@@ -263,6 +263,10 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 /* A dimmed card's mark dims with it. Left at full accent it would pull the eye
    to precisely the cards the filter is pushing back. */
 .session.is-dimmed .session__tick { color: rgba(230, 240, 255, 0.68); }
+/* Same reason: .session__tv sets its own colour rather than inheriting one,
+   so without this line it would stay full-strength on a dimmed card while
+   everything around it steps back. */
+.session.is-dimmed .session__tv { color: rgba(230, 240, 255, 0.68); }
 
 .session { transition: background-color 0.15s ease, border-color 0.15s ease; }
 
@@ -371,6 +375,17 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 
 .session {
   grid-column: var(--col); grid-row: var(--row-start) / var(--row-end);
+  /* The positioning root for the tight tier's corner overlay. It sits here
+     rather than on .session--tight because the markup decides that overlay on
+     `not s.layout.meta` - any tier declaring `meta: 0` - while only the last
+     entry in TIERS happens to be both. Add a fourth tier with no meta row and
+     a rule scoped to .session--tight would silently stop matching, leaving the
+     glyph to fall back to .grid, which is also positioned, and land in the top
+     right of the whole day instead of on a card. Every card is a positioning
+     root now, so the two can never disagree. Paint-neutral: .session has no
+     positioned descendants but that one, no pseudo-elements, and its z-index
+     already gave it a stacking context as a grid item. */
+  position: relative;
   z-index: 10; margin: 0 5px 4px; min-width: 0; overflow: hidden;
   border-radius: 10px;
   background: var(--card-bg);
@@ -401,6 +416,56 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
   font-size: 9px; font-weight: 700; letter-spacing: 0.08em; color: var(--ink-soft);
 }
 
+/* Whether the session has a recording, ridden in the meta row exactly as the
+   tick is (flex: none, no margin that could add to that row's build-time
+   height) rather than given a row of its own. Unlike the tick this is known
+   at build time, not toggled by script, so there is no default display:none
+   to undo. A neutral ink rather than --accent or --track: a recording is a
+   fact about the programme, not the visitor's own list or the format, and
+   --accent is reserved for "this one, out of all of them" (see README,
+   "Your sessions"). display:block sidesteps the couple of stray pixels an
+   inline svg's baseline otherwise leaves below it.
+
+   11px, not the tick's 12px, because the two glyphs do not fill their boxes
+   equally: the check mark's path covers a little over half its 16x16 viewBox,
+   while a screen with an antenna on top covers nearly three quarters of it.
+   Given the same box the TV therefore draws the largest mark in the row -
+   measured at 12px it was 11 pixels of ink tall against the time's 8 - which
+   is precisely the wrong emphasis for a fact about the programme sitting next
+   to the visitor's own mark. Sizing the box so the *ink* matches rather than
+   the box brings it to 8 pixels: the same height as the digits beside it.
+
+   margin-left: auto pushes it to the right end of the row, because that is
+   where the request put it: a tiny screen in the card's top right corner. It
+   was clustered with the time and the language until now, which reads as one
+   more fact in the left-hand run and left a conspicuous hole to its right on
+   every recorded card the visitor has not picked - which is most of them,
+   since the tick is display:none until then. The auto margin lives on the TV
+   rather than on the tick because the TV comes first: whichever of the two
+   comes first has to be the one that eats the free space, and the tick then
+   neutralises its own auto margin below. Two auto margins in one flex row
+   would split the slack between them and strand the TV mid-row instead.
+
+   The margin is main-axis only, so it cannot touch the row's height, which is
+   build-time geometry in _data/site.js. It is also inert on the corner variant
+   further down: that one is absolutely positioned against `right`, and an
+   absolutely positioned box with `left: auto` resolves its auto margins to
+   zero. */
+.session__tv {
+  margin-left: auto;
+  flex: none; display: block; width: 11px; height: 11px; color: var(--ink-soft);
+}
+/* 10px, not the 11px the tick uses at this tier. A compact card's meta row is
+   10.8px tall - a 9px time at line-height 1.2 - and that is the `meta: 10.8`
+   every compact title's line count is divided out of in _data/site.js. An 11px
+   box is taller than the line it rides in, so it grows the row: measured in
+   the browser, a compact card carrying the glyph came out at 11px against the
+   10.797px of one without it. The tick has always overrun the row by the same
+   fifth of a pixel, but it only appears on cards the visitor has marked,
+   whereas this glyph is on every recorded session on the day, so it is the one
+   that has to fit. */
+.session--compact .session__tv { width: 10px; height: 10px; }
+
 /* The mark on a card, pushed to the end of the meta row so it lands in the top
    right corner on the same line as the time. That row's height is part of the
    build-time card geometry in _data/site.js, so nothing here may add to it. */
@@ -409,6 +474,11 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 }
 .session:not(.is-picked) .session__tick { display: none; }
 .session--compact .session__tick { width: 11px; height: 11px; }
+/* When both marks are on a card the TV has already claimed the auto margin, so
+   the tick must give its own up or the two would split the row's free space
+   between them. It keeps margin-left: auto above for the far commoner case of
+   a marked session with no recording, where it is the only thing out there. */
+.session__tv + .session__tick { margin-left: 0; }
 
 /* --lines is how many lines actually fit in this card, worked out from its
    duration at build time (see cardLayout() in _data/site.js). Clamping to the
@@ -448,6 +518,24 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
    in the card's hidden text, and the hour gutter is a row away. */
 .session--tight .session__link { padding: 2px 7px 2px 6px; }
 .session--tight .session__title { --leading: 1.1; margin-top: 0; font-size: 10px; }
+
+/* This tier has no meta row for the recording glyph to ride in - the card is
+   too short to hold one at all - so it gets an absolutely positioned corner
+   overlay instead, clipped by .session's existing overflow:hidden the same
+   as everything else on the card, and positioned against .session itself (see
+   the position: relative up there, and why it is up there rather than here).
+
+   Written as a compound rather than as a bare .session__tv--corner so that it
+   beats .session__tv on specificity rather than on source order: both are one
+   class, so otherwise the corner's 10px only wins its width and height because
+   it happens to come later in the file, and any reordering would silently give
+   these cards the meta row's 11px instead. */
+.session__tv.session__tv--corner {
+  position: absolute; top: 3px; right: 4px; width: 10px; height: 10px;
+}
+/* Clips the title before it reaches the glyph, instead of running underneath
+   it: the sibling combinator reaches only the cards that actually carry one. */
+.session__tv--corner + .session__title { padding-right: 10px; }
 
 /* Narrow screens keep the same slot height but set the title a little smaller,
    so one more line can fit in the same card. */
