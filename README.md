@@ -435,11 +435,22 @@ tick's, because the tick is the one mark on the grid that came from the reader.
 
 `session.video` is a bare Vimeo id, and Sleeping Pill backfills it only after the
 conference — until then no card carries the glyph at all, the same way the
-"Opptak" link on a session page appears only once there is something to link to.
-Today 22 of the 155 sessions have one, all of them on the second day. Because
-`.session__meta` is `aria-hidden` the glyph alone would say nothing, so the
-card's hidden text carries "Opptak" / "Recording" beside the room and the time,
-in the same words the session page uses for the same thing.
+Vimeo link in the header's linkrow and the player in the "Opptak" section below
+it both stay absent until there is something to link to. Today 22 of the 155
+sessions have one, all of them on the second day. Because `.session__meta` is
+`aria-hidden` the glyph alone would say nothing, so the card's hidden text
+carries "Opptak" / "Recording" beside the room and the time, in the same words
+the session page uses for the same thing.
+
+**The Vimeo link moved into the header; the "Opptak" section now holds the
+player.** It used to be the section's only content, a bare anchor under the
+heading; now it sits in the linkrow beside "Se på javazone.no" and "Kopier
+lenke", in the same nested-span-plus-arrow shape as both, so a reader with
+somewhere to go finds it with the other two rather than at the foot of the
+page. What fills the section now is Vimeo's own `<iframe>`, sized by
+`aspect-ratio: 16 / 9` on the frame itself instead of the padding-top wrapper
+Vimeo's own snippet asks for, and without the snippet's `player.js` — nothing
+on this page drives the Player API, so the script would be dead weight.
 
 **Drawn as an SVG (`src/_includes/tv.njk`), not the 📺 emoji.** The emoji is a
 colour raster glyph: it renders as a different picture on every platform, it
