@@ -422,8 +422,26 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
    measured at 12px it was 11 pixels of ink tall against the time's 8 - which
    is precisely the wrong emphasis for a fact about the programme sitting next
    to the visitor's own mark. Sizing the box so the *ink* matches rather than
-   the box brings it to 8 pixels: the same height as the digits beside it. */
+   the box brings it to 8 pixels: the same height as the digits beside it.
+
+   margin-left: auto pushes it to the right end of the row, because that is
+   where the request put it: a tiny screen in the card's top right corner. It
+   was clustered with the time and the language until now, which reads as one
+   more fact in the left-hand run and left a conspicuous hole to its right on
+   every recorded card the visitor has not picked - which is most of them,
+   since the tick is display:none until then. The auto margin lives on the TV
+   rather than on the tick because the TV comes first: whichever of the two
+   comes first has to be the one that eats the free space, and the tick then
+   neutralises its own auto margin below. Two auto margins in one flex row
+   would split the slack between them and strand the TV mid-row instead.
+
+   The margin is main-axis only, so it cannot touch the row's height, which is
+   build-time geometry in _data/site.js. It is also inert on the corner variant
+   further down: that one is absolutely positioned against `right`, and an
+   absolutely positioned box with `left: auto` resolves its auto margins to
+   zero. */
 .session__tv {
+  margin-left: auto;
   flex: none; display: block; width: 11px; height: 11px; color: var(--ink-soft);
 }
 /* 10px, not the 11px the tick uses at this tier. A compact card's meta row is
@@ -445,6 +463,11 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 }
 .session:not(.is-picked) .session__tick { display: none; }
 .session--compact .session__tick { width: 11px; height: 11px; }
+/* When both marks are on a card the TV has already claimed the auto margin, so
+   the tick must give its own up or the two would split the row's free space
+   between them. It keeps margin-left: auto above for the far commoner case of
+   a marked session with no recording, where it is the only thing out there. */
+.session__tv + .session__tick { margin-left: 0; }
 
 /* --lines is how many lines actually fit in this card, worked out from its
    duration at build time (see cardLayout() in _data/site.js). Clamping to the
