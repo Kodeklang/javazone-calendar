@@ -541,8 +541,9 @@ Real data forced four, all deliberate:
 
 Two sections were **added**, because the data supports them and the reference
 had nothing to put there: "Passer for" (`intendedAudience`, present on all 155
-sessions) and "Forberedelser" (`workshopPrerequisites`, on 11). A "Opptak" link
-appears on its own once `video` is backfilled after the conference.
+sessions) and "Forberedelser" (`workshopPrerequisites`, on 11). The "Opptak"
+section holds an embedded player once `video` is backfilled after the
+conference, with a matching link in the header alongside it.
 
 Day windows come from the data rather than the design's assumed 08:45–16:15.
 
