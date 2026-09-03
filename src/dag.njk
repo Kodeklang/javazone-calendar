@@ -102,12 +102,28 @@ layout: base.njk
           <span class="session__meta" aria-hidden="true">
             <span class="session__time">{{ s.startUtc | time }}</span>
             {%- if s.language %}<span class="session__lang">{{ s.language | upper }}</span>{% endif %}
+            {#- A recording is a property of the programme, not the visitor's
+                own list, so it sits to the left of the tick and takes a
+                neutral ink rather than the accent: the tick keeps the outer
+                corner because it is the visitor's own mark, this is not. #}
+            {%- if s.video %}
+            {%- set tvClass = "session__tv" %}
+            {% include "tv.njk" %}
+            {%- endif %}
             {#- Shown only on a marked card. It rides in the meta row rather
                 than anywhere of its own because that row's height is already
                 part of the build-time card geometry, so it costs no line. #}
             {%- set checkClass = "session__tick" %}
             {% include "check.njk" %}
           </span>
+          {%- endif %}
+          {#- The 10-minute tight tier has no meta row to carry the glyph in,
+              so a recording on one of these gets its own corner overlay
+              instead - absolutely positioned, with the title padded on the
+              right so it clips before it ever reaches the glyph. #}
+          {%- if s.video and not s.layout.meta %}
+          {%- set tvClass = "session__tv session__tv--corner" %}
+          {% include "tv.njk" %}
           {%- endif %}
           <span class="session__title">{{ s.title }}</span>
           {%- if s.layout.speaker and s.speakerLabel %}
@@ -116,6 +132,11 @@ layout: base.njk
           <span class="visually-hidden">
             <time datetime="{{ s.startUtc }}">{{ s.startUtc | time }}</time>–<time datetime="{{ s.endUtc }}">{{ s.endUtc | time }}</time>,
             {{ s.roomName }}{% if s.speakerLabel %}, {{ s.speakerLabel }}{% endif %}
+            {#- The glyph above sits inside an aria-hidden row (or, on a
+                10-minute card, has no text alternative of its own at all),
+                so the fact is said here instead, in the same words the
+                detail page uses for the same link. #}
+            {%- if s.video %}, <span data-en="Recording">Opptak</span>{% endif %}
             {#- The tick above sits inside an aria-hidden row, so the mark is
                 said here instead. Filled in by app.js, in the current
                 language, because no build knows who marked what. #}
