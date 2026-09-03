@@ -424,6 +424,47 @@ are 20px tall and hold their title and nothing else — so they show no tick. Th
 row is `aria-hidden`, so the tick alone would say nothing; `.session__mark`
 inside the card's hidden text carries the same fact in the current language.
 
+## Recordings
+
+**A card carrying a small TV glyph has a recording.** That is a fact about the
+programme rather than about anyone's own list, which is why it takes a neutral
+ink and not the accent — the accent in this app means "this one, out of all of
+them", and it belongs to the marks a reader made. It is also why, on a card that
+has both, the TV sits to the *left* of the tick: the outermost corner stays the
+tick's, because the tick is the one mark on the grid that came from the reader.
+
+`session.video` is a bare Vimeo id, and Sleeping Pill backfills it only after the
+conference — until then no card carries the glyph at all, the same way the
+"Opptak" link on a session page appears only once there is something to link to.
+Today 22 of the 155 sessions have one, all of them on the second day. Because
+`.session__meta` is `aria-hidden` the glyph alone would say nothing, so the
+card's hidden text carries "Opptak" / "Recording" beside the room and the time,
+in the same words the session page uses for the same thing.
+
+**Drawn as an SVG (`src/_includes/tv.njk`), not the 📺 emoji.** The emoji is a
+colour raster glyph: it renders as a different picture on every platform, it
+ignores `currentColor`, so it could not step back with everything else on a
+greyed-out card, and at these sizes it would read as a badge stuck to the card
+rather than as a mark on it. The TV is drawn the way `check.njk` draws the check,
+in the same 16×16 box and off the same `currentColor` stroke, so the two marks on
+a card belong to one family.
+
+**The 10-minute tier does show the marker, where it shows no tick.** The tick can
+ride in the meta row for nothing and simply goes missing on cards that have no
+meta row; a recording is not the reader's own doing and is worth flagging
+wherever it exists, so on the tight tier the glyph becomes an absolutely
+positioned corner overlay (`.session__tv--corner`) with the title padded to clip
+before it reaches it. That costs a few characters of title on the handful of
+10-minute cards that have a recording, which is the cheaper of the two losses.
+
+Where it does ride in the meta row its box is deliberately smaller than the row:
+11px on the normal tier and 10px on the compact one, under the `meta: 12` and
+`meta: 10.8` those tiers declare in `_data/site.js`. The row is a flex row and
+takes the height of its tallest child, so a glyph a pixel taller than the
+declared figure would quietly grow the row that every title's line count is
+divided out of. A compact-tier glyph left at 11px did exactly that, and it showed
+up in measured cards rather than in the CSS.
+
 ## Contrast
 
 **The design's surface gradient was changed, deliberately.** The source specifies
