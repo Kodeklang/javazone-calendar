@@ -6,8 +6,36 @@
     context sizes it in CSS, and stroke follows currentColor so the resting
     and dimmed states are just a colour on the parent. The stroke is thinner
     than the check mark's 2.25 - a screen with an antenna is more geometry
-    than a single tick in the same 16x16 box, and 2.25 would close up the
-    screen's corners at the 11-12px this actually renders at.
+    than a single tick in the same 16x16 box, and anything heavier starts
+    closing up the screen's corners at the 10-12px this actually renders at.
+
+    Three things about the geometry were decided by looking at the rendered
+    pixels rather than at the numbers, and are worth writing down because
+    none of them is obvious from the path data.
+
+    It is one path, not a <rect> plus a <polyline>. The ink tokens carry
+    alpha - --ink-soft is rgba(230, 240, 255, 0.82) - so two separate
+    elements whose strokes overlap composite that alpha twice. Where the
+    antenna's apex met the screen's top edge that came out at luminance 230
+    against the 209 the token asks for: a bright dot sitting exactly where
+    the eye lands, which was most of what made the mark read as a badge.
+    Stroking a single path unions the two subpaths first and composites the
+    result once, so the whole glyph is the one grey it is meant to be.
+
+    The ink sits high in the box, spanning y 1.25 to 12.75 of 16 rather than
+    straddling the centre. In the meta row the glyph's box is centred by the
+    flex row, but the time beside it is text: its digits sit above their line
+    box's centre, because that line box also has to make room for descenders
+    nothing in "09:00" actually uses. Ink centred in the box therefore lands
+    about three quarters of a pixel below the digits it is standing next to.
+    Drawing the glyph a viewBox unit high puts its optical centre on theirs.
+
+    The antenna spreads to x 4.75 and 11.25 rather than hugging the middle.
+    Only the part above the screen's top stroke survives at these sizes -
+    a pixel and a half of each arm - so what makes the two arms read as a V
+    rather than as two dots on a lump is how far apart their tips are, not
+    how long the arms are. This is the spread Feather's tv icon uses, redrawn
+    into the 16x16 box the rest of these glyphs live in.
 
     Set `tvClass` before including to hang a context class on it. #}
-<svg class="tv{% if tvClass %} {{ tvClass }}{% endif %}" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.25" y="4.75" width="11.5" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><polyline points="5.5 2 8 4.75 10.5 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<svg class="tv{% if tvClass %} {{ tvClass }}{% endif %}" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 4.5H12A1.5 1.5 0 0 1 13.5 6V10.5A1.5 1.5 0 0 1 12 12H4A1.5 1.5 0 0 1 2.5 10.5V6A1.5 1.5 0 0 1 4 4.5ZM4.75 2 8 4.5 11.25 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
