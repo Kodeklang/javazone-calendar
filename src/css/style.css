@@ -523,8 +523,14 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
    too short to hold one at all - so it gets an absolutely positioned corner
    overlay instead, clipped by .session's existing overflow:hidden the same
    as everything else on the card, and positioned against .session itself (see
-   the position: relative up there, and why it is up there rather than here). */
-.session__tv--corner {
+   the position: relative up there, and why it is up there rather than here).
+
+   Written as a compound rather than as a bare .session__tv--corner so that it
+   beats .session__tv on specificity rather than on source order: both are one
+   class, so otherwise the corner's 10px only wins its width and height because
+   it happens to come later in the file, and any reordering would silently give
+   these cards the meta row's 11px instead. */
+.session__tv.session__tv--corner {
   position: absolute; top: 3px; right: 4px; width: 10px; height: 10px;
 }
 /* Clips the title before it reaches the glyph, instead of running underneath
