@@ -711,8 +711,9 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 
 /* Vimeo's own snippet holds the 16:9 box with a padding-top hack on a
    wrapper div; aspect-ratio does the same job on the iframe itself, no
-   wrapper needed. Radius matches .detail__pre, the other block that fills a
-   section on its own. */
+   wrapper needed - which is the whole of the player's markup, sitting
+   unwrapped in .detail__head under the title. Radius matches .detail__pre,
+   the other block on this page that is a box rather than a run of text. */
 .detail__video { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 12px; }
 
 .speaker {

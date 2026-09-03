@@ -42,7 +42,9 @@ layout: base.njk
       {#- A session with a recording has already happened, so the recording is
           what the page is for: it sits directly under the title, above the
           time, the room and the abstract, which are now a record of an event
-          rather than a plan to attend one.
+          rather than a plan to attend one. No heading over it and no section
+          around it - every other block on this page needs a label to say what
+          it is, and a video player under a title does not.
 
           Vimeo's copy-paste snippet also ships a padding-top wrapper to hold
           the 16:9 box and a <script src=".../player.js"> line; neither is
@@ -51,20 +53,17 @@ layout: base.njk
           does; the script exists only to drive the Player API, which
           nothing on this page calls, and the page already ships its own.
           No loading="lazy": the player opens the page now, so deferring it
-          would only delay the one thing the reader came for - title names
-          the session so a screen reader hears what the frame holds rather
-          than "iframe". dnt=1 on the src is Vimeo's own parameter for
-          suppressing the vuid tracking cookie and its analytics beacons;
-          this page ships no cookie banner, and before this player existed
-          it made no request to Vimeo at all. #}
+          would only delay the one thing the reader came for - title still
+          names the session, and with the heading gone it is the only thing
+          telling a screen reader what the frame holds. dnt=1 on the src is
+          Vimeo's own parameter for suppressing the vuid tracking cookie and
+          its analytics beacons; this page ships no cookie banner, and before
+          this player existed it made no request to Vimeo at all. #}
       {%- if session.video %}
-      <section class="detail__section">
-        <h2 class="section__label" data-en="Recording">Opptak</h2>
-        <iframe class="detail__video" src="https://player.vimeo.com/video/{{ session.video }}?dnt=1"
-                title="Opptak av {{ session.title }}"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                allowfullscreen></iframe>
-      </section>
+      <iframe class="detail__video" src="https://player.vimeo.com/video/{{ session.video }}?dnt=1"
+              title="Opptak av {{ session.title }}"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              allowfullscreen></iframe>
       {%- endif %}
 
       <p class="pills">
@@ -100,9 +99,10 @@ layout: base.njk
           <span data-en="View on javazone.no" data-no="Se på javazone.no">Se på javazone.no</span>
           <span class="linkrow__ext" aria-hidden="true">↗</span>
         </a>
-        {#- Moved out of the "Opptak" section, which now holds the player
-            itself; the wording stays exactly what it was there so a reader
-            who has seen it before still recognises it. #}
+        {#- The recording used to have a section of its own down the page,
+            holding this link and nothing else; the player took its place
+            and the link came up here. The wording stays exactly what it was
+            there so a reader who has seen it before still recognises it. #}
         {%- if session.video %}
         <a class="linkrow__item" href="https://vimeo.com/{{ session.video }}"
            rel="noopener noreferrer" target="_blank">
