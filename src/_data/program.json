@@ -2547,7 +2547,7 @@
         "Alt vises live med en ekte React-applikasjon som refaktoreres steg for steg, fra “alt i én komponent” til en ren, modulær arkitektur med tester som dokumentasjon."
       ],
       "prerequisites": null,
-      "video": "1223300523",
+      "video": "1223299722",
       "speakerIds": [
         "andrea-magnussen"
       ]
@@ -2578,7 +2578,7 @@
         "We’ll discuss why the &quot;unscalable&quot; early days are your greatest competitive advantage and how the feedback from your first ten users is more valuable than any market research report. If you’ve ever sat on an idea because it felt &quot;too small&quot; or &quot;too risky,&quot; this talk is your invitation to launch. Learn how to iterate your way through fear and build a product that resonates from Oslo to San Francisco."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223277232",
       "speakerIds": [
         "ivar-osthus"
       ]
@@ -2605,7 +2605,7 @@
         "Join me to discover how we can un-break our concurrent programs, regain the strict guarantees we lost, and safely confine the complexity of running millions of concurrent tasks."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223300523",
       "speakerIds": [
         "wout-werkman"
       ]
@@ -2661,7 +2661,7 @@
         "Reliability is not an accident — it's math. This session builds a clear, working understanding of SLIs, SLOs, and SLAs from first principles, starting with availability math: what the nines actually mean, how multi-service architectures compound failure, and what it realistically takes to move from two nines to four. We define exactly what to measure and why — the difference between infrastructure signals and user-experience signals, and how to derive SLIs that reflect real outcomes rather than server health. The centrepiece is the error budget: what it is, how it's calculated, and how it changes the way teams make decisions. Error budgets turn reliability from a feelings argument into a shared engineering constraint that drives development velocity, architecture choices, and operational maturity at the same time. We close with the SRE maturity arc — the practices, not the tools, that separate reactive firefighting from proactive reliability engineering. You'll leave with a mental model your whole team can use, from developer to architect to ops lead."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223284873",
       "speakerIds": [
         "ken-sipe"
       ]
@@ -3210,7 +3210,7 @@
         "Next.js takes a different path. Since React Server Components first landed, we’ve been working toward a way to build where each piece of your app runs where it belongs, while the mental model stays the same: components. In this talk, you’ll see how that translates into instant-feeling UX, streamed UI, fresh data, coordinated updates, caching across the stack, and strong Core Web Vitals that hold up as your product scales."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223367123",
       "speakerIds": [
         "aurora-scharff"
       ]
@@ -3244,7 +3244,7 @@
         "Av og til er det beste suksesskriteriet kor elegant ein klarar å forsvinna."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223374247",
       "speakerIds": [
         "johannes-molland"
       ]
@@ -3273,7 +3273,7 @@
         "In this talk, we're going to analyze the best way we can fetch a multi-level hierarchy from an RDBMS so that we can store the result set in a cache, such as Redis. I'm going to go through various solutions and analyze the performance impact of each option. From plain JDBC to JdbcTemplate, Spring Data JDBC, Spring Data JPA, and Blaze. Therefore, we are going to compare how all these options work and conclude what is the most efficient way to fetch a multi-level hierarchical structure with the most common Java data access technologies."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223379076",
       "speakerIds": [
         "vlad-mihalcea"
       ]
@@ -3300,7 +3300,7 @@
         "In this talk, we will explore the core mechanics of Large Language Models to see why their probabilistic nature makes them inherently difficult to secure. The session navigates the most critical threats identified by both the OWASP Top 10 for LLM Applications and the separate Top 10 list for Agentic Applications, focusing specifically on how prompt injection can compromise both your users and your development environment. We will look at examples of how AI in the real world has gone wrong, and also see how your AI coding tools introduce threats directly into your workflow."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223383834",
       "speakerIds": [
         "lars-smeby"
       ]
@@ -3329,7 +3329,7 @@
         "En reise gjennom utfordringene og frustrasjonene ved å være utvikler i et produktteam i en ikke-produktorientert organisasjon. Hva skjer når man blir kastet inn i et prosjekt der en ferdig løsning blir kjøpt inn for å erstatte et kritisk delsystem – uten at man har fullført jobben med å forstå de eksisterende prosessene eller integrasjonene? Dette foredraget dykker ned i de konkrete problemene som oppsto, hvordan vi håndterte dem, og de lærerike erfaringene vi sitter igjen med etter å ha jobbet med et produkt som skulle løse alt, men i stedet skapte mer kaos."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223381152",
       "speakerIds": [
         "oda-enger-hoem"
       ]
@@ -3361,7 +3361,7 @@
         "Keiseren er naken, og noen ganger er det helt all right."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223385333",
       "speakerIds": [
         "nadia-tokerud"
       ]
@@ -3386,7 +3386,7 @@
         "En mission for å forenkle oppsettet på prosjektet førte til en innsikt om at vi kan gjenbruke hvordan docker gjør authentication og bruke dette når vi skal gjøre maven repository authentication."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223387592",
       "speakerIds": [
         "erlend-hamnaberg"
       ]
@@ -3414,7 +3414,7 @@
         "Java is gaining features to support pattern matching and a &quot;data-oriented&quot; programming style. In this presentation, I explore when this programming style is beneficial, and how you should structure your programs to take advantage of it.  You will learn the syntax of pattern matching, as it has evolved, and you will get a glimpse at further enhancements in upcoming versions of Java. Just as importantly, I will show you how to recognize confusing and error-prone usages of pattern matching, which the new features also enable. You will come away with a mental model when to use pattern matching and &quot;data orientation&quot; now, how to prepare for future enhancements, and when to stay away."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223388783",
       "speakerIds": [
         "cay-horstmann"
       ]
@@ -3444,7 +3444,7 @@
         "The focus is practical: how to think in relationships instead of tables, how to get started quickly, and when knowledge graphs actually add value. This is not a deep dive into theory, but a hands-on introduction for data engineers who are curious about knowledge engineering and want to try it now, not someday."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223389668",
       "speakerIds": [
         "veronika-heimsbakk"
       ]
@@ -3476,7 +3476,7 @@
         "By the end of this session, participants will be able to:<br>- Understand the fundamentals of Post-Quantum Cryptography (PQC) and why early adoption is critical in the face of quantum computing threats.<br>- Identify key challenges and pitfalls encountered during real-world PQC migration projects.<br>- Apply proven best practices for adapting existing applications to PQC while maintaining security and performance.<br>- Develop a practical roadmap for integrating PQC into both legacy systems and new application designs."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223391069",
       "speakerIds": [
         "akihiro-nishikawa"
       ]
@@ -3508,7 +3508,7 @@
         "If you’re using OpenTelemetry without really knowing what it’s doing inside your JVM, or if you want to finally understand how an agent can rewrite your application in production, then welcome: this session opens the black box… and reveals the magic."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223392995",
       "speakerIds": [
         "bruce-bujon"
       ]
@@ -3539,7 +3539,7 @@
         "I forskningsprosjektet KAIROS følger vi norske utviklingsteam over fire år. Dette er et samarbeid mellom Knowit, TV2, Storebrand, Politiet, Avinor, SINTEF Digital og Norges forskningsråd. Vi studerer hvordan AI-verktøy endrer samarbeid, koordinering, roller og arbeidsprosesser i norske utviklingsteam."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223394835",
       "speakerIds": [
         "jan-henrik-gundelsby",
         "nils-brede-moe"
@@ -3571,7 +3571,7 @@
         "Målet med foredraget er at du skal sitte igjen med både forståelsen og selvtilliten til å implementere støtte for passkeys selv."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223406035",
       "speakerIds": [
         "kristian-lier-selnaes"
       ]
@@ -3606,7 +3606,7 @@
         "Leave the &quot;black box&quot; behind and discover how to build backends where you—the developer—are actually in control."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223398145",
       "speakerIds": [
         "geoffrey-rekier"
       ]
@@ -3638,7 +3638,7 @@
         "Korleis kan me stole på desse bevisa når berre nokre av attributtane frå eit kryptografisk signert bevis blir delt? Me går i gjennom selektiv deling, validering og tillitsstruktur."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223400085",
       "speakerIds": [
         "randi-oyri",
         "thomas-reppesgard"
@@ -3667,7 +3667,7 @@
         "In this lightning talk, we will examine how to prove you know something without actually spilling the beans about what you actually know."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223406376",
       "speakerIds": [
         "jorn-k-baltzersen"
       ]
@@ -3697,7 +3697,7 @@
         "I will introduce you to SOPS, key management and practical patterns like stdin-based handoff that let agents use secrets without dragging the plaintext into prompts, logs, chats or onto remote servers. There are some caveats, make sure you come and learn what they are!"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223407333",
       "speakerIds": [
         "nikolai-norman-andersen"
       ]
@@ -3724,7 +3724,7 @@
         "I foredraget får du høre både hvordan man navigerer i byråkratiet, organiserer team og skaffer handlingsrom, samtidig som vi snakker om konkrete teknikker for å forstå systemene og arbeidsprosessene, utvikle nye løsninger som kan tas i bruk underveis og reduserer risikoen for brukere som er skuffet over den nye funksjonaliteten eller (mangelen på) stabiliteten i løsningen"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223410462",
       "speakerIds": [
         "johannes-brodwall",
         "hafsa-elkam"
@@ -3761,7 +3761,7 @@
         "Hopefully, this talk will guide you towards hexagonal happiness!"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223412476",
       "speakerIds": [
         "henning-bang-halvorsen"
       ]
@@ -3790,7 +3790,7 @@
         "You will leave with a practical decision framework for validate vs transform, a DIY toolkit using pre-commit, hclwrite, custom tflint rules, and plan validation, and a simple migration path from module forks to rule-based enforcement. No vendor account required to apply the patterns from this talk."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223414906",
       "speakerIds": [
         "anton-babenko"
       ]
