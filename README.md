@@ -13,7 +13,7 @@ is a build-time tool only — no framework, and almost no third-party requests
 at runtime: the webfonts and the speaker photos are served from this origin;
 the two exceptions are Datadog RUM, which reports on every page (see
 [Real User Monitoring](#real-user-monitoring)), and the Vimeo player
-embedded on the 22 of 155 session pages that have a recording.
+embedded on a session page that has a recording.
 
 ## Running it
 
@@ -439,7 +439,7 @@ tick's, because the tick is the one mark on the grid that came from the reader.
 `session.video` is a bare Vimeo id, and Sleeping Pill backfills it only after the
 conference — until then no card carries the glyph at all, the same way the
 Vimeo link in the header's linkrow and the player in the "Opptak" section below
-it both stay absent until there is something to link to. Today 22 of the 155
+it both stay absent until there is something to link to. Today 45 of the 155
 sessions have one, all of them on the second day. Because `.session__meta` is
 `aria-hidden` the glyph alone would say nothing, so the card's hidden text
 carries "Opptak" / "Recording" beside the room and the time, in the same words
