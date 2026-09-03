@@ -438,33 +438,37 @@ tick's, because the tick is the one mark on the grid that came from the reader.
 
 `session.video` is a bare Vimeo id, and Sleeping Pill backfills it only after the
 conference — until then no card carries the glyph at all, the same way the
-Vimeo link in the header's linkrow and the player in the "Opptak" section below
-it both stay absent until there is something to link to. Today 45 of the 155
-sessions have one, all of them on the second day. Because `.session__meta` is
-`aria-hidden` the glyph alone would say nothing, so the card's hidden text
-carries "Opptak" / "Recording" beside the room and the time, in the same words
-the session page uses for the same thing.
+player under the session's title and the Vimeo link in its linkrow both stay
+absent until there is something to link to. Today 45 of the 155 sessions have
+one, all of them on the second day. Because `.session__meta` is `aria-hidden`
+the glyph alone would say nothing, so the card's hidden text carries "Opptak" /
+"Recording" beside the room and the time — the word the session page no longer
+needs to print, because there a player under the title says it by being one.
 
-**The Vimeo link moved into the header; the "Opptak" section now holds the
-player.** It used to be the section's only content, a bare anchor under the
-heading; now it sits in the linkrow beside "Se på javazone.no" and "Kopier
-lenke", in the same nested-span-plus-arrow shape as the javazone.no link
-beside it, so a reader with somewhere to go finds it with the other two
-rather than at the foot of the page. What fills the section now is Vimeo's
-own `<iframe>`, sized by `aspect-ratio: 16 / 9` on the frame itself instead
-of the padding-top wrapper Vimeo's own snippet asks for, and without the
-snippet's `player.js`
-— nothing on this page drives the Player API, so the script would be dead
-weight.
+**The "Opptak" section is gone; the player sits under the title and the link
+moved into the header.** The section used to hold one thing, a bare anchor
+under its heading, at the foot of the page. That anchor now sits in the
+linkrow beside "Se på javazone.no" and "Kopier lenke", in the same
+nested-span-plus-arrow shape as the javazone.no link beside it, so a reader
+with somewhere to go finds it with the other two. In the section's place is
+Vimeo's own `<iframe>`, lifted out of the section list into `.detail__head`
+directly below the `<h1>` — a session with a recording has already happened,
+so the recording is what the page is for, and the time, the room and the
+abstract now describe an event that is over. It carries no heading of its
+own: every other block on the page needs a label to say what it is, and a
+player under a title does not. It is sized by `aspect-ratio: 16 / 9` on the
+frame itself instead of the padding-top wrapper Vimeo's own snippet asks
+for, and without the snippet's `player.js` — nothing on this page drives the
+Player API, so the script would be dead weight. No `loading="lazy"` either,
+now that it opens the page rather than sitting below the fold.
 
 **That embed is the one hole in "works in a hall with no signal at all."**
 The service worker correctly leaves cross-origin requests alone, so nothing
-throws - but with no signal the iframe never loads, and a recorded session's
-"Opptak" heading now sits over a blank 288×162 box where readable link text
-used to be. Moving the link into the header softens that rather than closing
-it: offline, a reader still finds "Se opptaket på Vimeo" at the top of the
-page, just nothing below it explaining why the box under the heading is
-empty.
+throws - but with no signal the iframe never loads, and a recorded session
+now opens on a blank 288×162 box where readable link text used to be. Moving
+the link into the header softens that rather than closing it: offline, a
+reader still finds "Se opptaket på Vimeo" a few lines below, just nothing
+saying why the box above it is empty.
 
 **Drawn as an SVG (`src/_includes/tv.njk`), not the 📺 emoji.** The emoji is a
 colour raster glyph: it renders as a different picture on every platform, it
@@ -555,9 +559,10 @@ Real data forced four, all deliberate:
 
 Two sections were **added**, because the data supports them and the reference
 had nothing to put there: "Passer for" (`intendedAudience`, present on all 155
-sessions) and "Forberedelser" (`workshopPrerequisites`, on 11). The "Opptak"
-section holds an embedded player once `video` is backfilled after the
-conference, with a matching link in the header alongside it.
+sessions) and "Forberedelser" (`workshopPrerequisites`, on 11). A third piece
+of the header is new rather than a section: once `video` is backfilled after
+the conference, an embedded player sits under the title, with a matching link
+in the linkrow below it.
 
 Day windows come from the data rather than the design's assumed 08:45–16:15.
 
