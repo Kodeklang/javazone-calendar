@@ -375,6 +375,17 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 
 .session {
   grid-column: var(--col); grid-row: var(--row-start) / var(--row-end);
+  /* The positioning root for the tight tier's corner overlay. It sits here
+     rather than on .session--tight because the markup decides that overlay on
+     `not s.layout.meta` - any tier declaring `meta: 0` - while only the last
+     entry in TIERS happens to be both. Add a fourth tier with no meta row and
+     a rule scoped to .session--tight would silently stop matching, leaving the
+     glyph to fall back to .grid, which is also positioned, and land in the top
+     right of the whole day instead of on a card. Every card is a positioning
+     root now, so the two can never disagree. Paint-neutral: .session has no
+     positioned descendants but that one, no pseudo-elements, and its z-index
+     already gave it a stacking context as a grid item. */
+  position: relative;
   z-index: 10; margin: 0 5px 4px; min-width: 0; overflow: hidden;
   border-radius: 10px;
   background: var(--card-bg);
@@ -511,8 +522,8 @@ button.chip:hover { background: rgba(255, 255, 255, 0.14); }
 /* This tier has no meta row for the recording glyph to ride in - the card is
    too short to hold one at all - so it gets an absolutely positioned corner
    overlay instead, clipped by .session's existing overflow:hidden the same
-   as everything else on the card. */
-.session--tight { position: relative; }
+   as everything else on the card, and positioned against .session itself (see
+   the position: relative up there, and why it is up there rather than here). */
 .session__tv--corner {
   position: absolute; top: 3px; right: 4px; width: 10px; height: 10px;
 }
