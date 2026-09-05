@@ -5364,7 +5364,7 @@
         "An introduction to shadow rendering and related techniques. This talk will give an overview of real time rendering of shadows using three.js and openGL, with a practical example of how we created performant sharp shadows independent of resolution using techniques dating back to the video game DOOM 3 in order to solve a user problem we encountered in our own product."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223644510",
       "speakerIds": [
         "fredrik-lillemoen-eiding"
       ]
@@ -5389,7 +5389,7 @@
         "Uansett hvor du er nå, håper jeg denne lyntalen kan gi noen nye tanker, og i beste fall litt ro midt i uroens tid."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223644695",
       "speakerIds": [
         "nora-gjoen-gjosaeter"
       ]
@@ -5417,7 +5417,7 @@
         "Har du et knakende godt spørsmål til Erik og/eller Ivar? Send inn her da vel <a href=\"https://heis.fm/javazone\" rel=\"noopener noreferrer\" target=\"_blank\">https://heis.fm/javazone</a> !"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223666799",
       "speakerIds": [
         "audun-fauchald-strand",
         "truls-jorgensen"
@@ -5446,7 +5446,7 @@
         "Key Takeaways:<br>- Picking the right target<br>- Setting meaningful goals and metrics<br>- The contribution process<br>- Re-occurring optimisation techniques"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223666801",
       "speakerIds": [
         "nitsan-wakart"
       ]
@@ -5476,7 +5476,7 @@
         "Join me as we explore a different language on a different VM, discover what makes the BEAM unique, and see how Gleam brings strong typing and modern syntax to this powerful ecosystem."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223666800",
       "speakerIds": [
         "john-mikael-lindbakk"
       ]
@@ -5509,7 +5509,7 @@
         "Og det er alltid (så godt som) lettere, billigere og riktigere å fikse det du har!"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223666798",
       "speakerIds": [
         "fredrik-de-vibe"
       ]
@@ -5539,7 +5539,7 @@
         "Bonus: Baruch uses a coding agent to demonstrate these patterns live, so you'll see how they work under the hood — but everything applies to AI agents in general."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223667266",
       "speakerIds": [
         "baruch-sadogursky"
       ]
@@ -5572,7 +5572,7 @@
         "Dette er historien om én melding, men også om hvordan teknologi, mennesker og samfunnskritisk infrastruktur henger sammen, og hvordan tekniske valg påvirker brukeropplevelse og tillit i kritiske øyeblikk."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223667735",
       "speakerIds": [
         "synne-markmanrud",
         "vilde-aurora-halle-tvedten"
@@ -5601,7 +5601,7 @@
         "CRA, NIS2, DORA Does it ring a bell? By December 2027, the EU Cyber Resilience Act (CRA) will require Software Bills of Materials (SBOMs) for almost all software products placed on the European market. For teams working with Java, this is a significant compliance task, given their work with deep dependency trees, complex build systems and layered deployment models. This is an architectural and operational deadline that demands immediate attention.<br>The purpose of this session is to provide a clear and technical overview of what Java engineers, architects and DevOps teams must understand in order to meet CRA expectations and to avoid risk under NIS2 and DORA. These two initiatives increasingly treat SBOMs as evidence of supply-chain control. In this session, we provide a comprehensive explanation of the essential elements that an SBOM must capture in a Java ecosystem, including transitive dependencies, shaded JAR contents, BOM-managed versions, container layers, embedded services, and runtime components.<br>Attendees will learn how to integrate SBOM generation into Maven and Gradle pipelines with CycloneDX, how to supplement artefact SBOMs with container-image inventories, and how to implement them using Dependency-Track for vulnerability and license visibility. We also outline the minimal governance and workflow changes needed to ensure SBOMs stay correct throughout releases and updates without slowing developers down.<br>The objective is clear: to provide senior Java practitioners with the clarity, urgency, and practical guidance required to make their systems SBOM-ready before CRA enforcement begins, while enhancing overall software quality and supply-chain resilience."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223667902",
       "speakerIds": [
         "ixchel-ruiz"
       ]
@@ -5634,7 +5634,7 @@
         "If you run real Java systems, this session gives you the map, the risks, and the safe route forward."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223668360",
       "speakerIds": [
         "steve-poole"
       ]
@@ -5665,7 +5665,7 @@
         "Lei av “noen burde…”?<br>Kom og stjel ideen."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223667751",
       "speakerIds": [
         "stein-kare-skytteren"
       ]
@@ -5688,7 +5688,7 @@
         "Glow er et system for ruteplanlegging og pakkelevering utviklet av et datterselskap heleid av Posten. Det har blitt utviklet over 7 år av svært erfarne utviklere. Mot slutten av 2025 begynte vi å bruke AI i utviklingen. Dette er er en fortelling om hvordan det gikk. Er AI så bra som alle sier? Hva skjer når erfarne utviklere kobler AI på utviklingsprosessen i en eksisterende kodebase? Forstår AI hvordan vi vil kode nå basert på hvordan vi har kodet før?"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223667819",
       "speakerIds": [
         "morten-andersen-gott"
       ]
@@ -5719,7 +5719,7 @@
         "Standing on the edge of the unknown, what elements of the 75-year-old promise have we realized? A close examination gives us a better view of our immediate future as technologists and insight into what it means to be human."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223683966",
       "speakerIds": [
         "tim-berglund"
       ]
@@ -5745,7 +5745,7 @@
         "Java has had a dependency descriptor since 2017, and neither Maven nor Gradle will resolve a dependency by module name. This talk argues the POM is the wrong artifact to hang a dependency graph on, and shows Jenesis: a build tool that reads module-info.java instead of a build file, ships as Java source rather than a wrapper binary, and pins every dependency by content hash. Plus a crawl of Maven Central showing how modular the ecosystem already is, and an uncomfortable question about who owns the repository all of this depends on."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223683963",
       "speakerIds": [
         "rafael-winterhalter"
       ]
@@ -5773,7 +5773,7 @@
         "In this talk I'll look back at how we used to write software in &quot;the old days&quot;, compare that to the status quo, and show you that modern software development is not only harder, but slower than it needs to be."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223683965",
       "speakerIds": [
         "robin-heggelund-hansen"
       ]
@@ -5805,7 +5805,7 @@
         "You will also learn how you can get started with the HTMX/Kotlin stack for yourself. <br>Amongst other things we will discuss: <br>\t1. The web 1.0 frontend and how the frontend space ended up where it is today<br>\t2. HTMX: What it is, why it is incredibly powerful and how to use it<br>\t3. Kotlin DSL for HTML and how to serve HTML using KTor<br>        4. A quick tour of AlpineJS to get the full interactivity we have gotten used to on the modern web"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223683964",
       "speakerIds": [
         "havard-tolas-trondsen"
       ]
@@ -5832,7 +5832,7 @@
         "CargoNet er et togselskap og et terminalselskap og har i over 20 år basert driften på et felles, egenutviklet IT-system som burde vært erstattet for lengst. Andre aktører, som CargoNet integrerer med, har også systemer laget i og for en annen tidsalder. For ikke å glemme steinras, flom, avsporinger og kjøreledninger som faller ned. Aldri en kjedelig dag!<br>I dette foredraget vil du får høre om erfaringer vi har gjort oss med å bygge og ikke minste rulle ut nye IT-systemer de siste 3 årene.  Stikkord: Noen feil, noen suksesser, noen patterns og noen gode råd."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223684344",
       "speakerIds": [
         "erik-drolshammer"
       ]
@@ -5865,7 +5865,7 @@
         "Tillit er ikke bare et teknisk problem. Det er et arkitekturproblem. Og det starter med en EHF-faktura du trodde du kjente."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223684783",
       "speakerIds": [
         "rune-kjorlaug",
         "charlotte-kolle"
@@ -5896,7 +5896,7 @@
         "It’s time to clean up our act. In this session, we’ll move beyond basic CRUD to explore 5 essential patterns for building production-grade APIs. We will combine standard Jakarta EE/MicroProfile features with powerful custom implementations to tackle the cross-cutting concerns that matter most."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223684923",
       "speakerIds": [
         "rustam-mehmandarov"
       ]
@@ -5921,7 +5921,7 @@
         "Elhub ble tatt på senga av regjeringens lansering av norgespris 31 januar. 2025. Hva betydde det for oss? Hvordan snur vi en tung monolittisk applikasjon rundt, en som er absolutt sentral i dagens kraftmarked? Hvilke arkitekturgrep og prioriteringer måtte til for å lansere en en applikasjon som gikk fra obskur og ukjent, til enorm medieeksponering, med over ti tusen artikler i media, uten å risikere omdømmet vårt.  Hvilke grep har vi gjort med arkitektur og skyinfrastruktur, hvordan tilrettelegger vi for brukere fra 18 til 90? Hvordan forholder du deg til ikke-digitale brukere? Hvilke feil gjorde vi, hvordan angriper du ytelsestesting når du ikke aner, men potensielt kan få hver eneste strømkunde på døra i løpet av de første dagene? Hvordan angriper du prosjektet når lovendringer og regulativer først blir godkjent i statsråd 2 dager før lansering?"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223685030",
       "speakerIds": [
         "trond-stromme",
         "michael-akinde"
@@ -5948,7 +5948,7 @@
         "Jeg tar alle snarveiene: én server, én Dockerfile og ingen avansert konfigurasjon. Perfekt for hobbyprosjekter og<br>  prototyper du vil dele."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223684864",
       "speakerIds": [
         "eirik-meland"
       ]
@@ -5979,7 +5979,7 @@
         "We'll look at a real example, how it evolves, and what changes make the biggest difference. The focus is on something you can apply immediately, even in an existing codebase."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223684902",
       "speakerIds": [
         "jarle-mathiesen"
       ]
@@ -6002,7 +6002,7 @@
         "The AI hype wave is washing over us, fueled by advances in generative AI tools. It's a mixture of grandiose claims, speculations, euphoria and panic. Everyone wants to demonstrate that they are on board the AI train choo-chooing towards the future, that they're not getting left behind. The rhetoric will have us act, not think - there is no time! Is that true? It's a paradox that we are supposed to meet artificial intelligence with our own intelligence turned off. If it's true that AI will &quot;change everything&quot;, surely we need every ounce of human intelligence - as well as compassion, wisdom and humanity - we can muster! And what if it turns out to be false? At what cost do we participate in this dance?"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223705758",
       "speakerIds": [
         "einar-waaler-host"
       ]
@@ -6031,7 +6031,7 @@
         "Med 3.8 millioner brukere og 40.000 bedriftskunder, har Digipost en helt unik posisjon til å utforske digitale lommebøker i Norge. Det siste året har teamet jobbet sammen med andre aktører og hatt piloter i sandkassen til Digdir. Brukerhistorier innen sertifisering og organisasjonsidentitet har vært fokuset, som teamet har videreutviklet lommebok-konsepter; en ny måte for virksomheter å dele bevis digitalt, på en trygg måte og på tvers av landegrenser. Målet er å følge bølgen som kommer i Europa med EU-forordningen eIDAS 2.0 (Electronic Identification and Trust Services) om at alle EU/EØS-land skal tilby en offentlig utstedt eID på høyt sikkerhetsnivå. Vi deler erfaringer fra pilotene vi har gjennomført og presenterer prosessen vi har hatt, når vi utvikler produkter for en bruker som ikke finnes enda."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223705759",
       "speakerIds": [
         "andrea-lysgaard"
       ]
@@ -6056,7 +6056,7 @@
         "Would you like to move your data and workloads to a European public cloud provider, but don't know where to start? Or did you try to find one, and couldn't decide between too many choices? Join this session and get some practical advice on how to get started, things you should consider before making a decision, and what to expect. And maybe just as important: valid reasons for when European public cloud providers aren't the right choice for you, because like always in our business, “it depends” is the right answer to the question whether European public cloud providers are a fit for your needs."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223705761",
       "speakerIds": [
         "filip-van-laenen"
       ]
@@ -6085,7 +6085,7 @@
         "Denne hendelsen eksemplifiserer et større problem med at avhengighet av enkelt-teknologier og tjenester gjør oss utsatte når disse teknologiene feiler. I denne presentasjonen vil vi gå gjennom hva som gjorde at denne og aldre hendelser får så store konsekvenser. Vi vil også se på hvordan teknologisk mangfold kan hjelpe til med å redusere konsekvensene av denne typen hendelser og lede til mer robust og motstandsdyktig teknologisk infrastruktur."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223705760",
       "speakerIds": [
         "kent-inge-fagerland-simonsen"
       ]
@@ -6119,7 +6119,7 @@
         "This talk explores an alternative approach to designing web APIs that focuses on the behavior in the business domain rather than just the data operations. By leveraging domain-driven design principles, we can create APIs that are more aligned with the business needs, easier to understand, and more adaptable to change."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223706085",
       "speakerIds": [
         "asbjorn-ulsberg"
       ]
@@ -6149,7 +6149,7 @@
         "Jeg har også erfart at hvordan jeg deler bort, ikke alltid treffer like godt. Jeg forsøker å lære av det, som jeg lærer av software og prøve nye angrepsvinkler. Derfor vil jeg denne gangen starte med å fortelle min historie og hvilke problemet det har løst, før jeg snakker om løsning."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223706448",
       "speakerIds": [
         "terje-heen"
       ]
@@ -6179,7 +6179,7 @@
         "In the talk, I'd like to present two such tools: Lincheck and Fray, compare their functionalities, demonstrate how they work, identify the kinds of problems they might detect, discuss their applications, and highlight the issues they have already helped uncover."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223706835",
       "speakerIds": [
         "adam-warski"
       ]
@@ -6205,7 +6205,7 @@
         "In this session, we’ll look at Docker Sandboxes: a new primitive designed to let agents operate in a restricted cocoon with limited access to the filesystem and controlled network and secret injections. We’ll dive into the typical mess AI agents create, see why basic isolation isn't enough, and walk through a workflow for running agents that you can actually trust."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223707059",
       "speakerIds": [
         "oleg-selajev"
       ]
@@ -6233,7 +6233,7 @@
         "Have you ever wondered why a particular class was loaded at that exact moment? Getting to the bottom of it can be surprisingly hard.<br>I recently encountered a bug with a particularly nasty linkage error in which classes were loading unexpectedly, and I needed to figure out what triggered that. In this talk, I’ll walk through the steps I used to track it down. We’ll build a slowdebug JVM, attach GDB, and use breakpoints and inspection to identify the precise cause of the class loading.<br>If you’re curious about how the JVM really works and want to peek under the hood, this talk is for you."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223706505",
       "speakerIds": [
         "marco-sussitz"
       ]
@@ -6261,7 +6261,7 @@
         "You've built a Java application, but how do you actually package, install and run it? Packaging, distribution and execution of Java applications have mostly been only a JAR-file since the beginning of Java, but in these days we can do much better.<br>This session takes you on a practical journey through the full landscape of Java packaging, from the humble JAR to native binaries and OS-specific installation packages."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223706693",
       "speakerIds": [
         "sverre-moe"
       ]
@@ -6290,7 +6290,7 @@
         "Most importantly, we won’t just identify the problem. We’ll dive into practical steps you can take to mitigate these risks and keep your AI interactions secure. Join us to gain insights that will help you stay ahead in AI security and ensure your applications remain robust against these emerging threats."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223725299",
       "speakerIds": [
         "brian-vermeer"
       ]
@@ -6319,7 +6319,7 @@
         "Vi forteller hvordan vi kom i gang med det som virket som en tapt kamp. At vi fant motivasjon, trygghet og momentum. Vi tror mange utviklere kan finne glede og nytte i å jobbe med eksisterende kode. Finne ut hvordan bygge videre på noe som fins fra før, selv om utgangspunktet ikke er skrevet av oss. Når ny kode skrives fortere og fortere, så tror vi at behovet for å kunne håndtere ukjent programvare bare blir større. Hvilke ferdigheter trenger en moderne kode-arkeolog?"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223725300",
       "speakerIds": [
         "elisabeth-irgens",
         "robin-kaveland"
@@ -6347,7 +6347,7 @@
         "Come to my talk to learn key differences, gotchas that can help you to make up your mind which of the tools the best in your context."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223725298",
       "speakerIds": [
         "marek-dominiak"
       ]
@@ -6380,7 +6380,7 @@
         "This session is for developers and platform engineers who want to simplify infrastructure provisioning, reduce cognitive load for developers, and move towards a more self-service, platform-driven model.<br>Along the way, we’ll also explore lessons learned, trade-offs, and where Crossplane fits—and doesn’t fit—in a modern platform engineering setup."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223725301",
       "speakerIds": [
         "petter-arnesen"
       ]
@@ -6445,7 +6445,7 @@
         "We will cover the key benefits of Kotlin Coroutines,  how Ktor uses them internally,  and practical patterns for real-world scenarios — including structured concurrency, running tasks in parallel and managing background tasks."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223725872",
       "speakerIds": [
         "kjartan-aanestad"
       ]
@@ -6471,7 +6471,7 @@
         "We all use Java everywhere, from IoT devices and desktops to servers and even mainframes.<br>All we need these days is made available in frameworks and libraries but how much do we know about what’s going on in the Java Virtual Machine.<br>This session will try to give you an idea of how Java source code will be transformed from text to byte code in classes, to be interpreted and later eventually become compiled machine code.<br>How is code loaded into the JVM, which of this code will be interpreted or compiled and why? Why will some code be optimised and others not? How does the JVM handle the memory management? What are the good and bad parts of JIT compilation? How does the startup of the JVM work? <br>If you are interested in the answers to these and more questions, this session will be for you."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223726679",
       "speakerIds": [
         "gerrit-grunwald"
       ]
@@ -6500,7 +6500,7 @@
         "🔪 Warning: This talk contains traces of bad puns, git horror stories, and practical advice disguised as satire."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223726868",
       "speakerIds": [
         "serges-goma"
       ]
@@ -6532,7 +6532,7 @@
         "In this talk, I’ll demystify these concepts and explain them in a way you’ll never forget. You’ll impress your colleagues, gain a competitive edge, and be better prepared to understand and write reusable (framework) code."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223726217",
       "speakerIds": [
         "bram-janssens"
       ]
@@ -6561,7 +6561,7 @@
         "We’ve all said it: &quot;It works on my machine.&quot; Docker solved this by shipping the machine, but it didn't necessarily make the build reproducible, just the artifact. Enter Nix: a functional package manager that treats builds like pure mathematical functions. In this 20-minute talk, we’ll compare the &quot;Imperative vs. Functional&quot; approaches to environment management, discuss why Docker images often drift over time, and see how Nix provides bit-for-bit reproducibility. You’ll walk away knowing when to stick with a Dockerfile and when to reach for a Nix Flake."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223729965",
       "speakerIds": [
         "leonard-sheng-sheng-lee"
       ]
@@ -6590,7 +6590,7 @@
         "By leveraging the GDPR, we looked into various questions: How often do people lose or damage their phones? Where did they travel? And how regular are their sleep patterns? Alongside detailed insights into Spotify data, we provide a brief overview of the legal framework and examine how strictly other companies comply with the GDPR. While everyone in theory understands that data can hold immense power, this talk presents concrete examples – particularly given that we're dealing with what seems like just a music app."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223740444",
       "speakerIds": [
         "dennis-schulz",
         "thomas-hugle"
@@ -6620,7 +6620,7 @@
         "I got into programming because I wanted to make cool graphics, and that’s still what excites me most about coding. These days, shader coding is the ultimate playground for creating stunning real-time visuals. In this talk, I’ll start from scratch and show how to build 3D graphics using nothing but shader code. Along the way, I’ll share tips, tricks, and a bit of shader wizardry to help you get started as well."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223743974",
       "speakerIds": [
         "marten-range"
       ]
@@ -6645,7 +6645,7 @@
         "Are you tired of the same old AI, LLM, buzzword sessions and wondering if there is still anything new and cool out there we can do with AI? Do you crave an exciting, slightly ridiculous project that's just a lot of fun - while also learning about a whole new field with lots of promise? Don't miss this session!<br>Physical AI is about bringing together all the amazing breakthroughs (yes, like large language models) into the fields of robotics and embedded systems. We can make autonomous robots and systems that can generate their own movement instructions and evolve, without having to painstakingly define all the complex code or even tiny physics-engine implementations to get going.<br>But first - we need to build actual robots! As someone coming from the data science field - this may sound like a bit of a leap.<br>However, with a &quot;I'm sure it can't be that hard&quot; attitude, a bunch of electronics components, and an uncontainable enthusiasm - I set out to do just that.<br>I will share the story of building my own Robot Arm from 0 to an incrementally more complex prototype, and how I started giving it some &quot;AI superpowers&quot;, and what's next in this exciting field!"
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223742105",
       "speakerIds": [
         "iulia-feroli"
       ]
@@ -6675,7 +6675,7 @@
         "We will also discuss the Paketo Buildpacks project, emphasizing its flexibility and community focus. This section will show how Paketo improves the developer experience by offering a curated selection of buildpacks that make configuration easier and enhance performance. Additionally, we'll share real-world examples of how organizations are using Buildpacks to streamline their CI/CD pipelines and speed up their deployment cycles. To wrap up, we’ll go over some best practices for integrating Buildpacks into your workflows, providing tips on maximizing their features for better performance and security."
       ],
       "prerequisites": null,
-      "video": null,
+      "video": "1223744959",
       "speakerIds": [
         "patrick-baumgartner"
       ]
