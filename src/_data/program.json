@@ -5940,12 +5940,16 @@
       "format": "lightning-talk",
       "language": "no",
       "keywords": [
-        "hetzner coolify selfhosting suverenitet europeisk"
+        "hetzner",
+        "coolify",
+        "selfhosting",
+        "suverenitet",
+        "europeisk"
       ],
       "audience": "Alle som ønsker en enkel måte å selfhoste sine hobbyprosjekter",
       "description": [
-        "Coolify og Hetzner gjør det enkelt å hoste egne applikasjoner på europeisk grunn. I denne lyntalen viser jeg hvordan du<br>   raskt setter opp Coolify på en Hetzner-server og deployer en applikasjon med HTTPS og eget domene.",
-        "Jeg tar alle snarveiene: én server, én Dockerfile og ingen avansert konfigurasjon. Perfekt for hobbyprosjekter og<br>  prototyper du vil dele."
+        "Coolify og Hetzner gjør det enkelt å hoste egne applikasjoner på europeisk grunn. I denne lyntalen viser jeg hvordan du raskt setter opp Coolify på en Hetzner-server og deployer en applikasjon med HTTPS og eget domene.",
+        "Jeg tar alle snarveiene: én server, én Dockerfile og ingen avansert konfigurasjon. Perfekt for hobbyprosjekter og prototyper du vil dele."
       ],
       "prerequisites": null,
       "video": "1223684864",
